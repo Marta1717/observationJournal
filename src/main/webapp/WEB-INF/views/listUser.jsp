@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>List user</title>
+    <title>User list</title>
 </head>
 <body>
-<h2>List User</h2>
+<h2>User list</h2>
 <a href="<c:url value="/user/add/form"/>">Add new user</a>
 <table>
     <tr>
@@ -23,7 +23,6 @@
             <td>${user.email}</td>
             <td>${user.newsletter}</td>
             <td>
-<%--                <strong><a href="/">Cancel</a></strong>--%>
                 <a href="<c:url value="/user/update/form/${user.id}"/>">Edit</a>
                 <a href="<c:url value="/user/delete/form/${user.id}"/>">Delete</a>
             </td>

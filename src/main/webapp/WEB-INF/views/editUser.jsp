@@ -9,8 +9,9 @@
 <body>
 <h2>Edit User</h2>
 <%--@elvariable id="user" type=""--%>
-<form:form modelAttribute="user" method="post" action="/user/update">
-<form:hidden path="id"/>
+<form:form modelAttribute="user" method="post" action="/user/edit">
+    <form:hidden path="id"/>
+
     Username <br/>
     <form:input path="username"/>
     <form:errors path="username"/>
