@@ -21,11 +21,11 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String category;
-    private String description;
+    private String animalClassis;
+    private String animalDescription;
 
-////    @Enumerated(EnumType.STRING)
-////    private Category categoryType;
+    public static final List<String> CLASSIS = List.of(
+            "MAMMAL", "BIRD", "REPTILE", "AMPHIBIAN", "FISH");
 
     @ToString.Exclude
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)

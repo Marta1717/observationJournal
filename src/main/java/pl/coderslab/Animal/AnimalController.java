@@ -56,10 +56,10 @@ public class AnimalController {
         animalDao.saveAnimal(animal);
         return "Saved new animal: " + animal.getName();
     }
-//    @ModelAttribute("classis")
-//    public List<String> getClassis() {
-//        return Animal.CLASSIS;
-//    }
+    @ModelAttribute("classis")
+    public List<String> getClassis() {
+        return Animal.CLASSIS;
+    }
 
     @RequestMapping("/animal/get/{id}")
     @ResponseBody
@@ -88,14 +88,14 @@ public class AnimalController {
         return animal.toString();
     }
 
-    @RequestMapping("/animal/{classis}")
-    @ResponseBody
-    public String getAllAnimalsByClassis(@PathVariable String classis) {
-        List<Animal> animals;
-        animals = animalDao.findByCategory();
-        animals.forEach(a -> log.info(a.toString()));
-        return "findAllAnimalsByClassis";
-    }
+//    @RequestMapping("/animal/{classis}")
+//    @ResponseBody
+//    public String getAllAnimalsByClassis(@PathVariable String classis) {
+//        List<Animal> animals;
+//        animals = animalDao.findByCategory();
+//        animals.forEach(a -> log.info(a.toString()));
+//        return "findAllAnimalsByClassis";
+//    }
 
     @RequestMapping("/animal/all")
     @ResponseBody
@@ -104,6 +104,7 @@ public class AnimalController {
         allAnimals.forEach(animal -> log.info(animal.toString()));
         return "findAllAnimals";
     }
+
 
 //    @GetMapping("/test")
 //    public String testView() {
