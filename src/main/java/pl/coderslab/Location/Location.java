@@ -23,7 +23,8 @@ public class Location {
 
     private Long id;
     private String name;
-    private String description;
+    private String biome;
+    private String locationDescription;
 
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -2,10 +2,8 @@ package pl.coderslab.Location;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,15 +21,15 @@ public class LocationController {
         this.locationDao = locationDao;
     }
 
-    @RequestMapping("/location/add")
-    @ResponseBody
-    public String addLocation(@RequestParam Long id, @RequestParam String name) {
-        Location location = new Location();
-        location.setName("locationName");
-        location.setBiome("biome");
-        locationDao.saveLocation(location);
-        return "Dodano lokalizację " + location.getName();
-    }
+//    @RequestMapping("/location/add")
+//    @ResponseBody
+//    public String addLocation(@RequestParam Long id, @RequestParam String name) {
+//        Location location = new Location();
+//        location.setName("locationName");
+//        location.setBiome("biome");
+//        locationDao.saveLocation(location);
+//        return "Dodano lokalizację " + location.getName();
+//    }
 
     @RequestMapping("/location/get")
     @ResponseBody
@@ -40,9 +38,9 @@ public class LocationController {
         return location.toString();
     }
 
-    @RequestMapping("/location/update/{id}/{name}")
+    @RequestMapping("/location/update/{id}")
     @ResponseBody
-    public String updateLocation(@PathVariable Long id, @PathVariable String description) {
+    public String updateLocation(@PathVariable Long id) {
         Location location = locationDao.findLocationById(id);
         locationDao.updateLocation(location);
         return location.toString();
@@ -53,7 +51,7 @@ public class LocationController {
     public String deleteLocationById(@PathVariable Long id) {
         Location location = locationDao.findLocationById(id);
         locationDao.deleteLocationById(location.getId());
-        return "Deleted" + location.toString();
+        return "Deleted" + location;
     }
 
     @RequestMapping("/location/all")
@@ -62,6 +60,19 @@ public class LocationController {
         List<Location> allLocations = locationDao.findAllLocations();
         allLocations.forEach(location -> log.info(location.toString()));
         return "findAllDiscussion";
+    }
+
+    @GetMapping(value = "/location/add/form")
+    public String showAddLocationForm(Model model) {
+        model.addAttribute("location", new Location());
+        return "addLocation";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/location/add/form")
+    public String processAddLocation(@ModelAttribute Location location) {
+        locationDao.saveLocation(location);
+        return "Saved new location: " + location.getName();
     }
 }
 
