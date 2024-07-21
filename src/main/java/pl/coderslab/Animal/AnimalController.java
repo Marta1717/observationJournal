@@ -1,7 +1,6 @@
 package pl.coderslab.Animal;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,31 +21,11 @@ public class AnimalController {
         this.userDao = userDao;
     }
 
-//    public static final List<String> CLASSIS = List.of(
-//            "FISH", "AMPHIBIAN", "REPTILE","BIRD", "MAMMAL");
-
-//    @RequestMapping("/animal/add")
-//    @ResponseBody
-//    public String addAnimal() {
-//
-//        User user = new User();
-//        user.setUsername("Adam Kowalski");
-//        userDao.saveUser(user);
-//
-//        Animal animal = new Animal();
-//        animal.setName("Myszołów");
-//        animal.setClassis("Ptaki");
-//        animalDao.saveAnimal(animal);
-//
-//        return "Id dodanego zwierzęcia to: " + animal.getId() + "\nDodane zwierzę to "
-//                + animal.getName() + "\nZaobserwował go użytkownik " + user.getUsername();
-//    }
-
     @GetMapping(value = "/animal/add/form")
     public String showAddForm(Model model) {
         model.addAttribute("animal", new Animal());
-        List<String> classis = List.of("FISH", "AMPHIBIAN", "REPTILE", "BIRD", "MAMMAL");
-        model.addAttribute("classis", classis);
+//        List<String> classis = List.of("FISH", "AMPHIBIAN", "REPTILE", "BIRD", "MAMMAL");
+//        model.addAttribute("classis", classis);
         return "addAnimal";
     }
 
@@ -56,63 +35,45 @@ public class AnimalController {
         animalDao.saveAnimal(animal);
         return "Saved new animal: " + animal.getName();
     }
+
     @ModelAttribute("classis")
     public List<String> getClassis() {
         return Animal.CLASSIS;
     }
 
-    @RequestMapping("/animal/get/{id}")
-    @ResponseBody
-    public String getAnimalById(@PathVariable Long id) {
+    @GetMapping(value = "/animal/edit/form/{id}")
+    public String editAnimalForm(@PathVariable Long id, Model model) {
         Animal animal = animalDao.findAnimalById(id);
-        Hibernate .initialize(animal.getId());
-        return animal.toString();
+        model.addAttribute("animal", animal);
+        return "editAnimal";
     }
 
-    @RequestMapping("/animal/update/{id}/{name}")
     @ResponseBody
-    public String updateAnimal(@PathVariable Long id, @PathVariable String name) { //, @PathVariable String description, @PathVariable String category) {
-        Animal animal = animalDao.findAnimalById(id);
-        animal.setName(name);
-//        animal.setDescription(description);
-//        animal.setCategory(category);
+    @PostMapping(value = "/animal/edit")
+    public String processEditAnimal(@ModelAttribute Animal animal) {
         animalDao.updateAnimal(animal);
-        return animal.toString();
+        return "Updated animal: " + animal.getName();
     }
 
-    @RequestMapping("/animal/delete/{id}")
-    @ResponseBody
-    public String deleteAnimalById(@PathVariable Long id) {
+    @GetMapping("/animal/delete/form/{id}")
+    public String deleteAnimalForm(@PathVariable Long id, Model model) {
         Animal animal = animalDao.findAnimalById(id);
-        animalDao.deleteAnimalById(animal.getId());
-        return animal.toString();
+        model.addAttribute("animal", animal);
+        return "deleteAnimal";
     }
 
-//    @RequestMapping("/animal/{classis}")
-//    @ResponseBody
-//    public String getAllAnimalsByClassis(@PathVariable String classis) {
-//        List<Animal> animals;
-//        animals = animalDao.findByCategory();
-//        animals.forEach(a -> log.info(a.toString()));
-//        return "findAllAnimalsByClassis";
-//    }
-
-    @RequestMapping("/animal/all")
     @ResponseBody
-    public String findAllAnimals() {
-        List<Animal> allAnimals = animalDao.findAllAnimals();
-        allAnimals.forEach(animal -> log.info(animal.toString()));
-        return "findAllAnimals";
+    @PostMapping(value = "/animal/delete")
+    public String processDeleteAnimal(@RequestParam Long id) {
+        animalDao.deleteAnimalById(id);
+        return "Deleted animal";
     }
 
-
-//    @GetMapping("/test")
-//    public String testView() {
-//        return "index";
-//    }
-
-
-
+    @GetMapping("/animal/list")
+    public String showAnimalList(Model model) {
+        model.addAttribute("animals", animalDao.findAllAnimals());
+        return "listAnimal";
+    }
 }
 
 

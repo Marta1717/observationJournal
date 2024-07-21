@@ -4,16 +4,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add Animal</title>
+    <title>Edit Animal</title>
 </head>
 <body>
-<h2>Add Animal</h2>
+<h2>Edit Animal</h2>
 <%--@elvariable id="animal" type=""--%>
-<form:form modelAttribute="animal" method="post">
-    
-    
-    User<br/>
-    <form:select path="user.id" itemLabel="name"  itemValue="id" items="${users}"/>
+<form:form modelAttribute="animal" method="post" action="/animal/edit">
+    <form:hidden path="id"/>
 
     Classis:<br/>
     <form:select path="animalClassis" items="${classis}"/>
@@ -27,10 +24,10 @@
     Additional description <br/>
     <form:textarea path="animalDescription" rows="4"/>
     <form:errors path="animalDescription"/>
-    <br/>
-
     <br/><br/>
+
     <button type="submit">Submit</button>
+
 </form:form>
 </body>
 </html>

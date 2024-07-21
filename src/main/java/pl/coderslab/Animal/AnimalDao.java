@@ -1,6 +1,5 @@
 package pl.coderslab.Animal;
 
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -33,28 +32,10 @@ public class AnimalDao {
         entityManager.remove(entityManager.contains(animal) ? animal : entityManager.merge(animal));
     }
 
-
     public List<Animal> findAllAnimals() {
         Query query = entityManager.createQuery("""
                     select a from Animal a
-                    left join fetch a.observations
                 """);
-        List<Animal> animals = query.getResultList();
-        Hibernate.initialize(animals);
         return query.getResultList();
     }
-
-    public List<Animal> findByCategory() {
-        Query queryp = entityManager.createQuery("""
-                    select a from Animal a where a.classis = :classis
-                """);
-        queryp.setParameter("classis", "ptak");
-        List<Animal> animalsp = queryp.getResultList();
-        return animalsp;
-    }
-
-//    public List<Animal> findAnimalByName(String name) {
-//        return entityManager.createQuery("from Animal", Animal.class).getResultList();
-//    }
-
 }
