@@ -14,12 +14,14 @@
         <th>Id</th>
         <th>Username</th>
         <th>Email</th>
+        <th>Newsletter</th>
     </tr>
     <c:forEach items="${users}" var="user">
         <tr>
             <td>${user.id}</td>
             <td>${user.username}</td>
             <td>${user.email}</td>
+            <td>${user.newsletter}</td>
             <td>
 <%--                <strong><a href="/">Cancel</a></strong>--%>
                 <a href="<c:url value="/user/update/form/${user.id}"/>">Edit</a>
