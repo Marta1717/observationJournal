@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 //@RequiredArgsConstructor
 //@RequestMapping("/user)
@@ -45,13 +47,6 @@ public class UserController {
         return user.toString();
     }
 
-//    @RequestMapping("user/delete/{id}")
-//    @ResponseBody
-//    public String deleteUserById(@PathVariable Long id) {
-//        userDao.deleteUserById(id);
-//        return "Deleted";
-//    }
-
     @GetMapping(value = "/user/add/form")
     public String showAddForm(Model model) {
         model.addAttribute("user", new User());
@@ -65,7 +60,7 @@ public class UserController {
         return "Saved new user: " + user.getUsername();
     }
 
-    @GetMapping(value = "/user/update/form/{id}")
+    @GetMapping(value = "/user/edit/form/{id}")
     public String editForm(@PathVariable Long id, Model model) {
         User user = userDao.findUserById(id);
         model.addAttribute("user", user);
@@ -73,7 +68,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/user/update")
+    @PostMapping(value = "/user/Edit")
     public String processEditUser(@ModelAttribute User user) {
         userDao.updateUser(user);
         return "Updated user: " + user.getUsername();
@@ -98,6 +93,11 @@ public class UserController {
     public String showUsersList(Model model) {
         model.addAttribute("users", userDao.findAllUsers());
         return "listUser";
+    }
+
+    @ModelAttribute("newsletteragree")
+    public List<String> getNewsletterAgree() {
+        return User.NEWSLETTERAGREE;
     }
 }
 

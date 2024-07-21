@@ -23,8 +23,13 @@
     <form:input path="email"/>
     <form:errors path="email"/>
     <br/><br/>
+    Newsletter agree
+    <form:radiobuttons path="newsletter" items="${newsletteragree}"/>
+    <form:errors path="newsletter"/>
+    <br/><br/>
 
     <button type="submit">Submit</button>
+
 </form:form>
 </body>
 </html>
