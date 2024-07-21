@@ -12,6 +12,11 @@
 <form:form modelAttribute="animal" method="post" action="/animal/edit">
     <form:hidden path="id"/>
 
+    Select user<br/>
+    <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
+    <form:errors path="user.id"/>
+    <br/>
+
     Classis:<br/>
     <form:select path="animalClassis" items="${classis}"/>
     <form:errors path="animalClassis"/>

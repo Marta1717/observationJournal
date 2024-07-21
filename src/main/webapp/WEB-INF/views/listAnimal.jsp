@@ -9,12 +9,14 @@
 <body>
 <h2>Animal List</h2>
 <a href="<c:url value="/animal/add/form"/>">Add new animal</a>
+<br/><br/>
 <table>
     <tr>
-        <th>Id</th width="">
+        <th>Id</th>
         <th>Name</th>
         <th>Classis</th>
         <th>Description</th>
+        <th>User</th>
     </tr>
     <c:forEach items="${animals}" var="animal">
         <tr>
@@ -22,6 +24,7 @@
             <td>${animal.name}</td>
             <td>${animal.animalClassis}</td>
             <td>${animal.animalDescription}</td>
+            <td>${animal.user.username}</td>
             <td>
                 <a href="<c:url value="/animal/edit/form/${animal.id}"/>">Edit</a>
                 <a href="<c:url value="/animal/delete/form/${animal.id}"/>">Delete</a>

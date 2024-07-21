@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.User.User;
 import pl.coderslab.User.UserDao;
 
 import java.util.List;
@@ -73,6 +74,11 @@ public class AnimalController {
     public String showAnimalList(Model model) {
         model.addAttribute("animals", animalDao.findAllAnimals());
         return "listAnimal";
+    }
+
+    @ModelAttribute("users")
+    public List<User> getUsers() {
+        return this.userDao.findAllUsers();
     }
 }
 

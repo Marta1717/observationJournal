@@ -10,16 +10,18 @@
 <h2>Add Animal</h2>
 <%--@elvariable id="animal" type=""--%>
 <form:form modelAttribute="animal" method="post">
-    
-    
-    User<br/>
-    <form:select path="user.id" itemLabel="name"  itemValue="id" items="${users}"/>
+
+
+    Select user<br/>
+    <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
+    <form:errors path="user.id"/>
+    <br/>
 
     Classis:<br/>
     <form:select path="animalClassis" items="${classis}"/>
     <form:errors path="animalClassis"/>
-
     <br/>
+
     Name <br/>
     <form:input path="name"/>
     <form:errors path="name"/>
