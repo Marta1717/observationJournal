@@ -8,8 +8,16 @@
 </head>
 <body>
 <h2>Add Animal</h2>
+
+
+<br/><br/>
 <%--@elvariable id="animal" type=""--%>
 <form:form modelAttribute="animal" method="post">
+
+<%--    <a href="${pageContext.request.contextPath}/animal/edit/form/{id}">Edit Animal</a>--%>
+<%--    <a href="${pageContext.request.contextPath}/animal/delete/form{id}">Delete Animal</a>--%>
+    <a href="${pageContext.request.contextPath}/animal/list">Animal List</a>
+    <br/><br/><br/>
 
     Select user<br/>
     <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>

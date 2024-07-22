@@ -7,38 +7,39 @@
     <title>Add Observation</title>
 </head>
 <body>
-<h2>Add Observation</h2>
+<%--@declare id="animal"--%><h2>Add Observation</h2>
 <%--@declare id="location"--%>
 <%--@elvariable id="observation" type=""--%>
 <form:form method="post" modelAttribute="observation">
 
-    <label for="user">User</label><br/>
-    <form:input path="user.id" id="user"/>
+    User<br/>
+    <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
     <form:errors path="user.id"/>
     <br/>
 
-    <label for="animal">Animal</label>
-    <form:input path="animal.id" id="animal"/>
+    <label for="animal">Select animal:</label>
+    <form:select path="animal.id" items="${animals}" itemLabel="name" itemValue="id"/>
     <form:errors path="animal.id"/>
     <br/>
 
-    <label for="animal">Classis:</label>
-    <form:select path="animal.classis" id="animals"
-         items="${classisOptions}"/>
-    <form:errors path="animal.classis"/>
-    <br/>
+<%--    już raczej zbędne, to samo jest w animalu, tam chyba lepiej pasuje--%>
+<%--    <label for="animal">Classis:</label>--%>
+<%--    <form:select path="animal.classis" id="animals"--%>
+<%--         items="${classisOptions}"/>--%>
+<%--    <form:errors path="animal.classis"/>--%>
+<%--    <br/>--%>
 
     <label for="location">Location:</label>
-    <form:input path="location.id" items="${location}" itemLabel="name" itemValue="id" required="true"/>
-    <form:errors path="location.id"/>
-    <br/>
-
-    <label for="location">Biome:</label>
-    <form:input path="location.biome"/>
+    <form:select path="location.biome" items="${locations}" itemLabel="name" itemValue="id"/>
     <form:errors path="location.biome"/>
     <br/>
 
-    <label for="description">Description</label>
+    <label for="location">Biome:</label>
+    <form:select path="location.id" items="${locations}" itemLabel="name" itemValue="id"/>
+    <form:errors path="location.id"/>
+    <br/>
+
+    <label for="description" rows="6">Notes</label>
     <form:input path="description" id="description"/>
     <form:errors path="description"/>
     <br/><br/>

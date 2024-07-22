@@ -38,8 +38,4 @@ public class UserDao {
                 """, User.class);
         return query.getResultList();
     }
-
-//    public User findUserByUsername(int username) {
-//        return entityManager.find(User.class, username);
-//    }
 }
