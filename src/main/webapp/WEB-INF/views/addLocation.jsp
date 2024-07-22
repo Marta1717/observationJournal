@@ -11,7 +11,11 @@
 <%--@elvariable id="location" type=""--%>
 <form:form modelAttribute="location" method="post">
 
-    <br/>
+    Select user<br/>
+    <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
+    <form:errors path="user.id"/>
+    <br/><br/>
+
     Name <br/>
     <form:input path="name"/>
     <form:errors path="name"/>

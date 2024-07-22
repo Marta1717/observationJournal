@@ -19,17 +19,11 @@ public class UserController {
         this.userDao = userDao;
     }
 
-//    @RequestMapping ("/user/new/add")
-//    @ResponseBody
-//    public ResponseEntity<String> addUser() {
-//        User user = new User();
-////        user.setUsername("sampleUsername");
-////        user.setPassword("samplePassword");
-////        user.setEmail("sampleEmail@example.com");
-//
-//        return ResponseEntity.ok("Saved: {}");
-//    }
-
+    @GetMapping(value = "/user/list")
+    public String showUsersList(Model model) {
+        model.addAttribute("users", userDao.findAllUsers());
+        return "listUser";
+    }
 
     @RequestMapping("/user/get/{id}")
     @ResponseBody
@@ -68,14 +62,14 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/user/Edit")
+    @PostMapping(value = "/user/edit")
     public String processEditUser(@ModelAttribute User user) {
         userDao.updateUser(user);
         return "Updated user: " + user.getUsername();
     }
 
     @GetMapping("/user/delete/form/{id}")
-    public String deleteForm(@PathVariable Long id, Model model) {
+    public String deleteUserForm(@PathVariable Long id, Model model) {
         User user = userDao.findUserById(id);
         model.addAttribute("user", user);
         return "deleteUser";
@@ -89,11 +83,7 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "/user/list")
-    public String showUsersList(Model model) {
-        model.addAttribute("users", userDao.findAllUsers());
-        return "listUser";
-    }
+
 
     @ModelAttribute("newsletteragree")
     public List<String> getNewsletterAgree() {

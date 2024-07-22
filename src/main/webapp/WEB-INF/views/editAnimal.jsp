@@ -10,7 +10,6 @@
 <h2>Edit Animal</h2>
 <%--@elvariable id="animal" type=""--%>
 <form:form modelAttribute="animal" method="post" action="/animal/edit">
-    <form:hidden path="id"/>
 
     Select user<br/>
     <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
@@ -24,11 +23,9 @@
     <br/>
     Name <br/>
     <form:input path="name"/>
-    <form:errors path="name"/>
     <br/>
     Additional description <br/>
     <form:textarea path="animalDescription" rows="4"/>
-    <form:errors path="animalDescription"/>
     <br/><br/>
 
     <button type="submit">Submit</button>

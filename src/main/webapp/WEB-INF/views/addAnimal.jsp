@@ -11,7 +11,6 @@
 <%--@elvariable id="animal" type=""--%>
 <form:form modelAttribute="animal" method="post">
 
-
     Select user<br/>
     <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
     <form:errors path="user.id"/>
@@ -29,10 +28,10 @@
     Additional description <br/>
     <form:textarea path="animalDescription" rows="4"/>
     <form:errors path="animalDescription"/>
-    <br/>
-
     <br/><br/>
+
     <button type="submit">Submit</button>
+
 </form:form>
 </body>
 </html>
