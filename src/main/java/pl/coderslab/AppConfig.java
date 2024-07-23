@@ -1,4 +1,4 @@
-package pl.coderslab.App;
+package pl.coderslab;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
