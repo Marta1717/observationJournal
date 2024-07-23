@@ -7,16 +7,17 @@ import pl.coderslab.Observation.Observation;
 import pl.coderslab.User.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @Table(name = "animal")
-
 public class Animal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,8 +29,8 @@ public class Animal {
             "MAMMAL", "BIRD", "REPTILE", "AMPHIBIAN", "FISH");
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Observation> observations = new ArrayList<>();
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Observation> observations = new HashSet<>();
 
     @ManyToOne
     private User user;

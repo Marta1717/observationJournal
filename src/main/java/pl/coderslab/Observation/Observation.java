@@ -10,8 +10,8 @@ import pl.coderslab.User.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,8 +24,12 @@ public class Observation {
 
     private Long id;
     private LocalDateTime date;
-    private String biome;
+    private String animalName;
+    private String locationName;
+    private String locationBiome;
+    private String userUsername;
     private String description;
+
 
     @PrePersist
     public void prePersist() {
@@ -41,6 +45,31 @@ public class Observation {
     @ManyToOne
     private Location location;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "observation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Discussion> discussions = new ArrayList<>();
+    private Set<Discussion> discussions = new HashSet<>();
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+        if (animal != null) {
+            this.animalName = animal.getName();
+        }
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        if (user != null) {
+            this.userUsername = user.getUsername();
+        }
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+        if (location != null) {
+            this.locationName = location.getName();
+        }
+        if (location != null) {
+            this.locationBiome = location.getBiome();
+        }
+    }
 }

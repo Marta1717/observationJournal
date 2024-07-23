@@ -22,17 +22,18 @@
     Select user<br/>
     <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
     <form:errors path="user.id"/>
-    <br/>
+    <br/><br/>
 
-    Classis:<br/>
+    Select classis:<br/>
     <form:select path="animalClassis" items="${classis}"/>
     <form:errors path="animalClassis"/>
-    <br/>
+    <br/><br/>
 
     Name <br/>
     <form:input path="name"/>
     <form:errors path="name"/>
-    <br/>
+    <br/><br/>
+
     Additional description <br/>
     <form:textarea path="animalDescription" rows="4"/>
     <form:errors path="animalDescription"/>

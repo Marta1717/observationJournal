@@ -4,13 +4,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 @Transactional
 public class DiscussionDao {
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -18,25 +19,26 @@ public class DiscussionDao {
         entityManager.persist(discussion);
     }
 
-    public Discussion findDiscussionById(Long id) {
-        return entityManager.find(Discussion.class, id);
-    }
-
-    public void updateDiscussion(Discussion discussion) {
-        entityManager.merge(discussion);
-    }
-
-    public void deleteDiscussionById(Long id) {
-        Discussion discussion = findDiscussionById(id);
-        entityManager.remove(entityManager.contains(discussion) ? discussion : entityManager.merge(discussion));
-    }
 
     public List<Discussion> findAllDiscussions() {
-        Query query = entityManager.createQuery("""
-                    select d from Discussion d
-                    left join fetch d.observation
-                """);
-        List<Discussion> discussions = query.getResultList();
+        TypedQuery<Discussion> query = entityManager.createQuery("""
+                                SELECT d FROM Discussion d
+                """, Discussion.class);
         return query.getResultList();
     }
 }
+
+//    public Discussion findDiscussionById(Long id) {
+//        return entityManager.find(Discussion.class, id);
+//    }
+
+// nie potrzebujemy edycji i usuwania dyskusji
+
+//    public void updateDiscussion(Discussion discussion) {
+//        entityManager.merge(discussion);
+//    }
+//
+//    public void deleteDiscussionById(Long id) {
+//        Discussion discussion = findDiscussionById(id);
+//        entityManager.remove(entityManager.contains(discussion) ? discussion : entityManager.merge(discussion));
+//    }

@@ -8,8 +8,8 @@ import pl.coderslab.Observation.Observation;
 import pl.coderslab.User.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,12 +26,16 @@ public class Location {
     private String biome;
     private String locationDescription;
 
-
+    @ToString.Exclude
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Observation> observations = new ArrayList<>();
+    private Set<Observation> observations = new HashSet<>();
 
     @ManyToOne
-    @ToString.Exclude
     private User user;
 
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+    
 }

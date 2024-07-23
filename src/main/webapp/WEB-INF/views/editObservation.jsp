@@ -4,12 +4,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add Observation</title>
+    <title>Edit Observation</title>
 </head>
 <body>
-<%--@declare id="animal"--%><h2>Add Observation</h2>
+<%--@declare id="animal"--%>
 <%--@declare id="location"--%>
 <%--@elvariable id="observation" type=""--%>
+<h2>Edit Observation</h2>
 <form:form method="post" modelAttribute="observation">
 
     <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>
@@ -24,13 +25,6 @@
     <form:select path="animal.id" items="${animals}" itemLabel="name" itemValue="id"/>
     <form:errors path="animal.id"/>
     <br/>
-
-<%--    już raczej zbędne, to samo jest w animalu, tam chyba lepiej pasuje--%>
-<%--    <label for="animal">Classis:</label>--%>
-<%--    <form:select path="animal.classis" id="animals"--%>
-<%--         items="${classisOptions}"/>--%>
-<%--    <form:errors path="animal.classis"/>--%>
-<%--    <br/>--%>
 
     <label for="location">Location:</label>
     <form:select path="location.id" items="${location}" itemLabel="name" itemValue="id"/>
@@ -52,3 +46,4 @@
 </form:form>
 </body>
 </html>
+

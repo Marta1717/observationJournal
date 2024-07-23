@@ -11,6 +11,10 @@
 <table></table>
 <%--@elvariable id="user" type=""--%>
 <form:form modelAttribute="user" method="post">
+
+    <a href="${pageContext.request.contextPath}/user/list">User List</a>
+    <br/><br/><br/>
+
     <div class="mb-3">
     Username <br/>
     <form:input path="username"/>

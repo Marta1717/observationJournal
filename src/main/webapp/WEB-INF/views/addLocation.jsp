@@ -11,6 +11,9 @@
 <%--@elvariable id="location" type=""--%>
 <form:form modelAttribute="location" method="post">
 
+    <a href="${pageContext.request.contextPath}/location/list">Location List</a>
+    <br/><br/><br/>
+
     Select user<br/>
     <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
     <form:errors path="user.id"/>

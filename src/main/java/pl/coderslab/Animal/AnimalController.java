@@ -24,17 +24,18 @@ public class AnimalController {
 
     @GetMapping(value = "/animal/add/form")
     public String showAddForm(Model model) {
+        List<User> users = userDao.findAllUsers();
+        model.addAttribute("users", users);
         model.addAttribute("animal", new Animal());
 //        List<String> classis = List.of("FISH", "AMPHIBIAN", "REPTILE", "BIRD", "MAMMAL");
 //        model.addAttribute("classis", classis);
         return "addAnimal";
     }
 
-    @ResponseBody
     @PostMapping(value = "/animal/add/form")
     public String processAddAnimal(@ModelAttribute Animal animal) {
         animalDao.saveAnimal(animal);
-        return "Saved new animal: " + animal.getName();
+        return "redirect:/animal/list";
     }
 
     @ModelAttribute("classis")
@@ -49,11 +50,11 @@ public class AnimalController {
         return "editAnimal";
     }
 
-    @ResponseBody
+
     @PostMapping(value = "/animal/edit")
     public String processEditAnimal(@ModelAttribute Animal animal) {
         animalDao.updateAnimal(animal);
-        return "Updated animal: " + animal.getName();
+        return "redirect:/animal/list";
     }
 
     @GetMapping("/animal/delete/form/{id}")
@@ -63,11 +64,10 @@ public class AnimalController {
         return "deleteAnimal";
     }
 
-    @ResponseBody
     @PostMapping(value = "/animal/delete")
     public String processDeleteAnimal(@RequestParam Long id) {
         animalDao.deleteAnimalById(id);
-        return "Deleted animal";
+        return "redirect:/animal/list";
     }
 
     @GetMapping("/animal/list")

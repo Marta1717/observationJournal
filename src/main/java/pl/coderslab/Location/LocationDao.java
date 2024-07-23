@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -33,9 +33,18 @@ public class LocationDao {
     }
 
     public List<Location> findAllLocations() {
-       Query query = entityManager.createQuery("""
-       SELECT l FROM Location l 
-       """);
+        TypedQuery<Location> query = entityManager.createQuery("""
+       SELECT l FROM Location l
+       """, Location.class);
        return query.getResultList();
     }
+
+//    public List<Location> findLocationByBiome(String biome) {
+//        TypedQuery<Location> query = entityManager.createQuery("""
+//                        SELECT l FROM Location l
+//                        WHERE l.biome = :biome""", Location.class)
+//                .setParameter("biome", biome);
+//        return query.getResultList();
+//    }
+
 }

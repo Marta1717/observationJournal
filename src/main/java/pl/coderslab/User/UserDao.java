@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -33,8 +33,25 @@ public class UserDao {
     }
 
     public List<User> findAllUsers() {
-        Query query = entityManager.createQuery("""
+        TypedQuery<User> query = entityManager.createQuery("""
                 select u from User u
+                """, User.class);
+        return query.getResultList();
+    }
+
+//    public User findByIdWithObservations(Long id) {
+//        User user = entityManager.find(User.class, id);
+//        if (user != null) {
+//            Hibernate.initialize(user.getObservations());
+//        }
+//        return user;
+//    }
+    public List<User> findAllUsersWithDetails() {
+        TypedQuery<User> query = entityManager.createQuery("""
+                select u from User u
+                left join fetch u.animals
+                left join fetch u.discussions
+                left join fetch u.observations
                 """, User.class);
         return query.getResultList();
     }

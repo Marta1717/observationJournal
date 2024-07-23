@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Animal List</title>
+    <title>Animal list</title>
 </head>
 <body>
-<h2>Animal List</h2>
+<h2>Animal list</h2>
 <a href="<c:url value="/animal/add/form"/>">Add new animal</a>
 <br/><br/>
 <table>

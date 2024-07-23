@@ -19,12 +19,6 @@ public class UserController {
         this.userDao = userDao;
     }
 
-    @GetMapping(value = "/user/list")
-    public String showUsersList(Model model) {
-        model.addAttribute("users", userDao.findAllUsers());
-        return "listUser";
-    }
-
     @RequestMapping("/user/get/{id}")
     @ResponseBody
     public String getUserById(@PathVariable Long id) {
@@ -47,25 +41,23 @@ public class UserController {
         return "addUser";
     }
 
-    @ResponseBody
     @PostMapping(value = "/user/add/form")
     public String processAddUser(@ModelAttribute User user) {
         userDao.saveUser(user);
-        return "Saved new user: " + user.getUsername();
+        return "redirect:/user/list/";
     }
 
     @GetMapping(value = "/user/edit/form/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
+    public String editUserForm(@PathVariable Long id, Model model) {
         User user = userDao.findUserById(id);
         model.addAttribute("user", user);
         return "editUser";
     }
 
-    @ResponseBody
     @PostMapping(value = "/user/edit")
     public String processEditUser(@ModelAttribute User user) {
         userDao.updateUser(user);
-        return "Updated user: " + user.getUsername();
+        return "redirect:/user/list/";
     }
 
     @GetMapping("/user/delete/form/{id}")
@@ -75,20 +67,30 @@ public class UserController {
         return "deleteUser";
     }
 
-    @ResponseBody
     @PostMapping(value = "/user/delete")
     public String processDeleteUser(@RequestParam Long id) {
             userDao.deleteUserById(id);
-        return "Deleted user";
+        return "redirect:/user/list/";
     }
 
+    @GetMapping(value = "/user/list")
+    public String showUsersList(Model model) {
+        model.addAttribute("users", userDao.findAllUsers());
+        return "listUser";
+    }
 
-
+    @GetMapping("/details")
+    @ResponseBody
+    public List<User> getAllUsersWithDetails() {
+        return userDao.findAllUsersWithDetails();
+    }
 
     @ModelAttribute("newsletteragree")
     public List<String> getNewsletterAgree() {
         return User.NEWSLETTERAGREE;
     }
+
+
 }
 
 

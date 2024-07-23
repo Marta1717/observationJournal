@@ -1,10 +1,11 @@
 package pl.coderslab.Observation;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -32,17 +33,23 @@ public class ObservationDao {
     }
 
     public List<Observation> findAllObservations() {
-        Query query = entityManager.createQuery("""
+        TypedQuery<Observation> query = entityManager.createQuery("""
        SELECT o FROM Observation o
-       """);
+       """,Observation.class);
         return query.getResultList();
     }
 
-    public List<Observation> findObservationByUser() {
+    public List<Observation> findObservationByUserId(Long userId) {
         return entityManager
                 .createQuery("SELECT o FROM Observation o WHERE o.user.id = :userId", Observation.class)
-                .setParameter("userId", 1L)
+                .setParameter("userId", userId)
                 .getResultList();
+    }
+
+    public Observation findObservationWithAnimalById(Long id) {
+        Observation observation = findObservationById(id);
+        Hibernate.initialize(observation.getAnimal());
+        return observation;
     }
 
 

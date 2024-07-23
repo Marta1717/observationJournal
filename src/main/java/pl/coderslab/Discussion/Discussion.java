@@ -30,15 +30,19 @@ public class Discussion {
 
     public void setObservation(Observation observation) {
         this.observation = observation;
-        if (observation.getUser() != null) {
-            this.user = observation.getUser();
+        if (observation != null) {
+            observation.getDiscussions().add(this);
         }
     }
 
     public void setUser(User user) {
         this.user = user;
-        if (observation.getUser() != null) {
-            this.observation.setUser(user);
+        if (user != null) {
+            observation.getDiscussions().add(this);
         }
+    }
+
+    public String getAnimal() {
+        return null;
     }
 }

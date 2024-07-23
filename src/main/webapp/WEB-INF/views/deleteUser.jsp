@@ -21,7 +21,7 @@
     <input type="hidden" name="id" value="${user.id}"/>
     <p>Username:<br/> ${user.username}</p>
     <p>Email:<br/> ${user.email}</p>
-    <strong><a href="/">Cancel</a></strong>
+    <strong><a href="${pageContext.request.contextPath}/">Cancel</a></strong>
     <strong><button type="submit" name="action">Delete</button></strong>
 </form:form>
 </body>
