@@ -1,14 +1,14 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header-links.jsp"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Edit User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 
     <style>
-
         .container {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 30px;
@@ -25,20 +25,9 @@
             color: #4CAF50;
         }
 
-
         h4 {
             text-align: center;
-            color: #ff6f00;
-        }
-
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-
-        a:hover {
-            text-decoration: underline;
+            color: #055305;
         }
 
         label {
@@ -46,7 +35,7 @@
             margin: 10px 0 5px;
         }
 
-        input, select, textarea, button {
+        input, button {
             width: 100%;
             padding: 10px;
             margin: 5px 0 15px;
@@ -64,45 +53,42 @@
         button:hover {
             background-color: #45a049;
         }
-    </style>
 
+        .error {
+            color: red;
+        }
+
+    </style>
 </head>
 <body>
 <div class="container">
-    <h2>Edit User</h2>
-    <br/><br/>
-    <%--@elvariable id="user" type=""--%>
-    <form:form modelAttribute="user" method="post" action="/user/edit">
-        <form:hidden path="id"/>
+    <h2>Login</h2><br/>
+    <c:if test="${not empty loginError}">
+        <div class="error">
+                ${loginError}
+        </div>
+    </c:if>
+    <form:form action="${pageContext.request.contextPath}/login" method="post" modelAttribute="login">
 
     <div class="mb-3">
-    Username <br/>
-        <form:input path="username"/>
-        <form:errors path="username"/>
+        <label for="username">Username</label><br/>
+        <form:input path="username" id="username"/>
+        <form:errors path="username" cssClass="error"/>
+        <br/>
     </div>
-
     <div class="mb-3">
-    Password <br/>
-        <form:input path="password"/>
-        <form:errors path="password"/>
+        <label for="password">Password</label>
+        <form:password path="password" id="password"/>
+        <form:errors path="password" cssClass="error"/>
+<br/>
     </div>
-
     <div class="mb-3">
-    Email <br/>
-        <form:input path="email"/>
-        <form:errors path="email"/>
-    </div>
-
-    <div class="mb-3">
-    Newsletter agree
-        <form:radiobuttons path="newsletter" items="${newsletteragree}"/>
-        <form:errors path="newsletter"/>
-    </div>
-
-    <div class="mb-3">
-    <button type="submit">Submit</button>
+        <button type="submit">Login</button>
     </div>
     </form:form>
+</div>
+<div class="container">
+<div class="mb-4"><a href="${pageContext.request.contextPath}/user/add/form"><h4>or register</h4></a></div>
 </div>
 </body>
 </html>

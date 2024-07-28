@@ -23,20 +23,20 @@ public class LocationDao {
         return entityManager.find(Location.class, id);
     }
 
-
     public void updateLocation(Location location) {
         entityManager.merge(location);
     }
 
-    public void deleteLocationById(Long location) {
+    public void deleteLocationById(Long id) {
+        Location location = findLocationById(id);
         entityManager.remove(entityManager.contains(location) ? location : entityManager.merge(location));
-    }
+        }
 
     public List<Location> findAllLocations() {
         TypedQuery<Location> query = entityManager.createQuery("""
-       SELECT l FROM Location l
-       """, Location.class);
-       return query.getResultList();
+                       SELECT l FROM Location l
+                """, Location.class);
+        return query.getResultList();
     }
 
 //    public List<Location> findLocationByBiome(String biome) {

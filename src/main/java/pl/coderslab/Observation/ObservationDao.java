@@ -1,6 +1,5 @@
 package pl.coderslab.Observation;
 
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,48 +15,33 @@ public class ObservationDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void saveObservation(Observation observation) {
-        entityManager.persist(observation);
-    }
-
-    public void updateObservation(Observation observation) {
-        entityManager.merge(observation);
-    }
-
-    public void deleteObservationById(Long observation) {
-        entityManager.remove(entityManager.contains(observation) ? observation : entityManager.merge(observation));
-    }
-
-    public Observation findObservationById(Long id) {
-        return entityManager.find(Observation.class, id);
-    }
-
     public List<Observation> findAllObservations() {
         TypedQuery<Observation> query = entityManager.createQuery("""
-       SELECT o FROM Observation o
-       """,Observation.class);
+
+                        SELECT o FROM Observation o
+                """, Observation.class);
         return query.getResultList();
     }
 
-    public List<Observation> findObservationByUserId(Long userId) {
-        return entityManager
-                .createQuery("SELECT o FROM Observation o WHERE o.user.id = :userId", Observation.class)
-                .setParameter("userId", userId)
-                .getResultList();
-    }
-
-    public Observation findObservationWithAnimalById(Long id) {
-        Observation observation = findObservationById(id);
-        Hibernate.initialize(observation.getAnimal());
-        return observation;
-    }
-
-
-
-
-//    public List<Observation> findAllObservations() {
-//        return entityManager.createQuery("from Observation", Observation.class).getResultList();
+//    public List<Observation> findAllWithFilters(Long userId, String animalName, String locationName, String biome) {
+//        String jpql = "SELECT DISTINCT o FROM Observation o " +
+//                "LEFT JOIN FETCH o.user u " +
+//                "LEFT JOIN FETCH o.animalLocations al " +
+//                "LEFT JOIN FETCH al.animal a " +
+//                "LEFT JOIN FETCH al.location l " +
+//                "WHERE (:userId IS NULL OR u.id = :userId) " +
+//                "AND (:animalName IS NULL OR a.animalName LIKE CONCAT('%', :animalName, '%')) " +
+//                "AND (:locationName IS NULL OR l.locationName LIKE CONCAT('%', :locationName, '%')) " +
+//                "AND (:biome IS NULL OR l.biome LIKE CONCAT('%', :biome, '%'))";
+//
+//        TypedQuery<Observation> query = entityManager.createQuery(jpql, Observation.class);
+//        query.setParameter("userId", userId);
+//        query.setParameter("animalName", animalName);
+//        query.setParameter("locationName", locationName);
+//        query.setParameter("biome", biome);
+//        return query.getResultList();
 //    }
+}
 
 //    public Observation findObservationById(Long id) {
 //        TypedQuery<Observation> query = entityManager.createQuery("""
@@ -91,4 +75,4 @@ public class ObservationDao {
 //        Hibernate.initialize(biome.getClass());
 //        return query.getResultList();
 //    }
-}
+//}

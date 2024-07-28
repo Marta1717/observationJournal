@@ -1,41 +1,64 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@include file="header-links.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Add Location</title>
+
+    <style>
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            margin-left: 35%;
+            margin-right: 35%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-<h2>Add new location</h2>
-<%--@elvariable id="location" type=""--%>
-<form:form modelAttribute="location" method="post">
-
-    <a href="${pageContext.request.contextPath}/location/list">Location List</a>
+<div class="container">
+    <h2>Add new location</h2>
     <br/><br/><br/>
+    <form:form modelAttribute="location" method="post">
+        <a href="${pageContext.request.contextPath}/location/list">Location List</a>
+        <br/><br/><br/>
 
-    Select user<br/>
-    <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
-    <form:errors path="user.id"/>
-    <br/><br/>
+        <form:hidden path="userId" value="${loggedInUser.id}"/>
 
-    Name <br/>
-    <form:input path="name"/>
-    <form:errors path="name"/>
-    <br/><br/>
+<%--        <div class="mb-3">--%>
+<%--            Select user<br/>--%>
+<%--            <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>--%>
+<%--            <form:errors path="user.id"/>--%>
+<%--        </div>--%>
 
-    Biome <br/>
-    <form:input path="biome"/>
-    <form:errors path="biome"/>
-    <br/><br/>
+        <div class="mb-3">
+            Place name <br/>
+            <form:input path="locationName"/>
+            <form:errors path="locationName"/>
+        </div>
 
-    Additional description <br/>
-    <form:textarea path="locationDescription" rows="4"/>
-    <form:errors path="locationDescription"/>
-    <br/>
+        <div class="mb-3">
+            Biome <br/>
+            <form:input path="biome"/>
+            <form:errors path="biome"/>
+        </div>
 
-    <br/><br/>
-    <button type="submit">Add location</button>
-</form:form>
+        <div class="mb-3">
+            Additional description <br/>
+            <form:textarea path="locationDescription" rows="4"/>
+            <form:errors path="locationDescription"/>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit">Add location</button>
+        </div>
+    </form:form>
+</div>
 </body>
 </html>

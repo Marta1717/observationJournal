@@ -1,6 +1,5 @@
 package pl.coderslab.Animal;
 
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -28,6 +27,7 @@ public class AnimalDao {
         entityManager.merge(animal);
     }
 
+    //    @Transactional
     public void deleteAnimalById(Long id) {
         Animal animal = findAnimalById(id);
         entityManager.remove(entityManager.contains(animal) ? animal : entityManager.merge(animal));
@@ -35,16 +35,16 @@ public class AnimalDao {
 
     public List<Animal> findAllAnimals() {
         TypedQuery<Animal> query = entityManager.createQuery("""
-                                select a from Animal a
-                            """,Animal.class);
+                    select a from Animal a
+                """, Animal.class);
         return query.getResultList();
     }
 
-    public Animal findAnimalWithObservations(Long id) {
-        Animal animal = entityManager.find(Animal.class, id);
-        if (animal != null) {
-            Hibernate.initialize(animal.getObservations());
-        }
-        return animal;
-    }
+//    public Animal findAnimalWithObservations(Long id) {
+//        Animal animal = entityManager.find(Animal.class, id);
+//        if (animal != null) {
+//            Hibernate.initialize(animal.getObservations());
+//        }
+//        return animal;
+//    }
 }

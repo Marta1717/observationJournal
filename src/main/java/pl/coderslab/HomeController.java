@@ -10,11 +10,21 @@ public class HomeController {
 
     @GetMapping("/")
     public String showForm() {
-        return "home";
+        return "start";
     }
 
     @PostMapping("/")
     public String addForm() {  //@ModelAttribute Model model, BindingResult bindingResult) {
+        return "login";
+    }
+
+    @GetMapping("/home")
+    public String showHomeForm() {
         return "home";
     }
+
+//    @PostMapping("/")
+//    public String addForm() {  //@ModelAttribute Model model, BindingResult bindingResult) {
+//        return "login";
+//    }
 }

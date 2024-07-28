@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -85,12 +86,31 @@ public class UserController {
         return userDao.findAllUsersWithDetails();
     }
 
-    @ModelAttribute("newsletteragree")
-    public List<String> getNewsletterAgree() {
-        return User.NEWSLETTERAGREE;
+//    @ModelAttribute("newsletteragree")
+//    public List<String> getNewsletterAgree() {
+//        return User.NEWSLETTERAGREE;
+//    }
+
+    @GetMapping("/login")
+    public String showLoginForm(Model model) {
+        model.addAttribute("login", new User());
+        return "login";
     }
 
+    @PostMapping("/login")
+    public String processLogin(@ModelAttribute("login") User user, HttpSession session, Model model) {
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("Password: " + user.getPassword());
+        User loggedInUser = userDao.findUserByUsernameAndPassword(user.getUsername(),user.getPassword());
 
+        if (loggedInUser != null) {
+            session.setAttribute("loggedInUser", loggedInUser);
+            return "redirect:/home";
+        } else {
+            model.addAttribute("loginError", "Invalid username or password");
+            return "login";
+        }
+    }
 }
 
 

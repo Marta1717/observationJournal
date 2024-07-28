@@ -22,27 +22,33 @@ public class Discussion {
     private String comment;
     private LocalDate createdAt;
 
-    @ManyToOne
-    private Observation observation;
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDate.now();
+    }
 
     @ManyToOne
     private User user;
 
-    public void setObservation(Observation observation) {
-        this.observation = observation;
-        if (observation != null) {
-            observation.getDiscussions().add(this);
-        }
-    }
+    @OneToOne
+    @JoinColumn(name = "observation_id")
+    private Observation observation;
 
-    public void setUser(User user) {
-        this.user = user;
-        if (user != null) {
-            observation.getDiscussions().add(this);
-        }
-    }
-
-    public String getAnimal() {
-        return null;
-    }
+//    public void setObservation(Observation observation) {
+//        this.observation = observation;
+//        if (observation != null) {
+//            observation.getDiscussions().add(this);
+//        }
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//        if (user != null) {
+//            observation.getDiscussions().add(this);
+//        }
+//    }
+//
+//    public String getUsername() {
+//        return user.getUsername();
+//    }
 }
