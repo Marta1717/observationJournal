@@ -6,9 +6,7 @@
 <html lang="en">
 <head>
     <title>Add User</title>
-
     <style>
-
         .container {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 30px;
@@ -19,52 +17,7 @@
             width: 400px;
             text-align: left;
         }
-
-        /*h2 {*/
-        /*    text-align: center;*/
-        /*    color: #4CAF50;*/
-        /*}*/
-
-        /*h3 {*/
-        /*    text-align: left;*/
-        /*    color: #4cafaf;*/
-        /*}*/
-
-        /*a {*/
-        /*    color: #4CAF50;*/
-        /*    text-decoration: none;*/
-        /*    margin-right: 10px;*/
-        /*}*/
-
-        /*a:hover {*/
-        /*    text-decoration: underline;*/
-        /*}*/
-
-        /*label {*/
-        /*    display: block;*/
-        /*    margin: 10px 0 5px;*/
-        /*}*/
-
-        /*input, select, textarea, button {*/
-        /*    width: 100%;*/
-        /*    padding: 10px;*/
-        /*    margin: 5px 0 15px;*/
-        /*    border: 1px solid #ccc;*/
-        /*    border-radius: 5px;*/
-        /*}*/
-
-        /*button {*/
-        /*    background-color: #4CAF50;*/
-        /*    color: white;*/
-        /*    border: none;*/
-        /*    cursor: pointer;*/
-        /*}*/
-
-        /*button:hover {*/
-        /*    background-color: #45a049;*/
-        /*}*/
     </style>
-
 </head>
 <body>
 <div class="container">
@@ -102,9 +55,6 @@
     <button type="submit">Submit</button>
 </div>
 </form:form>
-</div>
-<div class="container">
-    <div class="mb-4"><a href="${pageContext.request.contextPath}/home"><h4>or register</h4></a></div>
 </div>
 </body>
 </html>

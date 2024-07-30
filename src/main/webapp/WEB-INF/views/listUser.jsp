@@ -55,7 +55,6 @@
             background-color: #ddd;
         }
     </style>
-
 </head>
 <body>
 <div class="container">

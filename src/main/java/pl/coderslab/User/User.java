@@ -3,11 +3,14 @@ package pl.coderslab.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.coderslab.Animal_Location.AnimalLocation;
+import pl.coderslab.Animal.Animal;
 import pl.coderslab.Discussion.Discussion;
+import pl.coderslab.Location.Location;
 import pl.coderslab.Observation.Observation;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,10 +25,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Column(unique = true)
+    @Size(min = 3, max = 15)
     private String username;
 
     @ToString.Exclude
+    @NotNull
+    @Size(min = 3, max = 15)
     private String password;
+
+    @NotNull
     private String email;
     private String newsletter;
 
@@ -40,15 +51,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Discussion> discussions = new HashSet<>();
 
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    private Set<Animal> animals = new HashSet<>();
-//
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    private Set<Location> locations = new HashSet<>();
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Animal> animals = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
-    private Set<AnimalLocation> animalLocations = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Location> locations = new HashSet<>();
 }

@@ -17,24 +17,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 400px;
-            text-align: left;
-        }
-
-        h2 {
             text-align: center;
-            color: #4CAF50;
-        }
-
-
-        h4 {
-            text-align: center;
-            color: #ff6f00;
-        }
-
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-            margin-right: 10px;
         }
 
         a:hover {
@@ -44,25 +27,6 @@
         label {
             display: block;
             margin: 10px 0 5px;
-        }
-
-        input, select, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
         }
     </style>
 
@@ -77,7 +41,7 @@
         <p>Username:<br/> ${user.username}</p>
         <p>Email:<br/> ${user.email}</p>
         <br/><br/><br/>
-        <strong><a href="${pageContext.request.contextPath}/">Cancel</a></strong><br/><br/>
+        <strong><a href="${pageContext.request.contextPath}/user/list">Cancel</a></strong><br/><br/>
         <strong>
             <button type="submit" name="action">Delete</button>
         </strong>

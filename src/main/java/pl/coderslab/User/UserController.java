@@ -90,7 +90,6 @@ public class UserController {
 //    public List<String> getNewsletterAgree() {
 //        return User.NEWSLETTERAGREE;
 //    }
-
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("login", new User());

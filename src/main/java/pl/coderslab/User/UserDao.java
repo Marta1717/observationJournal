@@ -62,7 +62,6 @@ public class UserDao {
     public List<User> findAllUsersWithDetails() {
         TypedQuery<User> query = entityManager.createQuery("""
                 select u from User u
-                left join fetch u.animalLocations
                 left join fetch u.discussions
                 left join fetch u.observations
                 """, User.class);
