@@ -28,9 +28,10 @@ public class Discussion {
     }
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "observation_id")
     private Observation observation;
 
@@ -46,9 +47,5 @@ public class Discussion {
 //        if (user != null) {
 //            observation.getDiscussions().add(this);
 //        }
-//    }
-//
-//    public String getUsername() {
-//        return user.getUsername();
 //    }
 }

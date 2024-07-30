@@ -27,7 +27,6 @@ public class DiscussionDao {
         return query.getResultList();
     }
 }
-
 //    public Discussion findDiscussionById(Long id) {
 //        return entityManager.find(Discussion.class, id);
 //    }

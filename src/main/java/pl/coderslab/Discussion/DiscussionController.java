@@ -88,7 +88,7 @@ public class DiscussionController {
     }
 }
 
-//    nie chcemy edytować ani usuwać komentarzy ani dyskusji, powinna się usuwać z obserwacją, której dotyczy
+//    nie chcemy edytować ani usuwać komentarzy
 
 //    @GetMapping(value = "/discussion/edit/form/{id}")
 //    public String editDiscussionForm(@PathVariable Long id, Model model) {

@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header-links.jsp.jsp"%>
+<%@include file="header-links.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +68,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>Add new discussion</h2>
+    <h2>Add new comment</h2>
     <br/><br/><br/>
     <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>
     <br/><br/><br/>
@@ -76,11 +76,12 @@
     <%--@elvariable id="discussion" type=""--%>
     <form:form modelAttribute="discussion" method="post">
 
-        <div class="mb-3">
-            Select observation:<br/>
-            <form:select path="observation.id" id="location" items="${observations}" itemLabel="id" itemValue="id"/>
-            <form:errors path="observation.id"/>
-        </div>
+<%--        zbędne, do komentarza wchodzi się przez obserwację--%>
+<%--        <div class="mb-3">--%>
+<%--            Select observation:<br/>--%>
+<%--            <form:select path="observation.id" id="location" items="${observations}" itemLabel="id" itemValue="id"/>--%>
+<%--            <form:errors path="observation.id"/>--%>
+<%--        </div>--%>
 
         <div class="mb-3">
             Comment: <br/>
