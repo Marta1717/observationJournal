@@ -25,17 +25,17 @@
 <div class="container">
     <h2>Add new location</h2>
     <br/><br/><br/>
-    <form:form modelAttribute="location" method="post">
+    <form:form modelAttribute="location" method="post" action="${pageContext.request.contextPath}/location/add/form">
         <a href="${pageContext.request.contextPath}/location/list">Location List</a>
         <br/><br/><br/>
 
-        <form:hidden path="userId" value="${loggedInUser.id}"/>
+        <form:hidden path="user" value="${loggedInUser.id}"/>
 
-<%--        <div class="mb-3">--%>
-<%--            Select user<br/>--%>
-<%--            <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>--%>
-<%--            <form:errors path="user.id"/>--%>
-<%--        </div>--%>
+        <div class="mb-3">
+            Select animal<br/>
+            <form:select path="animal.id" id="animal" items="${animals}" itemLabel="animalName" itemValue="id"/>
+            <form:errors path="animal.id"/>
+        </div>
 
         <div class="mb-3">
             Place name <br/>

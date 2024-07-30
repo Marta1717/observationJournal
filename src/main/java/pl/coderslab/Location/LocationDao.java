@@ -30,14 +30,28 @@ public class LocationDao {
     public void deleteLocationById(Long id) {
         Location location = findLocationById(id);
         entityManager.remove(entityManager.contains(location) ? location : entityManager.merge(location));
-        }
+    }
 
-    public List<Location> findAllLocations() {
+
+//    public List<Location> findLocationsByUserId(Long userId) {
+//        return entityManager.createQuery("""
+//                        SELECT l FROM Location l
+//                        LEFT JOIN l.animal
+//                        WHERE l.user.id = :userId""", Location.class)
+//                .setParameter("userId", userId)
+//                .getResultList();
+//    }
+
+
+    public List<Location> findAllObservations() {
         TypedQuery<Location> query = entityManager.createQuery("""
-                       SELECT l FROM Location l
+                SELECT l FROM Location l
+                JOIN FETCH l.animal
+                WHERE l.animal.id = :animalId
                 """, Location.class);
         return query.getResultList();
     }
+
 
 //    public List<Location> findLocationByBiome(String biome) {
 //        TypedQuery<Location> query = entityManager.createQuery("""

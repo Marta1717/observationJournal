@@ -38,11 +38,11 @@
     <br/><br/><br/>
     <form:form modelAttribute="location" method="post" action="${pageContext.request.contextPath}/location/edit">
 
-<%--        <div class="mb-3">--%>
-<%--            Select user<br/>--%>
-<%--            <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>--%>
-<%--            <form:errors path="user.id"/>--%>
-<%--        </div>--%>
+        <div class="mb-3">
+            Select animal<br/>
+            <form:select path="animal.id" id="user" items="${animals}" itemLabel="name" itemValue="id"/>
+            <form:errors path="animal.id"/>
+        </div>
 
         <div class="mb-3">
             Name <br/>

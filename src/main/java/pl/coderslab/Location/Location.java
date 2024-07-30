@@ -4,11 +4,12 @@ package pl.coderslab.Location;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.coderslab.Animal_Location.AnimalLocation;
+import pl.coderslab.Animal.Animal;
+import pl.coderslab.User.User;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -20,17 +21,20 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Size(min = 3, max = 15)
     private String locationName;
     private String biome;
     private String locationDescription;
-    private Long userId;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<AnimalLocation> animalLocations = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
 
-//    @ManyToOne
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 //    public String getUsername() {
 //        return user.getUsername();

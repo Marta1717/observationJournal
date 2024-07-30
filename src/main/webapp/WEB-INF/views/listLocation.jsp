@@ -57,7 +57,7 @@
             <th>Name</th>
             <th>Biome</th>
             <th>Description</th>
-<%--            <th>User</th>--%>
+            <th>User</th>
             <th></th>
             <th></th>
         </tr>
@@ -67,7 +67,7 @@
                 <td>${location.locationName}</td>
                 <td>${location.biome}</td>
                 <td>${location.locationDescription}</td>
-<%--                <td>${location.user.username}</td>--%>
+                <td>${location.user.username}</td>
                 <td>
                     <a href="<c:url value="/location/edit/form/${location.id}"/>">Edit</a>
                 </td>
