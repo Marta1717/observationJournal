@@ -6,7 +6,6 @@
 <html lang="en">
 <head>
     <title>Edit Animal</title>
-
     <style>
         .container {
             background-color: rgba(255, 255, 255, 0.9);
@@ -42,7 +41,6 @@
 <%--            <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>--%>
 <%--            <form:errors path="user.id"/>--%>
 <%--        </div>--%>
-
         <div class="mb-3">
             Classis:<br/>
             <form:select path="animalClassis" items="${classis}"/>

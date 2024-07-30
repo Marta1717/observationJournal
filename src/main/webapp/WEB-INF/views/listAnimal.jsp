@@ -27,7 +27,7 @@
 
         th, td {
             border: 1px solid #ddd;
-            padding: 8px; /* Zmniejsza przestrzeń wewnętrzną komórek */
+            padding: 8px;
             text-align: left;
         }
 
@@ -58,7 +58,7 @@
             <th>Name</th>
             <th>Classis</th>
             <th>Description</th>
-<%--            <th>User</th>--%>
+            <th>User</th>
             <th></th>
             <th></th>
         </tr>
@@ -68,7 +68,7 @@
                 <td>${animal.animalName}</td>
                 <td>${animal.animalClassis}</td>
                 <td>${animal.animalDescription}</td>
-<%--                <td>${animal.user.username}</td>--%>
+                <td>${animal.user.username}</td>
                 <td>
                     <a href="<c:url value="/animal/edit/form/${animal.id}"/>">Edit</a>
                 </td>

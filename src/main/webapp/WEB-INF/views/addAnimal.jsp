@@ -27,10 +27,10 @@
 <div class="container">
     <h2>Add Animal</h2>
     <br/><br/>
-    <form:form modelAttribute="animal" method="post">
+    <form:form modelAttribute="animal" method="post" action="${pageContext.request.contextPath}/animal/add/">
     <a href="${pageContext.request.contextPath}/animal/list"><h3>Animal List</h3></a>
     <br/><br/><br/>
-        <form:hidden path="userId" value="${loggedInUser.id}"/>
+<%--        <form:hidden path="user" value="${loggedInUser.id}"/>--%>
 
 <%--        <div class="mb-3">--%>
 <%--            Select user<br/>--%>

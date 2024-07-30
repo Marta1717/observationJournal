@@ -27,11 +27,19 @@ public class AnimalDao {
         entityManager.merge(animal);
     }
 
-    //    @Transactional
+
     public void deleteAnimalById(Long id) {
         Animal animal = findAnimalById(id);
         entityManager.remove(entityManager.contains(animal) ? animal : entityManager.merge(animal));
     }
+
+//    public List<Animal> findAnimalByUserId(Long userId) {
+//        TypedQuery<Animal> query = entityManager.createQuery("""
+//    SELECT a FROM Animal a WHERE a.user.id = :userId"""
+//                , Animal.class);
+//        query.setParameter("userId", userId);
+//        return query.getResultList();
+//    }
 
     public List<Animal> findAllAnimals() {
         TypedQuery<Animal> query = entityManager.createQuery("""
@@ -40,11 +48,4 @@ public class AnimalDao {
         return query.getResultList();
     }
 
-//    public Animal findAnimalWithObservations(Long id) {
-//        Animal animal = entityManager.find(Animal.class, id);
-//        if (animal != null) {
-//            Hibernate.initialize(animal.getObservations());
-//        }
-//        return animal;
-//    }
 }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.User.User;
-import pl.coderslab.User.UserDao;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -16,37 +15,25 @@ public class AnimalController {
 
     // @Autowired
     private final AnimalDao animalDao;
-    private final UserDao userDao;
 
-    public AnimalController(AnimalDao animalDao, UserDao userDao) {
+    public AnimalController(AnimalDao animalDao) {
         this.animalDao = animalDao;
-        this.userDao = userDao;
     }
 
     @GetMapping(value = "/animal/add/form")
-    public String showAddForm(Model model, HttpSession session) {
+    public String showAddForm(Model model) {
         model.addAttribute("animal", new Animal());
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            model.addAttribute("loggedInUser", loggedInUser);
-        } else {
-            return "redirect:/login";
-        }
-//        List<String> classis = List.of("FISH", "AMPHIBIAN", "REPTILE", "BIRD", "MAMMAL");
-//        model.addAttribute("classis", classis);
         return "addAnimal";
     }
 
-    @PostMapping(value = "/animal/add/form")
+    @PostMapping(value = "/animal/add/")
     public String processAddAnimal(@ModelAttribute Animal animal, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
-            animal.setUserId(loggedInUser.getId());
+            animal.setUser(loggedInUser);
             animalDao.saveAnimal(animal);
-            return "redirect:/animal/list";
-        } else {
-            return "redirect:/login";
         }
+        return "redirect:/animal/list";
     }
 
     @ModelAttribute("classis")
@@ -55,53 +42,63 @@ public class AnimalController {
     }
 
     @GetMapping(value = "/animal/edit/form/{id}")
-    public String editAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
-        Animal animal = animalDao.findAnimalById(id);
-        model.addAttribute("animal", animal);
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            model.addAttribute("loggedInUser", loggedInUser);
-        } else {
-            return "redirect:/login";
-        }
+    public String editAnimalForm(@PathVariable Long id, Model model) {
+        model.addAttribute("animal", animalDao.findAnimalById(id));
         return "editAnimal";
     }
 
     @PostMapping(value = "/animal/edit")
-    public String processEditAnimal(@ModelAttribute Animal animal, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            animal.setUserId(loggedInUser.getId());
-            animalDao.updateAnimal(animal);
-            return "redirect:/animal/list";
-        } else {
-            return "redirect:/login";
-        }
+    public String processEditAnimal(@ModelAttribute Animal animal) {
+        animalDao.updateAnimal(animal);
+        return "redirect:/animal/list";
     }
+
+//    @GetMapping("/animal/delete/form/{id}")
+//    public String deleteAnimalForm(@PathVariable Long id, Model model) {
+//        Animal animal = animalDao.findAnimalById(id);
+//        if (animal == null) {
+//            return "listAnimal";
+//        }
+//        model.addAttribute("animal", animal);
+//        return "deleteAnimal";
+//    }
+
 
     @GetMapping("/animal/delete/form/{id}")
     public String deleteAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
-        Animal animal = animalDao.findAnimalById(id);
-        model.addAttribute("animal", animal);
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            model.addAttribute("loggedInUser", loggedInUser);
-        } else {
+        if (loggedInUser == null) {
             return "redirect:/login";
         }
+        Animal animal = animalDao.findAnimalById(id);
+        if (animal == null) {
+            animalDao.deleteAnimalById(id);
+            return "listAnimal";
+        }
+        model.addAttribute("animal", animal);
         return "deleteAnimal";
     }
 
-    //@Transactional
+//    @PostMapping(value = "/animal/delete")
+//    public String processDeleteAnimal(@RequestParam Long id) {
+//        Animal animal = animalDao.findAnimalById(id);
+//        if (animal != null) {
+//            animalDao.deleteAnimalById(id);
+//        }
+//        return "listAnimal";
+//    }
+
     @PostMapping(value = "/animal/delete")
     public String processDeleteAnimal(@RequestParam Long id, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            animalDao.deleteAnimalById(id);
-            return "redirect:/animal/list";
-        } else {
+        if (loggedInUser == null) {
             return "redirect:/login";
         }
+        Animal animal = animalDao.findAnimalById(loggedInUser.getId());
+        if (animal != null) {
+            animalDao.deleteAnimalById(id);
+        }
+        return "redirect:/animal/list";
     }
 
     @GetMapping("/animal/list")
@@ -109,12 +106,30 @@ public class AnimalController {
         model.addAttribute("animals", animalDao.findAllAnimals());
         return "listAnimal";
     }
-
-    @ModelAttribute("users")
-    public List<User> getUsers() {
-        return this.userDao.findAllUsers();
-    }
 }
+
+//    @GetMapping("/animal/list")
+//    public String showAnimalList(Model model, HttpSession session) {
+//        User loggedInUser = (User) session.getAttribute("loggedInUser");
+//        if (loggedInUser != null) {
+//            model.addAttribute("animals", animalDao.findAnimalById(loggedInUser.getId()));
+//        }
+//        return "listAnimal";
+//    }
+//}
+
+//@GetMapping("/animal/list/all")
+//public String showAllAnimalList(Model model) {
+//    List<Animal> animals = animalDao.findAllAnimals();
+//    model.addAttribute("animals", animalDao.findAllAnimals());
+//    return "listAnimal";
+//}
+//
+//    @ModelAttribute("users")
+//    public List<User> getUsers() {
+//        return this.userDao.findAllUsers();
+//    }
+//}
 
 
 
