@@ -41,9 +41,15 @@ public class User {
     @Email
     private String email;
 
+//    private String role;
+
 //    public static final List<String> NEWSLETTER = List.of(
 //            "Yes", "No");
     private String newsletter;
+
+//    public boolean hasRole(String role) {
+//        return this.role.equals(role);
+//    }
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

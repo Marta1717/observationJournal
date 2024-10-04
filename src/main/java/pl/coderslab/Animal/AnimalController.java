@@ -12,7 +12,6 @@ import pl.coderslab.User.User;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -62,52 +61,40 @@ public class AnimalController {
         model.addAttribute("animal", animal);
         model.addAttribute("location", locationService.findAllLocations());
         return "editAnimal";
-}
+    }
 
-//    @PostMapping(value = "/animal/edit")
-//    public String processEditAnimal(@ModelAttribute Animal animal) {
-//        animalRepository.update(animal);
-//        return "redirect:/animal/list";
-//    }
-
-@GetMapping("/animal/delete/form/{id}")
-public String deleteAnimalForm(@PathVariable Long id, Model model) {
-    Animal animal = animalService.findAnimalById(id);
-    if (animal == null) {
+    @PostMapping(value = "/animal/edit")
+    public String processEditAnimal(@ModelAttribute Animal animal) {
+        animalService.saveAnimal(animal);
         return "redirect:/animal/list";
     }
-    model.addAttribute("animal", animal);
-    model.addAttribute("location", locationService.findAllLocations());
-    return "deleteAnimal";
-}
 
-//    @PostMapping(value = "/animal/delete")
-//    public String processDeleteAnimal(@RequestParam Long id) {
-//        Animal animal = animalRepository.findAnimalById(id);
-//        if (animal != null) {
-//            animalRepository.deleteAnimalById(id);
-//        }
-//        return "listAnimal";
-//    }
-
-@PostMapping(value = "/animal/delete")
-public String processDeleteAnimal(@RequestParam Long id, HttpSession session) {
-    User loggedInUser = (User) session.getAttribute("loggedInUser");
-    if (loggedInUser == null) {
-        return "redirect:/login";
+    @GetMapping("/animal/delete/form/{id}")
+    public String deleteAnimalForm(@PathVariable Long id, Model model) {
+        Animal animal = animalService.findAnimalById(id);
+        if (animal == null) {
+            return "redirect:/animal/list";
+        }
+        model.addAttribute("animal", animal);
+        model.addAttribute("location", locationService.findAllLocations());
+        return "deleteAnimal";
     }
-    Optional<Animal> animal = animalRepository.findById(loggedInUser.getId());
-    if (animal.isPresent()) {
-        animalRepository.deleteById(id);
-    }
-    return "redirect:/animal/list";
-}
 
-@GetMapping("/animal/list")
-public String showAnimalList(Model model) {
-    model.addAttribute("animals", animalRepository.findAll());
-    return "listAnimal";
-}
+    @PostMapping(value = "/animal/delete")
+    public String processDeleteAnimal(@RequestParam Long id) {
+        Animal animal = animalService.findAnimalById(id);
+        if (animal != null) {
+            animalService.deleteAnimalById(id);
+        }
+        return "redirect:/animal/list";
+    }
+
+    @GetMapping("/animal/list")
+    public String showAnimalList(Model model) {
+        List<Animal> animals = animalService.findAllAnimals();
+        model.addAttribute("animals", animals);
+        return "listAnimal";
+    }
 }
 
 //    @GetMapping("/animal/list")
