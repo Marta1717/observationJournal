@@ -9,6 +9,7 @@ import pl.coderslab.Location.Location;
 import pl.coderslab.Observation.Observation;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -26,22 +27,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Username cannot be null")
     @Column(unique = true)
     @Size(min = 3, max = 15)
     private String username;
 
     @ToString.Exclude
-    @NotNull
+    @NotNull(message = "Password cannot be null")
     @Size(min = 3, max = 15)
     private String password;
 
-    @NotNull
+    @NotNull(message = "Email cannot be null")
+    @Email
     private String email;
-    private String newsletter;
 
-//    public static final List<String> NEWSLETTERAGREE = List.of(
+//    public static final List<String> NEWSLETTER = List.of(
 //            "Yes", "No");
+    private String newsletter;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -52,10 +54,10 @@ public class User {
     private Set<Discussion> discussions = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Animal> animals = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Location> locations = new HashSet<>();
 }

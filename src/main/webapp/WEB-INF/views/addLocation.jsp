@@ -29,14 +29,6 @@
         <a href="${pageContext.request.contextPath}/location/list">Location List</a>
         <br/><br/><br/>
 
-        <form:hidden path="user" value="${loggedInUser.id}"/>
-
-        <div class="mb-3">
-            Select animal<br/>
-            <form:select path="animal.id" id="animal" items="${animals}" itemLabel="animalName" itemValue="id"/>
-            <form:errors path="animal.id"/>
-        </div>
-
         <div class="mb-3">
             Place name <br/>
             <form:input path="locationName"/>

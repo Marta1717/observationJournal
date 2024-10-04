@@ -11,7 +11,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-image: url('image.jpg');
-            background-color: #aaf1a8;
+            background-color: #def6de;
             margin: 0;
             padding: 0;
             background-size: cover;
@@ -93,7 +93,9 @@
 <body>
 <div class="header">
     <br/>
-    <h1>Observation Journal</h1>
+    <h1>
+        <a href="${pageContext.request.contextPath}/home" style="text-decoration: underline; color: white;">Observation Journal</a>
+    </h1>
     <br/><br/>
     <div class="user-info">
         Logged in as: <c:out value="${sessionScope.loggedInUser.username}"/>
@@ -103,8 +105,9 @@
         <a href="${pageContext.request.contextPath}/animal/list">Animal List</a>
         <a href="${pageContext.request.contextPath}/location/add/form">Add New Location</a>
         <a href="${pageContext.request.contextPath}/location/list">Location List</a>
+        <a href="${pageContext.request.contextPath}/observation/add/form">Add Observation</a>
         <a href="${pageContext.request.contextPath}/observation/list/all">All Observation List</a>
-        <a href="${pageContext.request.contextPath}/observation/list/all">Your Observation List</a>
+<%--        <a href="${pageContext.request.contextPath}/observation/list/my">My Observation List</a>--%>
     </div>
 </div>
 </body>

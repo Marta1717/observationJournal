@@ -69,7 +69,7 @@
         </div>
     </c:if>
     <form:form action="${pageContext.request.contextPath}/login" method="post" modelAttribute="login">
-
+        <form:hidden path="id"/>
     <div class="mb-3">
         <label for="username">Username</label><br/>
         <form:input path="username" id="username"/>
@@ -88,7 +88,7 @@
     </form:form>
 </div>
 <div class="container">
-<div class="mb-4"><a href="${pageContext.request.contextPath}/user/add/form"><h4>or register</h4></a></div>
+<div class="mb-4"><a href="${pageContext.request.contextPath}/register"><h4>or register</h4></a></div>
 </div>
 </body>
 </html>
