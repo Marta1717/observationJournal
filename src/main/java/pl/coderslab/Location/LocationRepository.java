@@ -2,7 +2,6 @@ package pl.coderslab.Location;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -23,11 +22,10 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
     void deleteLocationById(Long id);
 
-    List<Location> findLocationsByUserId(Long id);
+    Location findLocationsByUserId(Long userId);
 
-    @Query("SELECT c FROM Location c WHERE c.locationName LIKE :name%")
-    List<Location> findLocationByLocationName(String locationName);
 
-    @Query("SELECT c FROM Location c WHERE c.biome LIKE :biome%")
-    List<Location> findLocationByBiome(String biome);
+    Location findLocationByLocationName(String locationName);
+
+    Location findLocationByBiome(String biome);
 }

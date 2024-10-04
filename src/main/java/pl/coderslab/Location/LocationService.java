@@ -23,8 +23,8 @@ public class LocationService {
     }
 
     @Transactional
-    public Location save(Location location) {
-        return locationRepository.save(location);
+    public void save(Location location) {
+        locationRepository.save(location);
     }
 
     @Transactional
@@ -32,12 +32,12 @@ public class LocationService {
         locationRepository.deleteLocationById(id);
     }
 
-    public Location findLocationByUserId(Long id) {
-        return (Location) locationRepository.findLocationsByUserId(id);
+    public Location findLocationByUserId(Long userId) {
+        return (Location) locationRepository.findLocationsByUserId(userId);
     }
 
     public List<Location> findLocationsByLocationName(String locationName) {
-        return (List<Location>) locationRepository.findLocationByLocationName(locationName);
+        return (Location) locationRepository.findLocationByLocationName(locationName);
     }
 
     public List<Location> findLocationsByBiome(String biome) {

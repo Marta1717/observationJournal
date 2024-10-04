@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.User.User;
-import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +18,6 @@ public class LocationController {
 
 //    @Autowired
     private final LocationService locationService;
-    private final UserService userService;
 
     @GetMapping(value = "/location/add/form")
     public String showAddLocationForm(Model model, HttpSession session) {
@@ -82,27 +80,32 @@ public class LocationController {
         return "redirect:/location/list";
     }
 
-    @RequestMapping("/location/get/{locationName}/{biome}")
+    @RequestMapping("/location/get/{locationName}")
     @ResponseBody
-    public String getLocationByLocationName(@PathVariable String locationName, @PathVariable String biome) {
+    public String getLocationByLocationName(@PathVariable String locationName) {
         Location location = (Location) locationService.findLocationsByLocationName(locationName);
-        Location location1 = (Location) locationService.findLocationsByBiome(biome);
         return location.toString();
     }
 
-//    void RequestMapping("/location/get/{biome}")
-//    @ResponseBody
-//    public String findLocationByBiome(@PathVariable String biome) {
-//        Location location = (Location) locationService.findLocationsByBiome(biome);
-//        return location.toString();
-//    }
+    @RequestMapping("/location/get/{biome}")
+    @ResponseBody
+    public String getLocationByBiome(@PathVariable String biome) {
+        Location location = (Location) locationService.findLocationsByBiome(biome);
+        return location.toString();
+    }
+
+    @GetMapping("/locations/user/{id}")
+    public String getLocationsByUserId(@PathVariable Long id, Model model) {
+        Location locations = locationService.findLocationByUserId(id);
+        model.addAttribute("locations", locations);
+        return "listLocation";
+    }
 
     @GetMapping("/location/list")
     public String showAnimalList(Model model) {
         model.addAttribute("location", locationService.findAllLocations());
         return "listLocation";
     }
-
 
 //    @ModelAttribute("animals")
 //    public List<Animal> getAnimals() {
@@ -115,13 +118,6 @@ public class LocationController {
 //        return this.userService.findAllUsers();
 //    }
 
-//    @RequestMapping("/location/biome")
-//    @ResponseBody
-//    public String findAllBiome() {
-//        List<Location> allBiome = locationService.findLocationByBiome();
-//        allBiome.forEach(location -> log.info(location.toString()));
-//        return "findAllBiome";
-//    }
 }
 
 
