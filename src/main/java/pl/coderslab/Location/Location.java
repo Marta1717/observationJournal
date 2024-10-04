@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import pl.coderslab.Animal.Animal;
+import pl.coderslab.Observation.Observation;
 import pl.coderslab.User.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,22 +31,15 @@ public class Location {
     private String biome;
     private String locationDescription;
 
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Animal> animals = new HashSet<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Observation> observations = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-//    public String getUsername() {
-//        return user.getUsername();
-//    }
-
-//    public void setUser(User user) {
-//        this.user = user;
-//        if (user != null) {
-//            user.getLocations().add(this);
-//        }
-//    }
 }
