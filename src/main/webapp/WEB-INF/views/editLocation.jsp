@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header-links.jsp"%>
+<%@include file="header-links.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,32 +37,29 @@
     <a href="${pageContext.request.contextPath}/animal/list"><h3>Location List</h3></a>
     <br/><br/><br/>
     <form:form modelAttribute="location" method="post" action="${pageContext.request.contextPath}/location/edit">
+        <form:hidden path="id"/>
 
         <div class="mb-3">
-            Select animal<br/>
-            <form:select path="animal.id" id="user" items="${animals}" itemLabel="name" itemValue="id"/>
-            <form:errors path="animal.id"/>
-        </div>
-
-        <div class="mb-3">
-            Name <br/>
+            Place name <br/>
             <form:input path="locationName"/>
+            <form:errors path="locationName"/>
         </div>
 
         <div class="mb-3">
             Biome <br/>
             <form:input path="biome"/>
+            <form:errors path="biome"/>
         </div>
 
         <div class="mb-3">
             Additional description <br/>
             <form:textarea path="locationDescription" rows="4"/>
+            <form:errors path="locationDescription"/>
         </div>
 
         <div class="mb-3">
-            <button type="submit">Submit</button>
+            <button type="submit">Add location</button>
         </div>
-
     </form:form>
 </div>
 </body>

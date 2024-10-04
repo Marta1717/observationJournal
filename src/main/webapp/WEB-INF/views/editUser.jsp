@@ -53,7 +53,8 @@
         </div>
         <div class="mb-3">
             Newsletter agree
-            <form:radiobuttons path="newsletter" items="${newsletteragree}"/>
+            <form:radiobutton path="newsletter" value="Yes"/>
+            <form:radiobutton path="newsletter" value="No"/>
             <form:errors path="newsletter"/>
         </div>
         <div class="mb-3">
