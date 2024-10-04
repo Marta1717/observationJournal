@@ -1,5 +1,6 @@
 package pl.coderslab.Location;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ public class LocationService {
 
     private final LocationRepository locationRepository;
 
+    @Autowired
     public LocationService(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
@@ -32,12 +34,12 @@ public class LocationService {
         locationRepository.deleteLocationById(id);
     }
 
-    public Location findLocationByUserId(Long userId) {
-        return (Location) locationRepository.findLocationsByUserId(userId);
+    public List<Location> findLocationByUserId(Long userId) {
+        return locationRepository.findLocationsByUserId(userId);
     }
 
     public List<Location> findLocationsByLocationName(String locationName) {
-        return (Location) locationRepository.findLocationByLocationName(locationName);
+        return (List<Location>) locationRepository.findLocationByLocationName(locationName);
     }
 
     public List<Location> findLocationsByBiome(String biome) {

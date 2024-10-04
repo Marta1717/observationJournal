@@ -42,9 +42,9 @@
 <%--            <form:errors path="user.id"/>--%>
 <%--        </div>--%>
         <div class="mb-3">
-            Classis:<br/>
-            <form:select path="animalClassis" items="${classis}"/>
-            <form:errors path="animalClassis"/>
+            Category:<br/>
+            <form:select path="category" items="${category}"/>
+            <form:errors path="category"/>
         </div>
 
         <div class="mb-3">

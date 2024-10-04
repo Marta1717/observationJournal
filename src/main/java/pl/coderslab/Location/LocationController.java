@@ -96,7 +96,7 @@ public class LocationController {
 
     @GetMapping("/locations/user/{id}")
     public String getLocationsByUserId(@PathVariable Long id, Model model) {
-        Location locations = locationService.findLocationByUserId(id);
+        Location locations = (Location) locationService.findLocationByUserId(id);
         model.addAttribute("locations", locations);
         return "listLocation";
     }

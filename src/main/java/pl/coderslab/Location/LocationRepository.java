@@ -22,7 +22,7 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
     void deleteLocationById(Long id);
 
-    Location findLocationsByUserId(Long userId);
+    List <Location> findLocationsByUserId(Long userId);
 
 
     Location findLocationByLocationName(String locationName);

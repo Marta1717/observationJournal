@@ -56,7 +56,7 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Classis</th>
+            <th>Category</th>
             <th>Description</th>
             <th>User</th>
             <th></th>
@@ -66,7 +66,7 @@
             <tr>
                 <td>${animal.id}</td>
                 <td>${animal.animalName}</td>
-                <td>${animal.animalClassis}</td>
+                <td>${animal.category}</td>
                 <td>${animal.animalDescription}</td>
                 <td>${animal.user.username}</td>
                 <td>

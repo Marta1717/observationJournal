@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import pl.coderslab.Location.Location;
+import pl.coderslab.Observation.Observation;
 import pl.coderslab.User.User;
 
 import javax.persistence.*;
@@ -27,18 +28,25 @@ public class Animal {
     @NotNull
     @Size(min = 3, max = 25)
     private String animalName;
-    private String animalClassis;
+    private String category;
     private String animalDescription;
 
-    public static final List<String> CLASSIS = List.of(
+    public static final List<String> CATEGORY= List.of(
             "MAMMAL", "BIRD", "REPTILE", "AMPHIBIAN", "FISH");
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Location> locations = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Observation> observations = new HashSet<>();
+
+    public String getAnimalCategory() {
+        return category;
+    }
 }

@@ -32,6 +32,12 @@
     <br/><br/><br/>
 <%--        <form:hidden path="user" value="${loggedInUser.id}"/>--%>
 
+        <div class="mb-3">
+            Select location<br/>
+            <form:select path="location.id" id="location" items="${locations}" itemLabel="locationName" itemValue="id"/>
+            <form:errors path="location.id"/>
+        </div>
+
 <%--        <div class="mb-3">--%>
 <%--            Select user<br/>--%>
 <%--            <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>--%>
@@ -40,8 +46,8 @@
 
         <div class="mb-3">
             Select classis:<br/>
-            <form:select path="animalClassis" items="${classis}"/>
-            <form:errors path="animalClassis"/>
+            <form:select path="animalCategory" items="${category}"/>
+            <form:errors path="animalCategory"/>
         </div>
 
         <div class="mb-3">
