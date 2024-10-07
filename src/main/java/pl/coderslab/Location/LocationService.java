@@ -1,6 +1,5 @@
 package pl.coderslab.Location;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +10,6 @@ public class LocationService {
 
     private final LocationRepository locationRepository;
 
-    @Autowired
     public LocationService(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
@@ -25,26 +23,28 @@ public class LocationService {
     }
 
     @Transactional
-    public void save(Location location) {
+    public void saveLocation(Location location) {
         locationRepository.save(location);
     }
 
     @Transactional
     public void deleteLocation(Long id) {
-        locationRepository.deleteLocationById(id);
+        locationRepository.deleteById(id);
+    }
+    
+    public List<Location> findLocationByLocationName(String locationName) {
+        return locationRepository.findLocationByLocationName(locationName);
+    }
+    
+    public List<Location> findLocationByBiome(String biome) {
+        return locationRepository.findLocationByBiome(biome);
     }
 
     public List<Location> findLocationByUserId(Long userId) {
         return locationRepository.findLocationsByUserId(userId);
     }
-
-    public List<Location> findLocationsByLocationName(String locationName) {
-        return (List<Location>) locationRepository.findLocationByLocationName(locationName);
+    
+    public List<Location> findLocationByUserName(String userName) {
+        return locationRepository.findLocationByUser_Username(userName);
     }
-
-    public List<Location> findLocationsByBiome(String biome) {
-        return (List<Location>) locationRepository.findLocationByBiome(biome);
-    }
-
-
 }

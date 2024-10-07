@@ -101,12 +101,13 @@
         Logged in as: <c:out value="${sessionScope.loggedInUser.username}"/>
     </div>
     <div class="header-links">
-        <a href="${pageContext.request.contextPath}/animal/add/form">Add New Animal</a>
-        <a href="${pageContext.request.contextPath}/animal/list">Animal List</a>
         <a href="${pageContext.request.contextPath}/location/add/form">Add New Location</a>
         <a href="${pageContext.request.contextPath}/location/list">Location List</a>
+        <a href="${pageContext.request.contextPath}/animal/add/form">Add New Animal</a>
+        <a href="${pageContext.request.contextPath}/animal/list">Animal List</a>
         <a href="${pageContext.request.contextPath}/observation/add/form">Add Observation</a>
         <a href="${pageContext.request.contextPath}/observation/list/all">All Observation List</a>
+        <a href="${pageContext.request.contextPath}/discussionn/list">Discussion List</a>
 <%--        <a href="${pageContext.request.contextPath}/observation/list/my">My Observation List</a>--%>
     </div>
 </div>

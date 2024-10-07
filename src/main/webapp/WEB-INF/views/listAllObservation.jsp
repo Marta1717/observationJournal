@@ -130,24 +130,22 @@
                 <th>Id</th>
                 <th>User</th>
                 <th>Animal Name</th>
-                <th>Classis</th>
+                <th>Category</th>
                 <th>Animal Description</th>
                 <th>Location Name</th>
                 <th>Biome</th>
                 <th>Location Details</th>
-                <th></th>
-                <th></th>
             </tr>
-            <c:forEach items="${pageContext.request.contextPath}/observation/list/all" var="observation">
+            <c:forEach items="${observations}" var="observation">
                 <tr>
                     <td>${observation.id}</td>
                     <td>${observation.user.username}</td>
-                    <td>${observation.animalLocations.animalName}</td>
-                    <td>${observation.animalLocations.animalClassis}</td>
-                    <td>${observation.animalLocations.animaldescription}</td>
-                    <td>${observation.animalLocations.locationName}</td>
-                    <td>${observation.animalLocations.biome}</td>
-                    <td>${observation.animalLocations.locationDescription}</td>
+                    <td>${observation.animal.animalName}</td>
+                    <td>${observation.animal.category}</td>
+                    <td>${observation.animal.animaldescription}</td>
+                    <td>${observation.location.locationName}</td>
+                    <td>${observation.location.biome}</td>
+                    <td>${observation.location.locationDescription}</td>
                 </tr>
             </c:forEach>
         </table>

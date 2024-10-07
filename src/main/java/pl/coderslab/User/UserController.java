@@ -20,14 +20,14 @@ public class UserController {
     @RequestMapping("/user/get/{id}")
     @ResponseBody
     public String getUserById(@PathVariable Long id) {
-        User user = userService.findUserById(id);
+        User user = (User) userService.findUserById(id);
         return user.toString();
     }
 
     @RequestMapping("/user/update/{id}/{username}")
     @ResponseBody
     public String updateUser(@PathVariable Long id, @PathVariable String username) {
-        User user = userService.findUserById(id);
+        User user = (User) userService.findUserById(id);
         user.setUsername(username);
         userService.saveUser(user);
         return user.toString();
@@ -78,7 +78,7 @@ public class UserController {
 
     @GetMapping(value = "/user/edit/form/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
-        User user = userService.findUserById(id);
+        User user = (User) userService.findUserById(id);
         model.addAttribute("user", user);
         return "editUser";
     }
@@ -91,7 +91,7 @@ public class UserController {
 
     @GetMapping("/user/delete/form/{id}")
     public String deleteUserForm(@PathVariable Long id, Model model) {
-        User user = userService.findUserById(id);
+        User user = (User) userService.findUserById(id);
         model.addAttribute("user", user);
         return "deleteUser";
     }

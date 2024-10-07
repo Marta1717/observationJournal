@@ -26,7 +26,7 @@
     <h2>Add new location</h2>
     <br/><br/><br/>
     <form:form modelAttribute="location" method="post" action="${pageContext.request.contextPath}/location/add/form">
-        <a href="${pageContext.request.contextPath}/location/list">Location List</a>
+        <a href="${pageContext.request.contextPath}/location/list"><h3>Location List</h3></a>
         <br/><br/><br/>
 
         <div class="mb-3">

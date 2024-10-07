@@ -25,19 +25,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findUserById(Long id) {
-        return userRepository.findUserById(id);
+    public List<User> findUserById(Long id) {
+        return (List<User>) userRepository.findUserById(id);
     }
 
     @Transactional
     public void saveUser(User user) {
-        // Można dodać logikę walidacji
+        // Można dodać walidację
         userRepository.save(user);
     }
 
     @Transactional
     public void deleteUser(Long id) {
-        userRepository.deleteUserById(id);
+        userRepository.deleteById(id);
     }
 
     @Transactional

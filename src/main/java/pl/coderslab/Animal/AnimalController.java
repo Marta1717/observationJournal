@@ -95,6 +95,40 @@ public class AnimalController {
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
+
+    @GetMapping("/animal/{animalName}")
+    public String getAnimalByAnimalName(@PathVariable String animalName, Model model) {
+        List<Animal> animals = animalService.findAnimalByAnimalName(animalName);
+        model.addAttribute("animals", animals);
+        return "listAnimal";
+    }
+
+    @GetMapping("/animal/{category}")
+    public String getAnimalByCategory(@PathVariable String category, Model model) {
+        List<Animal> animals = animalService.findAnimalByCategory(category);
+        model.addAttribute("animals", animals);
+        return "listAnimal";
+    }
+    @GetMapping("/animal/user/{username}")
+    public String getAnimalByUsername(@PathVariable String username, Model model) {
+        List<Animal> animals = animalService.findAnimalsByUsername(username);
+        model.addAttribute("animals", animals);
+        return "listAnimal";
+    }
+
+    @GetMapping("/animal/location/{locationName}")
+    public String getAnimalByLocationName(@PathVariable String locationName, Model model) {
+        List<Animal> animals = animalService.findAnimalsByLocationName(locationName);
+        model.addAttribute("animals", animals);
+        return "listAnimal";
+    }
+
+    @GetMapping("/animal/location/{biome}")
+    public String getAnimalByBiome(@PathVariable String biome, Model model) {
+        List<Animal> animals = animalService.findAnimalsByBiome(biome);
+        model.addAttribute("animals", animals);
+        return "listAnimal";
+    }
 }
 
 //    @GetMapping("/animal/list")
