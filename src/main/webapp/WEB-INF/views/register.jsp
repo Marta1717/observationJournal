@@ -47,9 +47,9 @@
         <div class="mb-3">
             Newsletter agree <br>
             <form:radiobutton path="newsletter" value="YES" id="newsletteryes"/>
-            <label for="newsletterYes">Yes</label>
+            <label for="newsletteryes">Yes</label>
             <form:radiobutton path="newsletter" value="NO" id="newsletterno"/>
-            <label for="newsletterNo">No</label>
+            <label for="newsletterno">No</label>
             <form:errors path="newsletter" cssClass="error"/>
             <br/><br/>
         </div>

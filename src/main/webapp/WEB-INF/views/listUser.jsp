@@ -60,7 +60,7 @@
 <div class="container">
     <h2>User list</h2>
     <br/><br/>
-    <a href="<c:url value="/user/add/form"/>"><h3>Add new user</h3></a>
+    <a href="<c:url value="/register"/>"><h3>Add new user</h3></a>
     <br/><br/>
     <table>
         <tr>
@@ -73,15 +73,16 @@
         </tr>
         <c:forEach items="${users}" var="user">
             <tr>
+            <tr>
                 <td>${user.id}</td>
                 <td>${user.username}</td>
                 <td>${user.email}</td>
                 <td>${user.newsletter}</td>
                 <td>
-                    <a href="<c:url value="/user/update/form/${user.id}"/>">Edit</a>
+                    <a href="<c:url value="/user/edit/${user.id}"/>">Edit</a>
                 </td>
                 <td>
-                    <a href="<c:url value="/user/delete/form/${user.id}"/>">Delete</a>
+                    <a href="<c:url value="/user/delete/${user.id}"/>">Delete</a>
                 </td>
             </tr>
         </c:forEach>

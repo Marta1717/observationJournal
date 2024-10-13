@@ -3,8 +3,9 @@ package pl.coderslab.Observation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.coderslab.Animal_Location.AnimalLocation;
+import pl.coderslab.Animal.Animal;
 import pl.coderslab.Discussion.Discussion;
+import pl.coderslab.Location.Location;
 import pl.coderslab.User.User;
 
 import javax.persistence.*;
@@ -34,39 +35,15 @@ public class Observation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "observation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<AnimalLocation> animalLocations = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
 
     @ToString.Exclude
-    @OneToOne(mappedBy = "observation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Discussion discussions;
-
-
-//    public void setUser(User user) {
-//        this.user = user;
-//        if (user != null) {
-//            this.userUsername = user.getUsername();
-//        }
-//    }
-
-
-    //    public void setAnimal(Animal animal) {
-//        this.animal = animal;
-//        if (animal != null) {
-//            this.animalName = animal.getAnimalName();
-//        }
-//    }
-//
-//
-//    public void setLocation(Location location) {
-//        this.location = location;
-//        if (location != null) {
-//            this.locationName = location.getLocationName();
-//        }
-//        if (location != null) {
-//            this.locationBiome = location.getBiome();
-//        }
-//    }
-
-
+    @OneToMany(mappedBy = "observation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Discussion> discussions = new HashSet<>();
 }

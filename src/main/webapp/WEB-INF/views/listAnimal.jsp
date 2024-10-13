@@ -50,7 +50,7 @@
 <div class="container">
     <h2>Animal list</h2>
     <br/><br/>
-    <a href="<c:url value="/animal/add/form"/>"><h3>Add new animal</h3></a>
+    <a href="<c:url value="/animal/add"/>"><h3>Add new animal</h3></a>
     <br/><br/>
     <table>
         <tr>
@@ -70,10 +70,10 @@
                 <td>${animal.animalDescription}</td>
                 <td>${animal.user.username}</td>
                 <td>
-                    <a href="<c:url value="/animal/edit/form/${animal.id}"/>">Edit</a>
+                    <a href="<c:url value="/animal/edit/${animal.id}"/>">Edit</a>
                 </td>
                 <td>
-                    <a href="<c:url value="/animal/delete/form/${animal.id}"/>">Delete</a>
+                    <a href="<c:url value="/animal/delete/${animal.id}"/>">Delete</a>
                 </td>
             </tr>
         </c:forEach>

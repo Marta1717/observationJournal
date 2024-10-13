@@ -70,6 +70,7 @@
 <div class="container">
     <h2>Add new comment</h2>
     <br/><br/><br/>
+<form:form modelAttribute="discussion" method="post" action="${pageContext.request.contextPath}/discussion/add/">
     <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>
     <br/><br/><br/>
     <%--@declare id="location"--%>
@@ -93,6 +94,7 @@
             <button type="submit">Add comment</button>
         </div>
     </form:form>
+</form:form>
 </div>
 </body>
 </html>

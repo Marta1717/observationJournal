@@ -32,7 +32,7 @@ public class Animal {
     private String animalDescription;
 
     public static final List<String> CATEGORY= List.of(
-            "MAMMAL", "BIRD", "REPTILE", "AMPHIBIAN", "FISH");
+            "SSAK", "PTAK", "GAD", "PŁAZ", "RYBA");
 
     @ManyToOne
     @JoinColumn(name = "user_id")

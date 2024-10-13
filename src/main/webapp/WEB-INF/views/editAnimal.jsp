@@ -34,7 +34,7 @@
     <br/><br/>
     <a href="${pageContext.request.contextPath}/animal/list"><h3>Animal List</h3></a>
     <br/><br/><br/>
-    <form:form modelAttribute="animal" method="post" action="${pageContext.request.contextPath}/animal/edit">
+    <form:form modelAttribute="animal" method="post" action="${pageContext.request.contextPath}/animal/edit/">
         <form:hidden path="id" />
 <%--        <div class="mb-3">--%>
 <%--            Select user<br/>--%>

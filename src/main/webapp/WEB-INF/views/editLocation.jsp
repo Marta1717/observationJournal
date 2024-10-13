@@ -34,9 +34,9 @@
 <div class="container">
     <h2>Edit Location</h2>
     <br/><br/>
-    <a href="${pageContext.request.contextPath}/animal/list"><h3>Location List</h3></a>
+    <a href="${pageContext.request.contextPath}/location/list"><h3>Location List</h3></a>
     <br/><br/><br/>
-    <form:form modelAttribute="location" method="post" action="${pageContext.request.contextPath}/location/edit">
+    <form:form modelAttribute="location" method="post" action="${pageContext.request.contextPath}/location/edit/">
         <form:hidden path="id"/>
 
         <div class="mb-3">

@@ -35,7 +35,7 @@
 <h2>Delete location</h2>
     <br/><br/>
 <h3>Are you sure you want to delete the location named: <strong>${location.locationName}</strong>?</h3>
-<form:form method="post" action="/location/delete">
+<form:form method="post" action="/location/delete/">
     <input type="hidden" name="id" value="${location.id}"/>
     <p>Name:<br/> ${location.locationName}</p>
     <p>Name:<br/> ${location.biome}</p>

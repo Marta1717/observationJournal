@@ -17,29 +17,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 400px;
-            text-align: left;
-        }
-
-        h2 {
             text-align: center;
-            color: #4CAF50;
-        }
-
-        h3 {
-            text-align: center;
-            color: #ff6f00;
-        }
-
-
-        h4 {
-            text-align: center;
-            color: #ff6f00;
-        }
-
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-            margin-right: 10px;
         }
 
         a:hover {
@@ -50,32 +28,13 @@
             display: block;
             margin: 10px 0 5px;
         }
-
-        input, select, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
     </style>
-
 </head>
 <body>
+<div class="container">
 <h2>Delete observation</h2>
 <h3>Are you sure you want to delete this observation<strong>${observation.id}</strong>?</h3>
-<form:form method="post" action="/observation/delete">
+<form:form method="post" action="/observation/delete/">
     <input type="hidden" name="id" value="${observation.id}"/>
     <p>Date:<br/> ${observation.date}</p>
 <%--    <p>Biome:<br/> ${observation.location.biome}</p>--%>

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Location.Location;
-import pl.coderslab.Location.LocationRepository;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
 
@@ -18,19 +17,17 @@ import java.util.List;
 @Controller
 public class AnimalController {
 
-    private final AnimalRepository animalRepository;
-    private final LocationRepository locationRepository;
     private final AnimalService animalService;
     private final LocationService locationService;
 
 
-    @GetMapping(value = "/animal/add/form")
+    @GetMapping(value = "/animal/add")
     public String showAddForm(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
         }
-        List<Location> locations = locationRepository.findLocationsByUserId(loggedInUser.getId());
+        List<Location> locations = locationService.findLocationByUserId(loggedInUser.getId());
         model.addAttribute("animal", new Animal());
         model.addAttribute("locations", locations);
         return "addAnimal";
@@ -41,7 +38,7 @@ public class AnimalController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             animal.setUser(loggedInUser);
-            animalRepository.save(animal);
+            animalService.saveAnimal(animal);
         }
         return "redirect:/animal/list";
     }
@@ -51,7 +48,7 @@ public class AnimalController {
         return Animal.CATEGORY;
     }
 
-    @GetMapping(value = "/animal/edit/form/{id}")
+    @GetMapping(value = "/animal/edit/{id}")
     public String editAnimalForm(@PathVariable Long id, Model model) {
 
         Animal animal = animalService.findAnimalById(id);
@@ -69,7 +66,7 @@ public class AnimalController {
         return "redirect:/animal/list";
     }
 
-    @GetMapping("/animal/delete/form/{id}")
+    @GetMapping("/animal/delete/{id}")
     public String deleteAnimalForm(@PathVariable Long id, Model model) {
         Animal animal = animalService.findAnimalById(id);
         if (animal == null) {
@@ -109,6 +106,7 @@ public class AnimalController {
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
+
     @GetMapping("/animal/user/{username}")
     public String getAnimalByUsername(@PathVariable String username, Model model) {
         List<Animal> animals = animalService.findAnimalsByUsername(username);
@@ -140,15 +138,6 @@ public class AnimalController {
 //        return "listAnimal";
 //    }
 //}
-
-//@GetMapping("/animal/list/all")
-//public String showAllAnimalList(Model model) {
-//    List<Animal> animals = animalRepository.findAllAnimals();
-//    model.addAttribute("animals", animalRepository.findAllAnimals());
-//    return "listAnimal";
-//}
-//
-
 //}
 
 

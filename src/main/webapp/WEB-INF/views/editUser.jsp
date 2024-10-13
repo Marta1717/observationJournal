@@ -33,33 +33,33 @@
     <h2>Edit User</h2>
     <br/><br/>
     <%--@elvariable id="user" type=""--%>
-    <form:form modelAttribute="user" method="post" action="${pageContext.request.contextPath}/user/edit">
-        <form:hidden path="id"/>
-<%--        <div class="mb-3">--%>
-            Username <br/>
-            <form:input path="username"/>
-            <form:errors path="username"/>
-        </div>
-        <div class="mb-3">
-            Password <br/>
-            <form:input path="password"/>
-            <form:errors path="password"/>
-        </div>
+    <form:form modelAttribute="user" method="post" action="${pageContext.request.contextPath}/user/edit/">
+    <form:hidden path="id"/>
+<div class="mb-3">
+    Username <br/>
+    <form:input path="username"/>
+    <form:errors path="username"/>
+</div>
+<div class="mb-3">
+    Password <br/>
+    <form:input path="password"/>
+    <form:errors path="password"/>
+</div>
 
-        <div class="mb-3">
-            Email <br/>
-            <form:input path="email"/>
-            <form:errors path="email"/>
-        </div>
-        <div class="mb-3">
-            Newsletter agree
-            <form:radiobutton path="newsletter" value="Yes"/>
-            <form:radiobutton path="newsletter" value="No"/>
-            <form:errors path="newsletter"/>
-        </div>
-        <div class="mb-3">
-            <button type="submit">Submit</button>
-        </div>
-    </form:form>
+<div class="mb-3">
+    Email <br/>
+    <form:input path="email"/>
+    <form:errors path="email"/>
+</div>
+<div class="mb-3">
+    Newsletter agree
+    <form:radiobutton path="newsletter" value="Yes"/>
+    <form:radiobutton path="newsletter" value="No"/>
+    <form:errors path="newsletter"/>
+</div>
+<div class="mb-3">
+    <button type="submit">Submit</button>
+</div>
+</form:form>
 </body>
 </html>

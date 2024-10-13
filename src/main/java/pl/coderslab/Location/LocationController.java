@@ -20,7 +20,7 @@ public class LocationController {
     //    @Autowired
     private final LocationService locationService;
 
-    @GetMapping(value = "/location/add/form")
+    @GetMapping(value = "/location/add")
     public String showAddLocationForm(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
@@ -30,7 +30,7 @@ public class LocationController {
         return "addLocation";
     }
 
-    @PostMapping(value = "/location/add/form")
+    @PostMapping(value = "/location/add")
     public String processAddLocation(@ModelAttribute Location location, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
@@ -40,7 +40,7 @@ public class LocationController {
         return "redirect:/location/list";
     }
 
-    @GetMapping(value = "/location/edit/form/{id}")
+    @GetMapping(value = "/location/edit/{id}")
     public String editLocationForm(@PathVariable Long id, Model model) {
         model.addAttribute("location", locationService.findLocationById(id));
 //        model.addAttribute("animals", animalService.findAllAnimals());
@@ -53,7 +53,7 @@ public class LocationController {
         return "redirect:/location/list";
     }
 
-    @GetMapping("/location/delete/form/{id}")
+    @GetMapping("/location/delete/{id}")
     public String deleteLocationForm(@PathVariable Long id, Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {

@@ -36,7 +36,7 @@
     <h2>Delete User</h2>
     <h3>Are you sure you want to delete the user with username: <strong>${user.username}</strong>?</h3>
     <%--@elvariable id="user" type=""--%>
-    <form:form method="post" action="/user/delete">
+    <form:form method="post" action="/user/delete/">
         <input type="hidden" name="id" value="${user.id}"/>
         <p>Username:<br/> ${user.username}</p>
         <p>Email:<br/> ${user.email}</p>

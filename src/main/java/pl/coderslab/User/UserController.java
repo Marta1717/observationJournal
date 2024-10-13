@@ -20,18 +20,18 @@ public class UserController {
     @RequestMapping("/user/get/{id}")
     @ResponseBody
     public String getUserById(@PathVariable Long id) {
-        User user = (User) userService.findUserById(id);
+        User user = userService.findUserById(id);
         return user.toString();
     }
 
-    @RequestMapping("/user/update/{id}/{username}")
-    @ResponseBody
-    public String updateUser(@PathVariable Long id, @PathVariable String username) {
-        User user = (User) userService.findUserById(id);
-        user.setUsername(username);
-        userService.saveUser(user);
-        return user.toString();
-    }
+//    @RequestMapping("/user/update/{id}/{username}")
+//    @ResponseBody
+//    public String updateUser(@PathVariable Long id, @PathVariable String username) {
+//        User user = userService.findUserById(id);
+//        user.setUsername(username);
+//        userService.saveUser(user);
+//        return user.toString();
+//    }
 
     @GetMapping(value = "/register")
     public String showRegistrationForm(Model model) {
@@ -47,7 +47,7 @@ public class UserController {
             return "register";
         }
         try {
-            userService.registerUser(user.getUsername(), user.getPassword(), user.getEmail());
+            userService.registerUser(user);
             return "redirect:/user/list";
         } catch (Exception e) {
             model.addAttribute("registrationError", "Registration failed: " + e.getMessage());
@@ -76,9 +76,12 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/user/edit/form/{id}")
+    @GetMapping(value = "/user/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
-        User user = (User) userService.findUserById(id);
+        User user = userService.findUserById(id);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found with id: " + id);
+        }
         model.addAttribute("user", user);
         return "editUser";
     }
@@ -89,9 +92,9 @@ public class UserController {
         return "redirect:/user/list/";
     }
 
-    @GetMapping("/user/delete/form/{id}")
+    @GetMapping("/user/delete/{id}")
     public String deleteUserForm(@PathVariable Long id, Model model) {
-        User user = (User) userService.findUserById(id);
+        User user = userService.findUserById(id);
         model.addAttribute("user", user);
         return "deleteUser";
     }

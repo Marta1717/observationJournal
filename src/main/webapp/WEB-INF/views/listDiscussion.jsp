@@ -59,9 +59,9 @@
 </head>
 <body>
 <div class="container">
-    <h2>discussion List</h2>
+    <h2>Discussion List</h2>
     <br/><br/>
-    <a href="<c:url value="/discussion/add/form"/>"><h3>Add new discussion</h3></a>
+    <a href="<c:url value="/discussion/add">"><h3>Add new discussion</h3></a>
     <br/><br/>
     <table>
         <tr>
@@ -79,6 +79,7 @@
             </tr>
         </c:forEach>
     </table>
+    </c:url>
 </div>
 </body>
 </html>

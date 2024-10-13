@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header-links.jsp"%>
+<%@include file="header-links.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,51 +68,53 @@
 </head>
 <body>
 <div class="container">
-<%--@declare id="animal"--%>
-<%--@declare id="location"--%>
-<%--@elvariable id="observation" type=""--%>
-<h2>Edit Observation</h2>
+    <%--@declare id="animal"--%>
+    <%--@declare id="location"--%>
+    <%--@elvariable id="observation" type=""--%>
+    <h2>Edit Observation</h2>
     <br/><br/>
-<form:form method="post" modelAttribute="observation">
+    <form:form method="post" modelAttribute="observation">
 
-    <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>
-    <br/><br/><br/>
+        <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>
+        <br/><br/><br/>
+        <form:form modelAttribute="observation" method="post"
+                   action="${pageContext.request.contextPath}/observation/edit/">
+            <br><br>
+            <div class="mb-3">
+                Select user<br/>
+                <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
+                <form:errors path="user.id"/>
+            </div>
 
-    <div class="mb-3">
-    Select user<br/>
-    <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
-    <form:errors path="user.id"/>
-    </div>
+            <div class="mb-3">
+                <label for="animal">Select animal:</label>
+                <form:select path="animal.animalName" items="${animals}" itemLabel="name" itemValue="id"/>
+                <form:errors path="animal.animalName"/>
+            </div>
 
-    <div class="mb-3">
-    <label for="animal">Select animal:</label>
-    <form:select path="animal.id" items="${animals}" itemLabel="name" itemValue="id"/>
-    <form:errors path="animal.id"/>
-    </div>
+            <div class="mb-3">
+                <label for="location">Location:</label>
+                <form:select path="location.locationName" items="${location}" itemLabel="name" itemValue="id"/>
+                <form:errors path="location.locationName"/>
+            </div>
 
-    <div class="mb-3">
-    <label for="location">Location:</label>
-    <form:select path="location.id" items="${location}" itemLabel="name" itemValue="id"/>
-    <form:errors path="location.id"/>
-    </div>
+            <div class="mb-3">
+                <label for="location">Biome:</label>
+                <form:select path="location.biome" items="${location}" itemLabel="biome" itemValue="id"/>
+                <form:errors path="location.biome"/>
+            </div>
 
-    <div class="mb-3">
-    <label for="location">Biome:</label>
-    <form:select path="location.id" items="${location}" itemLabel="biome" itemValue="id"/>
-    <form:errors path="location.id"/>
-    </div>
+            <div class="mb-3">
+                <label for="description" rows="6" cols="20">Notes</label>
+                <form:textarea path="description" id="description"/>
+                <form:errors path="description"/>
+            </div>
 
-    <div class="mb-3">
-    <label for="description" rows="6" cols="20">Notes</label>
-    <form:textarea path="description" id="description"/>
-    <form:errors path="description"/>
-    </div>
-
-    <div class="mb-3">
-    <button type="submit">Submit</button>
-    </div>
-
-</form:form>
+            <div class="mb-3">
+                <button type="submit">Submit</button>
+            </div>
+        </form:form>
+    </form:form>
 </div>
 </body>
 </html>

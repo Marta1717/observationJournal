@@ -34,18 +34,4 @@ public class Discussion {
     @ManyToOne
     @JoinColumn(name = "observation_id")
     private Observation observation;
-
-//    public void setObservation(Observation observation) {
-//        this.observation = observation;
-//        if (observation != null) {
-//            observation.getDiscussions().add(this);
-//        }
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//        if (user != null) {
-//            observation.getDiscussions().add(this);
-//        }
-//    }
 }

@@ -64,7 +64,7 @@
             }
 
             .table-container {
-                width: 65%;
+                width: 85%;
                 display: flex;
                 flex-direction: column;
             }
@@ -107,10 +107,14 @@
         <h2>Filter Observations</h2>
     <form action="${pageContext.request.contextPath}/observation/list/all" method="get">
         <label for="userId">Filter by User:</label>
-        <input type="text" id="userId" name="userId">
+        <input type="text" id="userId" name="username">
 
         <label for="animalName">Filter by Animal Name:</label>
         <input type="text" id="animalName" name="animalName">
+
+        <label for="category">Filter by Category:</label>
+        <input type="text" id="category" name="category">
+
 
         <label for="locationName">Filter by Location Name:</label>
         <input type="text" id="locationName" name="locationName">
@@ -135,6 +139,10 @@
                 <th>Location Name</th>
                 <th>Biome</th>
                 <th>Location Details</th>
+                <th>Description</th>
+                <th>Discussion</th>
+                <th></th>
+                <th></th>
             </tr>
             <c:forEach items="${observations}" var="observation">
                 <tr>
@@ -142,10 +150,20 @@
                     <td>${observation.user.username}</td>
                     <td>${observation.animal.animalName}</td>
                     <td>${observation.animal.category}</td>
-                    <td>${observation.animal.animaldescription}</td>
+                    <td>${observation.animal.animalDescription}</td>
                     <td>${observation.location.locationName}</td>
                     <td>${observation.location.biome}</td>
                     <td>${observation.location.locationDescription}</td>
+                    <td>${observation.description}</td>
+                    <td>
+                        <a href="<c:url value="/discussion/add/form${observation.id}"/>">Add comment</a>
+                    </td>
+                    <td>
+                    <a href="<c:url value="/observation/edit/${observation.id}"/>">Edit</a>
+                    </td>
+                    <td>
+                        <a href="<c:url value="/observation/delete/${observation.id}"/>">Delete</a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

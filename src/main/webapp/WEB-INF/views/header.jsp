@@ -114,11 +114,11 @@
 <%--        Logged in as: <c:out value="${username}"/>--%>
 <%--    </div>--%>
 <%--    <div class="header-links">--%>
-<%--        <a href="${pageContext.request.contextPath}/animal/add/form">Add New Animal</a>--%>
+<%--        <a href="${pageContext.request.contextPath}/animal/add">Add New Animal</a>--%>
 <%--        <a href="${pageContext.request.contextPath}/animal/list">Animal List</a>--%>
-<%--        <a href="${pageContext.request.contextPath}/location/add/form">Add New Location</a>--%>
+<%--        <a href="${pageContext.request.contextPath}/location/add">Add New Location</a>--%>
 <%--        <a href="${pageContext.request.contextPath}/location/list">Location List</a>--%>
-<%--&lt;%&ndash;        <a href="${pageContext.request.contextPath}/observation/add/form">Add New Observation</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;        <a href="${pageContext.request.contextPath}/observation/add">Add New Observation</a>&ndash;%&gt;--%>
 <%--        <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>--%>
     </div>
 </body>

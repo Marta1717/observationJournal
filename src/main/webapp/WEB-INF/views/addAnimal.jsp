@@ -32,8 +32,7 @@
     <br/><br/><br/>
 <%--        <form:hidden path="user" value="${loggedInUser.id}"/>--%>
 
-        <div class="mb-3">
-            Select location<br/>
+        <div class="mb-3">Select location<br/>
             <form:select path="location.id" id="location" items="${locations}" itemLabel="locationName" itemValue="id"/>
             <form:errors path="location.id"/>
         </div>
@@ -45,20 +44,18 @@
 <%--        </div>--%>
 
         <div class="mb-3">
-            Select classis:<br/>
+            Select category:<br/>
             <form:select path="animalCategory" items="${category}"/>
             <form:errors path="animalCategory"/>
         </div>
 
-        <div class="mb-3">
-            Name <br/>
+        <div class="mb-3">Name <br/>
             <form:input path="animalName"/>
             <form:errors path="animalName"/>
 
         </div>
 
-        <div class="mb-3">
-            Additional description <br/>
+        <div class="mb-3">Additional description <br/>
             <form:textarea path="animalDescription" rows="4"/>
             <form:errors path="animalDescription"/>
         </div>

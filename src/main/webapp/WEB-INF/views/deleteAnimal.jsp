@@ -34,7 +34,7 @@
     <h2>Delete animal</h2>
     <br/><br/>
     <h3>Are you sure you want to delete the animal named: <strong>${animal.animalName}</strong>?</h3>
-    <form:form method="post" action="${pageContext.request.contextPath}/animal/delete">
+    <form:form method="post" action="${pageContext.request.contextPath}/animal/delete/">
         <input type="hidden" name="id" value="${animal.id}"/>
         <p>Name:<br/><br/>${animal.animalName}</p>
         <p>Category:<br/><br/>${animal.category}</p>

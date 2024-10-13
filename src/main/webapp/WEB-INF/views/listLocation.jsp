@@ -49,7 +49,7 @@
 <div class="container">
     <h2>Location list</h2>
     <br/><br/>
-    <a href="<c:url value="/location/add/form"/>"><h3>Add new location</h3></a>
+    <a href="<c:url value="/location/add"/>"><h3>Add new location</h3></a>
     <br/><br/>
     <table>
         <tr>
@@ -69,10 +69,10 @@
                 <td>${location.locationDescription}</td>
                 <td>${location.user.username}</td>
                 <td>
-                    <a href="<c:url value="/location/edit/form/${location.id}"/>">Edit</a>
+                    <a href="<c:url value="/location/edit/${location.id}"/>">Edit</a>
                 </td>
                 <td>
-                    <a href="<c:url value="/location/delete/form/${location.id}"/>">Delete</a>
+                    <a href="<c:url value="/location/delete/${location.id}"/>">Delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -139,7 +139,7 @@
 <%--        <button type="submit">Show user locations</button>--%>
 <%--    </form>--%>
 
-<%--    <a href="<c:url value="/location/add/form"/>"><h3>Add new location</h3></a>--%>
+<%--    <a href="<c:url value="/location/add"/>"><h3>Add new location</h3></a>--%>
 <%--    <br/><br/>--%>
 
 <%--    <h3>All Locations</h3>--%>
@@ -161,10 +161,10 @@
 <%--                <td>${location.locationDescription}</td>--%>
 <%--                <td>${location.user.username}</td>--%>
 <%--                <td>--%>
-<%--                    <a href="<c:url value="/location/edit/form/${location.id}"/>">Edit</a>--%>
+<%--                    <a href="<c:url value="/location/edit/${location.id}"/>">Edit</a>--%>
 <%--                </td>--%>
 <%--                <td>--%>
-<%--                    <a href="<c:url value="/location/delete/form/${location.id}"/>">Delete</a>--%>
+<%--                    <a href="<c:url value="/location/delete/${location.id}"/>">Delete</a>--%>
 <%--                </td>--%>
 <%--            </tr>--%>
 <%--        </c:forEach>--%>
@@ -190,10 +190,10 @@
 <%--                    <td>${location.locationDescription}</td>--%>
 <%--                    <td>${location.user.username}</td>--%>
 <%--                    <td>--%>
-<%--                        <a href="<c:url value="/location/edit/form/${location.id}"/>">Edit</a>--%>
+<%--                        <a href="<c:url value="/location/edit/${location.id}"/>">Edit</a>--%>
 <%--                    </td>--%>
 <%--                    <td>--%>
-<%--                        <a href="<c:url value="/location/delete/form/${location.id}"/>">Delete</a>--%>
+<%--                        <a href="<c:url value="/location/delete/${location.id}"/>">Delete</a>--%>
 <%--                    </td>--%>
 <%--                </tr>--%>
 <%--            </c:forEach>--%>
