@@ -58,7 +58,7 @@
     <form:errors path="newsletter"/>
 </div>
 <div class="mb-3">
-    <button type="submit">Submit</button>
+    <button type="submit">SUBMIT</button>
 </div>
 </form:form>
 </body>

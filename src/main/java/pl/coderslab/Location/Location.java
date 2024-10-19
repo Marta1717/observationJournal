@@ -28,15 +28,16 @@ public class Location {
     @NotNull
     @Size(min = 3, max = 15)
     private String locationName;
+    @NotNull
     private String biome;
     private String locationDescription;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "location", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Animal> animals = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "location", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Observation> observations = new HashSet<>();
 
     @ManyToOne

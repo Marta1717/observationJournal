@@ -10,7 +10,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('image.jpg');
+            background-image: url('images/image.jpg');
             background-color: #def6de;
             margin: 0;
             padding: 0;
@@ -106,9 +106,7 @@
         <a href="${pageContext.request.contextPath}/animal/add">Add New Animal</a>
         <a href="${pageContext.request.contextPath}/animal/list">Animal List</a>
         <a href="${pageContext.request.contextPath}/observation/add">Add Observation</a>
-        <a href="${pageContext.request.contextPath}/observation/list/all">All Observation List</a>
-        <a href="${pageContext.request.contextPath}/discussionn/list">Discussion List</a>
-<%--        <a href="${pageContext.request.contextPath}/observation/list/my">My Observation List</a>--%>
+        <a href="${pageContext.request.contextPath}/observation/list/all">Observation List</a>
     </div>
 </div>
 </body>

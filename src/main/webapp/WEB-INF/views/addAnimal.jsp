@@ -45,8 +45,8 @@
 
         <div class="mb-3">
             Select category:<br/>
-            <form:select path="animalCategory" items="${category}"/>
-            <form:errors path="animalCategory"/>
+            <form:select path="category" items="${category}"/>
+            <form:errors path="category"/>
         </div>
 
         <div class="mb-3">Name <br/>
@@ -61,7 +61,7 @@
         </div>
 
         <div class="mb-3">
-            <button type="submit">Submit</button>
+            <button type="submit">SUBMIT</button>
         </div>
 
     </form:form>

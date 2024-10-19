@@ -32,15 +32,15 @@
 </head>
 <body>
 <div class="container">
-<h2>Delete observation</h2>
+<h2>Delete Observation</h2>
 <h3>Are you sure you want to delete this observation<strong>${observation.id}</strong>?</h3>
 <form:form method="post" action="/observation/delete/">
     <input type="hidden" name="id" value="${observation.id}"/>
     <p>Date:<br/> ${observation.date}</p>
 <%--    <p>Biome:<br/> ${observation.location.biome}</p>--%>
     <p>Description:<br/> ${observation.description}</p>
-    <strong><a href="${pageContext.request.contextPath}/observation/list">Cancel</a></strong>
-    <strong><button type="submit" name="action">Delete</button></strong>
+    <strong><a href="${pageContext.request.contextPath}/observation/list">CANCEL</a></strong>
+    <strong><button type="submit" name="action">DELETE</button></strong>
 </form:form>
 </body>
 </html>

@@ -34,8 +34,8 @@ public class DiscussionController {
         return discussion.toString();
     }
 
-    @GetMapping(value = "/discussion/add/{id}")
-    public String showAddDiscussionForm(Model model, HttpSession session) {
+    @GetMapping(value = "/discussion/add/form/{id}")
+    public String showAddDiscussionForm(Model model, HttpSession session, @PathVariable Long id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
@@ -57,13 +57,13 @@ public class DiscussionController {
             discussion.setUser(loggedInUser);
             discussionService.saveDiscussion(discussion);
         }
-        return "redirect:/discussion/list";
+        return "redirect:/observation/list/all";
     }
     //nie edytujemy i nie usuwamy dyskusji
 
     @GetMapping("/discussion/list")
     public String showDiscussionList(Model model) {
-        model.addAttribute("discussion", discussionService.findAll());
+        model.addAttribute("discussion", discussionService.findAllDiscussion());
         return "listDiscussion";
     }
 
@@ -92,7 +92,6 @@ public class DiscussionController {
         model.addAttribute("discussions", discussions);
         return "listDiscussion";
     }
-
 }
 //    nie chcemy edytować ani usuwać komentarzy
 

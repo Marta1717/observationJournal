@@ -73,34 +73,28 @@
     <%--@elvariable id="observation" type=""--%>
     <h2>Edit Observation</h2>
     <br/><br/>
-    <form:form method="post" modelAttribute="observation">
 
         <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>
         <br/><br/><br/>
         <form:form modelAttribute="observation" method="post"
                    action="${pageContext.request.contextPath}/observation/edit/">
             <br><br>
-            <div class="mb-3">
-                Select user<br/>
-                <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>
-                <form:errors path="user.id"/>
-            </div>
 
             <div class="mb-3">
                 <label for="animal">Select animal:</label>
-                <form:select path="animal.animalName" items="${animals}" itemLabel="name" itemValue="id"/>
-                <form:errors path="animal.animalName"/>
+                <form:select path="animal.id" items="${animals}" itemLabel="animalName" itemValue="id"/>
+                <form:errors path="animal.id"/>
             </div>
 
             <div class="mb-3">
                 <label for="location">Location:</label>
-                <form:select path="location.locationName" items="${location}" itemLabel="name" itemValue="id"/>
-                <form:errors path="location.locationName"/>
+                <form:select path="location.id" items="${locations}" itemLabel="LocationName" itemValue="id"/>
+                <form:errors path="location.id"/>
             </div>
 
             <div class="mb-3">
                 <label for="location">Biome:</label>
-                <form:select path="location.biome" items="${location}" itemLabel="biome" itemValue="id"/>
+                <form:select path="location.biome" items="${locations}" itemLabel="biome" itemValue="id"/>
                 <form:errors path="location.biome"/>
             </div>
 
@@ -111,10 +105,9 @@
             </div>
 
             <div class="mb-3">
-                <button type="submit">Submit</button>
+                <button type="submit">SUBMIT</button>
             </div>
         </form:form>
-    </form:form>
 </div>
 </body>
 </html>

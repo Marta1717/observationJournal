@@ -26,12 +26,12 @@
 <body>
 <div class="container">
     <h2>Add Observation</h2>
-    <br/><br/>
+    <br/>
     <%--@declare id="location"--%>
     <%--@elvariable id="observation" type=""--%>
     <form:form method="post" modelAttribute="observation" action="${pageContext.request.contextPath}/observation/add/">
-    <a href="${pageContext.request.contextPath}/animal/list"><h3>Animal List</h3></a>
-    <br/><br/><br/>
+    <a href="${pageContext.request.contextPath}/animal/list"><h3>Observation List</h3></a>
+    <br/><br/>
 
 <%--    <label for="user">Select User</label><br/>--%>
 <%--        <form:input path="user.id" id="user"/>--%>
@@ -63,7 +63,7 @@
         <form:errors path="description"/>
     </div>
 
-    <button type="submit">Submit</button>
+    <button type="submit">SUBMIT</button>
 
     </form:form>
 </body>

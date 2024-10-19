@@ -31,7 +31,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>Delete animal</h2>
+    <h2>Delete Animal</h2>
     <br/><br/>
     <h3>Are you sure you want to delete the animal named: <strong>${animal.animalName}</strong>?</h3>
     <form:form method="post" action="${pageContext.request.contextPath}/animal/delete/">
@@ -39,10 +39,10 @@
         <p>Name:<br/><br/>${animal.animalName}</p>
         <p>Category:<br/><br/>${animal.category}</p>
         <p>Description:<br/><br/>${animal.animalDescription}</p><br/><br/>
-        <strong><a href="${pageContext.request.contextPath}/animal/list"><h4>Cancel</h4></a></strong>
+        <strong><a href="${pageContext.request.contextPath}/animal/list"><h4>CANCEL</h4></a></strong>
         <br/><br/>
         <strong>
-            <button type="submit" name="action">Delete</button>
+            <button type="submit" name="action">DELETE</button>
         </strong><br/><br/>
     </form:form>
 </div>

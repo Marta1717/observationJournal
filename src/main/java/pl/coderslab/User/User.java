@@ -27,17 +27,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Username cannot be null")
+    @NotNull(message = "Pole 'user' nie może być puste")
     @Column(unique = true)
     @Size(min = 3, max = 15)
     private String username;
 
     @ToString.Exclude
-    @NotNull(message = "Password cannot be null")
+    @NotNull(message = "Pole 'password' nie może być puste")
     @Size(min = 3, max = 15)
     private String password;
 
-    @NotNull(message = "Email cannot be null")
+    @NotNull(message = "Pole 'email' nie może być puste")
     @Email
     private String email;
 
@@ -52,18 +52,18 @@ public class User {
 //    }
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Observation> observations = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Discussion> discussions = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Animal> animals = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Location> locations = new HashSet<>();
 }

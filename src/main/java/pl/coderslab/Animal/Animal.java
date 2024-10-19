@@ -28,6 +28,7 @@ public class Animal {
     @NotNull
     @Size(min = 3, max = 25)
     private String animalName;
+    @NotNull
     private String category;
     private String animalDescription;
 
@@ -43,7 +44,7 @@ public class Animal {
     private Location location;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "animal", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Observation> observations = new HashSet<>();
 
     public String getAnimalCategory() {

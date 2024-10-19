@@ -58,7 +58,7 @@
         </div>
 
         <div class="mb-3">
-            <button type="submit">Add location</button>
+            <button type="submit">SUBMIT</button>
         </div>
     </form:form>
 </div>

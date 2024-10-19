@@ -9,9 +9,9 @@ import pl.coderslab.Location.Location;
 import pl.coderslab.User.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -23,7 +23,10 @@ public class Observation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Data nie może być pusta")
     private LocalDate date;
+
+    @Size(min = 3, max = 500, message = "Opis musi mieć od 3 do 500 znaków")
     private String description;
 
     @PrePersist
@@ -33,17 +36,19 @@ public class Observation {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @NotNull(message = "Pole 'user' nie może być puste")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
+    @NotNull(message = "Pole 'location' nie może być puste")
     private Location location;
 
     @ManyToOne
     @JoinColumn(name = "animal_id")
+    @NotNull(message = "Pole 'animal' nie może być puste")
     private Animal animal;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "observation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Discussion> discussions = new HashSet<>();
+    @OneToOne(mappedBy = "observation", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Discussion discussion;
 }

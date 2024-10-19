@@ -32,7 +32,7 @@
 </head>
 <body>
 <div class="container">
-<h2>Delete location</h2>
+<h2>Delete Location</h2>
     <br/><br/>
 <h3>Are you sure you want to delete the location named: <strong>${location.locationName}</strong>?</h3>
 <form:form method="post" action="/location/delete/">
@@ -40,9 +40,9 @@
     <p>Name:<br/> ${location.locationName}</p>
     <p>Name:<br/> ${location.biome}</p>
     <p>Description:<br/> ${location.locationDescription}</p>
-    <strong><a href="${pageContext.request.contextPath}/location/list">Cancel</a></strong>
+    <strong><a href="${pageContext.request.contextPath}/location/list">CANCEL</a></strong>
     <br/><br/>
-    <strong><button type="submit" name="action">Delete</button></strong>
+    <strong><button type="submit" name="action">DELETE</button></strong>
 
 </form:form>
 </div>

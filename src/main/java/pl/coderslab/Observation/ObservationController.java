@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Animal.Animal;
 import pl.coderslab.Animal.AnimalService;
+import pl.coderslab.Discussion.Discussion;
+import pl.coderslab.Discussion.DiscussionService;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
 
@@ -20,9 +22,9 @@ import java.util.List;
 public class ObservationController {
 
     private final ObservationService observationService;
-    //   private final UserService userService;
     private final LocationService locationService;
     private final AnimalService animalService;
+    private final DiscussionService discussionService;
 
 
     @GetMapping("/observation/add")
@@ -33,7 +35,6 @@ public class ObservationController {
         }
         model.addAttribute("observation", new Observation());
         model.addAttribute("user", loggedInUser);
-//        model.addAttribute("users", userService.findAllUsers());
         model.addAttribute("locations", locationService.findAllLocations());
         model.addAttribute("animals", animalService.findAllAnimals());
         model.addAttribute("category", Animal.CATEGORY);
@@ -51,15 +52,28 @@ public class ObservationController {
     }
 
     @GetMapping(value = "/observation/edit/{id}")
-    public String editObservationForm(@PathVariable Long id, Model model) {
+    public String editObservationForm(@PathVariable Long id, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("observation", observationService.findObservationById(id));
+        model.addAttribute("user", loggedInUser);
+        model.addAttribute("locations", locationService.findAllLocations());
+        model.addAttribute("animals", animalService.findAllAnimals());
+        model.addAttribute("category", Animal.CATEGORY);
         return "editObservation";
     }
 
     @PostMapping(value = "/observation/edit")
-    public String processEditObservation(@ModelAttribute Observation observation) {
+    public String processEditObservation(@ModelAttribute Observation observation, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        observation.setUser(loggedInUser);
         observationService.editObservation(observation);
-        return "redirect:/observation/list" + observation.getId();
+        return "redirect:/observation/list/";
 
     }
 
@@ -70,15 +84,15 @@ public class ObservationController {
             return "redirect:/login";
         }
         Observation observation = observationService.findObservationById(id);
-        if (observation == null) {
-            observationService.deleteObservationById(id);
-            return "redirect:/observation/list";
+        if (observation != null) {
+            model.addAttribute("location", locationService.findAllLocations());
+            model.addAttribute("user", loggedInUser);
+            model.addAttribute("animal", animalService.findAllAnimals());
+            model.addAttribute("observation", observationService.findObservationById(id));
+            return "deleteObservation";
+        } else {
+            return "redirect:/observation/list/all";
         }
-        model.addAttribute("location", observation.getLocation());
-        model.addAttribute("user", loggedInUser);
-        model.addAttribute("animal", observation.getAnimal());
-        model.addAttribute("observation", observationService.findObservationById(id));
-        return "deleteObservation";
     }
 
     @PostMapping(value = "/observation/delete")
@@ -87,11 +101,11 @@ public class ObservationController {
         if (loggedInUser == null) {
             return "redirect:/login";
         }
-        Observation observation = observationService.findObservationById(loggedInUser.getId());
-        if (observation == null) {
+        Observation observation = observationService.findObservationById(id);
+        if (observation != null) {
             observationService.deleteObservationById(id);
         }
-        return "redirect:/observation/list/";
+        return "redirect:/observation/list/all";
     }
 
     @GetMapping("/observation/list/all")
@@ -117,14 +131,40 @@ public class ObservationController {
             observations = observationService.findAllObservations();
         }
         model.addAttribute("observations", observations);
-        return "listAllObservation";
+        return "listObservation";
+    }
+//  raczej zbędne, usuniety widok detailDiscussion
+//    @GetMapping("/observation/{id}/discussion")
+//    public String showDiscussionForObservation(@PathVariable Long id, Model model) {
+//        Observation observation = observationService.findObservationById(id);
+//        Discussion discussion = observation.getDiscussion();
+//
+//        if (discussion == null) {
+//            discussion = new Discussion();
+//            discussion.setObservation(observation);
+//        }
+//        model.addAttribute("observation", observation);
+//        model.addAttribute("discussion", discussion);
+//        return "detailsDiscussion";
+//    }
+
+    @GetMapping("/observation/{id}")
+    public String showObservationDetails(@PathVariable Long id, Model model) {
+        Observation observation = observationService.findObservationById(id);
+        List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
+        model.addAttribute("observation", observation);
+        model.addAttribute("discussionsList", discussions);
+        return "detailsObservationWithComments";
     }
 
-    @GetMapping("/observation/user/id/{id}")
-    public String getObservationByUserId(@PathVariable Long id, Model model) {
-        Observation observation = observationService.findObservationById(id);
-        model.addAttribute("observation", observation);
-        return "listMyObservation";
+    @PostMapping("/observation/discussion/add")
+    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            discussion.setUser(loggedInUser);
+            discussionService.saveDiscussion(discussion);
+        }
+        return "redirect:/observation/" + discussion.getObservation().getId();
     }
 }
 //

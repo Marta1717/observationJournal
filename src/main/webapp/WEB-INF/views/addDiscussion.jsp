@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header-links.jsp"%>
+<%@include file="header-links.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,21 +68,21 @@
 </head>
 <body>
 <div class="container">
-    <h2>Add new comment</h2>
+    <h2>Add New Comment</h2>
     <br/><br/><br/>
-<form:form modelAttribute="discussion" method="post" action="${pageContext.request.contextPath}/discussion/add/">
-    <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>
-    <br/><br/><br/>
-    <%--@declare id="location"--%>
-    <%--@elvariable id="discussion" type=""--%>
-    <form:form modelAttribute="discussion" method="post">
+    <form:form modelAttribute="discussion" method="post" action="${pageContext.request.contextPath}/observation/discussion/add/">
+        <input type="hidden" name="observation.id" value="${observation.id}"/>
+        <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>
+        <br/><br/><br/>
+        <%--@declare id="location"--%>
+        <%--@elvariable id="discussion" type=""--%>
 
-<%--        zbędne, do komentarza wchodzi się przez obserwację--%>
-<%--        <div class="mb-3">--%>
-<%--            Select observation:<br/>--%>
-<%--            <form:select path="observation.id" id="location" items="${observations}" itemLabel="id" itemValue="id"/>--%>
-<%--            <form:errors path="observation.id"/>--%>
-<%--        </div>--%>
+        <%--        zbędne, do komentarza wchodzi się przez obserwację--%>
+        <%--        <div class="mb-3">--%>
+        <%--            Select observation:<br/>--%>
+        <%--            <form:select path="observation.id" id="location" items="${observations}" itemLabel="id" itemValue="id"/>--%>
+        <%--            <form:errors path="observation.id"/>--%>
+        <%--        </div>--%>
 
         <div class="mb-3">
             Comment: <br/>
@@ -91,10 +91,9 @@
         </div>
 
         <div class="mb-3">
-            <button type="submit">Add comment</button>
+            <button type="submit">SUBMIT</button>
         </div>
     </form:form>
-</form:form>
 </div>
 </body>
 </html>

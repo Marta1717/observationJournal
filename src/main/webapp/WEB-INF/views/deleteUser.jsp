@@ -41,9 +41,9 @@
         <p>Username:<br/> ${user.username}</p>
         <p>Email:<br/> ${user.email}</p>
         <br/><br/><br/>
-        <strong><a href="${pageContext.request.contextPath}/user/list">Cancel</a></strong><br/><br/>
+        <strong><a href="${pageContext.request.contextPath}/user/list">CANCEL</a></strong><br/><br/>
         <strong>
-            <button type="submit" name="action">Delete</button>
+            <button type="submit" name="action">DELETE</button>
         </strong>
     </form:form>
 </div>

@@ -83,12 +83,12 @@
 <br/>
     </div>
     <div class="mb-3">
-        <button type="submit">Login</button>
+        <button type="submit">LOG IN</button>
     </div>
     </form:form>
 </div>
 <div class="container">
-<div class="mb-4"><a href="${pageContext.request.contextPath}/register"><h4>or register</h4></a></div>
+<div class="mb-4"><a href="${pageContext.request.contextPath}/register"><h4>OR REGISTER</h4></a></div>
 </div>
 </body>
 </html>

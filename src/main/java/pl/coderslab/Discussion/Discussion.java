@@ -7,7 +7,8 @@ import pl.coderslab.Observation.Observation;
 import pl.coderslab.User.User;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,18 +21,19 @@ public class Discussion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    private LocalDate createdAt;
+    @NotNull(message = "Data nie może być pusta")
+    private LocalDateTime createdAt;
 
     @PrePersist
     public void prePersist() {
-        createdAt = LocalDate.now();
+        createdAt = LocalDateTime.now();
     }
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "observation_id")
+    @OneToOne
+    @JoinColumn(name = "observation_id", referencedColumnName = "id")
     private Observation observation;
 }

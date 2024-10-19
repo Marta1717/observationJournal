@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>Add new location</h2>
+    <h2>Add Location</h2>
     <br/><br/><br/>
     <form:form modelAttribute="location" method="post" action="${pageContext.request.contextPath}/location/add/">
         <a href="${pageContext.request.contextPath}/location/list"><h3>Location List</h3></a>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="mb-3">
-            <button type="submit">Add location</button>
+            <button type="submit">SUBMIT</button>
         </div>
     </form:form>
 </div>

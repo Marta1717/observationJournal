@@ -48,9 +48,9 @@
 </head>
 <body>
 <div class="container">
-    <h2>Animal list</h2>
+    <h2>Animal List</h2>
     <br/><br/>
-    <a href="<c:url value="/animal/add"/>"><h3>Add new animal</h3></a>
+    <a href="<c:url value="/animal/add"/>"><h3>Add New Animal</h3></a>
     <br/><br/>
     <table>
         <tr>

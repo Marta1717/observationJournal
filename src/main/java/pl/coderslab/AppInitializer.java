@@ -1,5 +1,6 @@
 package pl.coderslab;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -11,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 public class AppInitializer implements WebApplicationInitializer {
-    public void onStartup(ServletContext container) throws ServletException {
+    public void onStartup(@NotNull ServletContext container) throws ServletException {
         AnnotationConfigWebApplicationContext ctx =
                 new AnnotationConfigWebApplicationContext();
         ctx.register(AppConfig.class);

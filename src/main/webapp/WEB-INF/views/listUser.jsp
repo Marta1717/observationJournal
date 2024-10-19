@@ -58,9 +58,9 @@
 </head>
 <body>
 <div class="container">
-    <h2>User list</h2>
+    <h2>User List</h2>
     <br/><br/>
-    <a href="<c:url value="/register"/>"><h3>Add new user</h3></a>
+    <a href="<c:url value="/register"/>"><h3>Add New User</h3></a>
     <br/><br/>
     <table>
         <tr>

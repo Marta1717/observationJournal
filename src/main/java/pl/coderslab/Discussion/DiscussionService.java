@@ -20,10 +20,12 @@ public class DiscussionService {
     public void saveDiscussion (Discussion discussion) {
         discussionRepository.save(discussion);
     }
+
     public Discussion findById(Long id) {
         return discussionRepository.findById(id).orElse(null);
     }
-    public List<Discussion> findAll() {
+
+    public List<Discussion> findAllDiscussion() {
         return discussionRepository.findAll();
     }
 
@@ -39,9 +41,4 @@ public class DiscussionService {
     public List<Discussion> findDiscussionByObservation(Observation observation) {
         return discussionRepository.findDiscussionByObservation(observation);
     }
-
-
-
-
-
 }
