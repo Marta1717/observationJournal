@@ -40,11 +40,11 @@ public class DiscussionController {
         if (loggedInUser == null) {
             return "redirect:/login";
         }
-        List<Observation> observations = observationService.findAllObservations();
+        Observation observation = observationService.findObservationById(id);
         List<User> users = userService.findAllUsers();
         List<Animal> animals = animalService.findAllAnimals();
         model.addAttribute("animal", animals);
-        model.addAttribute("observations", observations);
+        model.addAttribute("observations", observation);
         model.addAttribute("users", users);
         model.addAttribute("discussion", new Discussion());
         return "addDiscussion";
@@ -55,7 +55,13 @@ public class DiscussionController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             discussion.setUser(loggedInUser);
-            discussionService.saveDiscussion(discussion);
+            Observation observation = discussion.getObservation();
+            if (observation != null) {
+                discussion.setObservation(observation);
+                discussionService.saveDiscussion(discussion);
+            } else {
+                throw new IllegalArgumentException("Observation cannot be null or its ID is missing");
+            }
         }
         return "redirect:/observation/list/all";
     }

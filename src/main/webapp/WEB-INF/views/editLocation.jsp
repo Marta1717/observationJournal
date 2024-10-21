@@ -46,12 +46,6 @@
         </div>
 
         <div class="mb-3">
-            Biome <br/>
-            <form:input path="biome"/>
-            <form:errors path="biome"/>
-        </div>
-
-        <div class="mb-3">
             Additional description <br/>
             <form:textarea path="locationDescription" rows="4"/>
             <form:errors path="locationDescription"/>

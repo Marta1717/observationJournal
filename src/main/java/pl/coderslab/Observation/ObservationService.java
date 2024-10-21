@@ -56,8 +56,4 @@ public class ObservationService {
     public List<Observation> findObservationsByLocationName(String locationName) {
         return observationRepository.findByLocation_LocationName(locationName);
     }
-
-    public List<Observation> findObservationsByBiome(String biome) {
-        return observationRepository.findByLocation_Biome(biome);
-    }
 }

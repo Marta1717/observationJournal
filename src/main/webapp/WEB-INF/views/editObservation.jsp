@@ -93,12 +93,6 @@
             </div>
 
             <div class="mb-3">
-                <label for="location">Biome:</label>
-                <form:select path="location.biome" items="${locations}" itemLabel="biome" itemValue="id"/>
-                <form:errors path="location.biome"/>
-            </div>
-
-            <div class="mb-3">
                 <label for="description" rows="6" cols="20">Notes</label>
                 <form:textarea path="description" id="description"/>
                 <form:errors path="description"/>

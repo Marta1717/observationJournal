@@ -35,10 +35,6 @@ public class LocationService {
     public List<Location> findLocationByLocationName(String locationName) {
         return locationRepository.findLocationByLocationName(locationName);
     }
-    
-    public List<Location> findLocationByBiome(String biome) {
-        return locationRepository.findLocationByBiome(biome);
-    }
 
     public List<Location> findLocationByUserId(Long userId) {
         return locationRepository.findLocationsByUserId(userId);

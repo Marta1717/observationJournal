@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Animal.AnimalService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -21,6 +22,7 @@ public class LocationController {
     //    @Autowired
     private final LocationService locationService;
     private final AnimalService animalService;
+    private final UserService userService;
 
     @GetMapping(value = "/location/add")
     public String showAddLocationForm(Model model, HttpSession session) {
@@ -43,7 +45,11 @@ public class LocationController {
     }
 
     @GetMapping(value = "/location/edit/{id}")
-    public String editLocationForm(@PathVariable Long id, Model model) {
+    public String editLocationForm(@PathVariable Long id, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("location", locationService.findLocationById(id));
         model.addAttribute("animals", animalService.findAllAnimals());
         return "editLocation";
@@ -51,6 +57,7 @@ public class LocationController {
 
     @PostMapping(value = "/location/edit")
     public String processEditLocation(@ModelAttribute Location location) {
+        location.setUser(userService.findUserById(location.getUser().getId()));
         locationService.saveLocation(location);
         return "redirect:/location/list";
     }
@@ -86,12 +93,6 @@ public class LocationController {
     @GetMapping("/location/get/{locationName}")
     public String getLocationByLocationName(@PathVariable String locationName) {
         Location location = (Location) locationService.findLocationByLocationName(locationName);
-        return location.toString();
-    }
-
-    @GetMapping("/location/get/{biome}")
-    public String getLocationByBiomeLocationByBiome(@PathVariable String biome) {
-        List<Location> location = locationService.findLocationByBiome(biome);
         return location.toString();
     }
 

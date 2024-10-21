@@ -70,7 +70,7 @@
 <div class="container">
     <h2>Add New Comment</h2>
     <br/><br/><br/>
-    <form:form modelAttribute="discussion" method="post" action="${pageContext.request.contextPath}/observation/discussion/add/">
+    <form:form modelAttribute="discussion" method="post" action="${pageContext.request.contextPath}/observation/discussion/add/${observation.id}">
         <input type="hidden" name="observation.id" value="${observation.id}"/>
         <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>
         <br/><br/><br/>

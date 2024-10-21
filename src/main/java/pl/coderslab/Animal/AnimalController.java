@@ -120,13 +120,6 @@ public class AnimalController {
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
-
-    @GetMapping("/animal/location/{biome}")
-    public String getAnimalByBiome(@PathVariable String biome, Model model) {
-        List<Animal> animals = animalService.findAnimalsByBiome(biome);
-        model.addAttribute("animals", animals);
-        return "listAnimal";
-    }
 }
 
 //    @GetMapping("/animal/list")

@@ -55,7 +55,6 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Biome</th>
             <th>Description</th>
             <th>User</th>
             <th></th>
@@ -65,7 +64,6 @@
             <tr>
                 <td>${location.id}</td>
                 <td>${location.locationName}</td>
-                <td>${location.biome}</td>
                 <td>${location.locationDescription}</td>
                 <td>${location.user.username}</td>
                 <td>

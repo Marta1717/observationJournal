@@ -47,8 +47,4 @@ public class AnimalService {
     public List<Animal> findAnimalsByLocationName(String locationName) {
         return animalRepository.findByLocation_LocationName(locationName);
     }
-
-    public List<Animal> findAnimalsByBiome(String biome) {
-        return animalRepository.findByLocation_Biome(biome);
-    }
 }

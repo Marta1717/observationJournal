@@ -37,7 +37,6 @@
 <form:form method="post" action="/observation/delete/">
     <input type="hidden" name="id" value="${observation.id}"/>
     <p>Date:<br/> ${observation.date}</p>
-<%--    <p>Biome:<br/> ${observation.location.biome}</p>--%>
     <p>Description:<br/> ${observation.description}</p>
     <strong><a href="${pageContext.request.contextPath}/observation/list">CANCEL</a></strong>
     <strong><button type="submit" name="action">DELETE</button></strong>

@@ -22,7 +22,5 @@ public interface ObservationRepository extends JpaRepository<Observation, Long> 
     List<Observation> findByUser_Username(String username);
 
     List<Observation> findByLocation_LocationName(String locationName);
-
-    List<Observation> findByLocation_Biome(String biome);
 }
 

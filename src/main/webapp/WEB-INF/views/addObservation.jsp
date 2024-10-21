@@ -53,11 +53,6 @@
         <form:errors path="location.id"/>
     </div>
 
-    <div class="mb-3">Select Biome<br/>
-        <form:select path="location.biome" id="location" items="${locations}" itemLabel="biome" itemValue="id"/>
-        <form:errors path="location.biome"/>
-    </div>
-
     <div class="mb-3">Additional description <br/>
         <form:textarea path="description" rows="4"/>
         <form:errors path="description"/>

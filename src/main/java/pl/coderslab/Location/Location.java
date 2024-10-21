@@ -28,8 +28,6 @@ public class Location {
     @NotNull
     @Size(min = 3, max = 15)
     private String locationName;
-    @NotNull
-    private String biome;
     private String locationDescription;
 
     @ToString.Exclude

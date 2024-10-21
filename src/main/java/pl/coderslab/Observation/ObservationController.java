@@ -11,6 +11,7 @@ import pl.coderslab.Discussion.Discussion;
 import pl.coderslab.Discussion.DiscussionService;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ObservationController {
     private final LocationService locationService;
     private final AnimalService animalService;
     private final DiscussionService discussionService;
+    private final UserService userService;
 
 
     @GetMapping("/observation/add")
@@ -44,10 +46,11 @@ public class ObservationController {
     @PostMapping("/observation/add")
     public String processAddObservation(@ModelAttribute Observation observation, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            observation.setUser(loggedInUser);
-            observationService.saveObservation(observation);
+        if (loggedInUser == null) {
+            return "redirect:/login";
         }
+        observation.setUser(userService.findUserById(loggedInUser.getId()));
+        observationService.saveObservation(observation);
         return "redirect:/observation/list/all";
     }
 
@@ -114,7 +117,6 @@ public class ObservationController {
             @RequestParam(required = false) String animalName,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String locationName,
-            @RequestParam(required = false) String biome,
             Model model) {
         List<Observation> observations;
         if (username != null && !username.isEmpty()) {
@@ -125,8 +127,6 @@ public class ObservationController {
             observations = observationService.findObservationsByCategory(category);
         } else if (locationName != null && !locationName.isEmpty()) {
             observations = observationService.findObservationsByLocationName(locationName);
-        } else if (biome != null && !biome.isEmpty()) {
-            observations = observationService.findObservationsByBiome(biome);
         } else {
             observations = observationService.findAllObservations();
         }
@@ -158,13 +158,17 @@ public class ObservationController {
     }
 
     @PostMapping("/observation/discussion/add")
-    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session) {
+    public String processAddDiscussion(@ModelAttribute Discussion discussion, @RequestParam Long id, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             discussion.setUser(loggedInUser);
-            discussionService.saveDiscussion(discussion);
+            Observation observation = observationService.findObservationById(id);
+            if (observation != null) {
+                discussion.setObservation(observation);
+                discussionService.saveDiscussion(discussion);
+            }
         }
-        return "redirect:/observation/" + discussion.getObservation().getId();
+        return "redirect:/observation/";
     }
 }
 //
@@ -182,12 +186,7 @@ public class ObservationController {
 //        return "listAllObservation";
 //    }
 //
-//    @GetMapping("/observation/location/biome/{biome}")
-//    public String getObservationByBiome(@PathVariable String biome, Model model) {
-//        List<Observation> observations = observationService.findObservationsByBiome(biome);
-//        model.addAttribute("observations", observations);
-//        return "listAllObservation";
-//    }
+//
 //
 //    @GetMapping("observation/animalName/{animalName}")
 //    public String getObservationByAnimalName(@PathVariable String animalName, Model model) {

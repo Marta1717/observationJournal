@@ -16,7 +16,5 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     
     List<Location> findLocationByLocationName(String locationName);
 
-    List<Location> findLocationByBiome(String biome);
-
     List<Location> findLocationByUser_Username(String username);
 }

@@ -38,7 +38,6 @@
 <form:form method="post" action="/location/delete/">
     <input type="hidden" name="id" value="${location.id}"/>
     <p>Name:<br/> ${location.locationName}</p>
-    <p>Name:<br/> ${location.biome}</p>
     <p>Description:<br/> ${location.locationDescription}</p>
     <strong><a href="${pageContext.request.contextPath}/location/list">CANCEL</a></strong>
     <br/><br/>

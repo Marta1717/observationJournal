@@ -119,9 +119,6 @@
         <label for="locationName">Filter by Location Name:</label>
         <input type="text" id="locationName" name="locationName">
 
-        <label for="biome">Filter by Biome:</label>
-        <input type="text" id="biome" name="biome">
-
         <button type="submit">Filter</button>
     </form>
     </div>
@@ -137,7 +134,6 @@
                 <th>Category</th>
                 <th>Animal Description</th>
                 <th>Location Name</th>
-                <th>Biome</th>
                 <th>Location Details</th>
                 <th>Description</th>
                 <th>Discussion</th>
@@ -152,7 +148,6 @@
                     <td>${observation.animal.category}</td>
                     <td>${observation.animal.animalDescription}</td>
                     <td>${observation.location.locationName}</td>
-                    <td>${observation.location.biome}</td>
                     <td>${observation.location.locationDescription}</td>
                     <td>${observation.description}</td>
                     <td>
