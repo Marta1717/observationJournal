@@ -7,19 +7,19 @@
 <head>
     <title>Animal list</title>
     <style>
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            margin-left: 15%;
-            margin-right: 15%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 1200px;
-            overflow-y: auto;
-            height: 80vh;
-            text-align: left;
-        }
+        /*.container {*/
+        /*    background-color: rgba(255, 255, 255, 0.9);*/
+        /*    padding: 30px;*/
+        /*    margin-left: 15%;*/
+        /*    margin-right: 15%;*/
+        /*    border-radius: 10px;*/
+        /*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+        /*    width: 90%;*/
+        /*    max-width: 1200px;*/
+        /*    overflow-y: auto;*/
+        /*    height: 80vh;*/
+        /*    text-align: left;*/
+        /*}*/
 
         table {
             width: 100%;
@@ -66,7 +66,7 @@
             <tr>
                 <td>${animal.id}</td>
                 <td>${animal.animalName}</td>
-                <td>${animal.category}</td>
+                <td>${animal.category.name()}</td>
                 <td>${animal.animalDescription}</td>
                 <td>${animal.user.username}</td>
                 <td>

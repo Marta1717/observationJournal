@@ -33,6 +33,7 @@ public class Discussion {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "observation_id", referencedColumnName = "id")
     private Observation observation;

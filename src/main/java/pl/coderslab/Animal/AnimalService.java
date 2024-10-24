@@ -36,7 +36,7 @@ public class AnimalService {
         return animalRepository.findByAnimalName(animalName);
     }
 
-    public List<Animal> findAnimalByCategory(String category) {
+    public List<Animal> findAnimalByCategory(CATEGORY category) {
         return animalRepository.findByCategory(category);
     }
 

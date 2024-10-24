@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Animal.AnimalService;
 import pl.coderslab.User.User;
-import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,7 +21,6 @@ public class LocationController {
     //    @Autowired
     private final LocationService locationService;
     private final AnimalService animalService;
-    private final UserService userService;
 
     @GetMapping(value = "/location/add")
     public String showAddLocationForm(Model model, HttpSession session) {
@@ -31,6 +29,7 @@ public class LocationController {
             return "redirect:/login";
         }
         model.addAttribute("location", new Location());
+        model.addAttribute("user", loggedInUser);
         return "addLocation";
     }
 
@@ -50,15 +49,24 @@ public class LocationController {
         if (loggedInUser == null) {
             return "redirect:/login";
         }
+        Location location = locationService.findLocationById(id);
+        if(!location.getUser().getId().equals(loggedInUser.getId())) {
+            return "redirect:/location/list";
+        }
         model.addAttribute("location", locationService.findLocationById(id));
         model.addAttribute("animals", animalService.findAllAnimals());
+        model.addAttribute("user", loggedInUser);
+
         return "editLocation";
     }
 
     @PostMapping(value = "/location/edit")
-    public String processEditLocation(@ModelAttribute Location location) {
-        location.setUser(userService.findUserById(location.getUser().getId()));
+    public String processEditLocation(@ModelAttribute Location location, @SessionAttribute("loggedInUser") User loggedInUser) {
+
+        location.setUser(loggedInUser);
+
         locationService.saveLocation(location);
+
         return "redirect:/location/list";
     }
 
@@ -69,22 +77,18 @@ public class LocationController {
             return "redirect:/login";
         }
         Location location = locationService.findLocationById(id);
-        if (location == null) {
-            locationService.deleteLocation(id);
+        if(!location.getUser().getId().equals(loggedInUser.getId())) {
             return "redirect:/location/list";
         }
-        model.addAttribute("location", locationService.findLocationById(id));
+        model.addAttribute("location", location);
         return "deleteLocation";
     }
 
     @PostMapping(value = "/location/delete")
     public String processDeleteLocation(@RequestParam Long id, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
         Location location = locationService.findLocationById(id);
-        if (location != null) {
+        if (loggedInUser != null && location.getUser().getId().equals(loggedInUser.getId())) {
             locationService.deleteLocation(id);
         }
         return "redirect:/location/list";

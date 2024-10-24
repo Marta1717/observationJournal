@@ -1,10 +1,8 @@
 package pl.coderslab.User;
 
 import org.springframework.stereotype.Service;
-import pl.coderslab.Observation.Observation;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,34 +46,22 @@ public class UserService {
         throw new IllegalArgumentException("Invalid username or password");
     }
 
-    public List<Observation> getUserObservations(Long id) {
-        User user = userRepository.findUserById(id);
-        return new ArrayList<>(user.getObservations());
-    }
-
-
-
 //    public List<Discussion> getUserDiscussions(Long id) {
 //        User user = userRepository.findUserById(id);
 //        return new ArrayList<>(user.getDiscussions());
 //    }
 
-//    public List<Location> getUserLocations(Long id) {
-//        User user = userRepository.findUserById(id);
-//        return new ArrayList<>(user.getLocations());
-//    }
-
     @Transactional
     public void subscribeToNewsletter(Long userId) {
         User user = userRepository.findUserById(userId);
-        user.setNewsletter("subscribed");
+        user.setNewsletter("YES");
         userRepository.save(user);
     }
 
     @Transactional
     public void unsubscribeFromNewsletter(Long userId) {
         User user = userRepository.findUserById(userId);
-        user.setNewsletter("unsubscribed");
+        user.setNewsletter("NO");
         userRepository.save(user);
     }
 }

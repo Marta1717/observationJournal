@@ -26,7 +26,7 @@ public class Location {
     private Long id;
 
     @NotNull
-    @Size(min = 3, max = 15)
+    @Size(min = 3, max = 25)
     private String locationName;
     private String locationDescription;
 

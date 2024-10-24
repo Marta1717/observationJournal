@@ -43,10 +43,10 @@
         <form:errors path="animal.id"/>
     <br/>
 
-    <label for="animal">Select Category:</label>
-        <form:select path="animal.category" id="animals" items="${category}"/>
-        <form:errors path="animal.category"/>
-    <br/>
+<%--    <label for="animal">Select Category:</label>--%>
+<%--        <form:select path="animal.category" id="animals" items="${category}"/>--%>
+<%--        <form:errors path="animal.category"/>--%>
+<%--    <br/>--%>
 
     <div class="mb-3">Select location<br/>
         <form:select path="location.id" id="location" items="${locations}" itemLabel="locationName" itemValue="id"/>

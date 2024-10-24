@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.Animal.Animal;
 import pl.coderslab.Animal.AnimalService;
+import pl.coderslab.Animal.CATEGORY;
 import pl.coderslab.Discussion.Discussion;
 import pl.coderslab.Discussion.DiscussionService;
 import pl.coderslab.Location.LocationService;
@@ -39,7 +39,6 @@ public class ObservationController {
         model.addAttribute("user", loggedInUser);
         model.addAttribute("locations", locationService.findAllLocations());
         model.addAttribute("animals", animalService.findAllAnimals());
-        model.addAttribute("category", Animal.CATEGORY);
         return "addObservation";
     }
 
@@ -47,6 +46,10 @@ public class ObservationController {
     public String processAddObservation(@ModelAttribute Observation observation, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        User user = userService.findUserById(loggedInUser.getId());
+        if (user == null) {
             return "redirect:/login";
         }
         observation.setUser(userService.findUserById(loggedInUser.getId()));
@@ -64,7 +67,6 @@ public class ObservationController {
         model.addAttribute("user", loggedInUser);
         model.addAttribute("locations", locationService.findAllLocations());
         model.addAttribute("animals", animalService.findAllAnimals());
-        model.addAttribute("category", Animal.CATEGORY);
         return "editObservation";
     }
 
@@ -73,6 +75,13 @@ public class ObservationController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
+        }
+        Observation existingObservation = observationService.findObservationById(observation.getId());
+        if (existingObservation == null) {
+            return "redirect:/observation/list/all";
+        }
+        if (!existingObservation.getUser().getId().equals(loggedInUser.getId())) {
+            return "redirect:/observation/list/all";
         }
         observation.setUser(loggedInUser);
         observationService.editObservation(observation);
@@ -104,10 +113,14 @@ public class ObservationController {
         if (loggedInUser == null) {
             return "redirect:/login";
         }
-        Observation observation = observationService.findObservationById(id);
-        if (observation != null) {
-            observationService.deleteObservationById(id);
+        Observation existingObservation = observationService.findObservationById(id);
+        if (existingObservation != null) {
+            return "redirect:/observation/list/all";
         }
+        if (!existingObservation.getUser().getId().equals(loggedInUser.getId())) {
+            return "redirect:/observation/list/all";
+        }
+        observationService.deleteObservationById(id);
         return "redirect:/observation/list/all";
     }
 
@@ -119,18 +132,20 @@ public class ObservationController {
             @RequestParam(required = false) String locationName,
             Model model) {
         List<Observation> observations;
-        if (username != null && !username.isEmpty()) {
-            observations = observationService.findObservationsByUsername(username);
-        } else if (animalName != null && !animalName.isEmpty()) {
-            observations = observationService.findObservationsByAnimalName(animalName);
-        } else if (category != null && !category.isEmpty()) {
-            observations = observationService.findObservationsByCategory(category);
-        } else if (locationName != null && !locationName.isEmpty()) {
-            observations = observationService.findObservationsByLocationName(locationName);
-        } else {
-            observations = observationService.findAllObservations();
-        }
+            if (username != null && !username.isEmpty()) {
+                observations = observationService.findObservationsByUsername(username);
+            } else if (animalName != null && !animalName.isEmpty()) {
+                observations = observationService.findObservationsByAnimalName(animalName);
+            } else if (locationName != null && !locationName.isEmpty()) {
+                observations = observationService.findObservationsByLocationName(locationName);
+            } else if (category != null && !category.isEmpty()) {
+                CATEGORY category1 = CATEGORY.valueOf(category.toUpperCase());
+                observations = observationService.findObservationsByCategory(String.valueOf(category1));
+            } else {
+                observations = observationService.findAllObservations();
+            }
         model.addAttribute("observations", observations);
+        model.addAttribute("category", CATEGORY.values());
         return "listObservation";
     }
 //  raczej zbędne, usuniety widok detailDiscussion
@@ -153,23 +168,23 @@ public class ObservationController {
         Observation observation = observationService.findObservationById(id);
         List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
         model.addAttribute("observation", observation);
-        model.addAttribute("discussionsList", discussions);
+        model.addAttribute("discussionList", discussions);
         return "detailsObservationWithComments";
     }
 
-    @PostMapping("/observation/discussion/add")
-    public String processAddDiscussion(@ModelAttribute Discussion discussion, @RequestParam Long id, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            discussion.setUser(loggedInUser);
-            Observation observation = observationService.findObservationById(id);
-            if (observation != null) {
-                discussion.setObservation(observation);
-                discussionService.saveDiscussion(discussion);
-            }
-        }
-        return "redirect:/observation/";
-    }
+//    @PostMapping("/observation/discussion/add")
+//    public String processAddDiscussion(@ModelAttribute Discussion discussion, @RequestParam Long id, HttpSession session) {
+//        User loggedInUser = (User) session.getAttribute("loggedInUser");
+//        if (loggedInUser != null) {
+//            discussion.setUser(loggedInUser);
+//            Observation observation = observationService.findObservationById(id);
+//            if (observation != null) {
+//                discussion.setObservation(observation);
+//                discussionService.saveDiscussion(discussion);
+//            }
+//        }
+//        return "redirect:/observation/";
+//    }
 }
 //
 //    @GetMapping("/observation/user/username/{username}")

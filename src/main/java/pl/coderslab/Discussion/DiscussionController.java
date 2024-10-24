@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.Animal.Animal;
-import pl.coderslab.Animal.AnimalService;
 import pl.coderslab.Observation.Observation;
 import pl.coderslab.Observation.ObservationService;
 import pl.coderslab.User.User;
@@ -25,7 +23,8 @@ public class DiscussionController {
     private final DiscussionService discussionService;
     private final ObservationService observationService;
     private final UserService userService;
-    private final AnimalService animalService;
+//    private final AnimalService animalService;
+//    private final LocationService locationService;
 
     @RequestMapping("/discussion/get/{id}")
     @ResponseBody
@@ -34,34 +33,39 @@ public class DiscussionController {
         return discussion.toString();
     }
 
-    @GetMapping(value = "/discussion/add/form/{id}")
+    @GetMapping(value = "/discussion/add/form/{id}/")
     public String showAddDiscussionForm(Model model, HttpSession session, @PathVariable Long id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
         }
         Observation observation = observationService.findObservationById(id);
-        List<User> users = userService.findAllUsers();
-        List<Animal> animals = animalService.findAllAnimals();
-        model.addAttribute("animal", animals);
+//        List<Animal> animals = animalService.findAllAnimals();
+//        List<Location> locations = locationService.findAllLocations();
+//        model.addAttribute("animal", animals);
+//        model.addAttribute("location", locations);
         model.addAttribute("observations", observation);
-        model.addAttribute("users", users);
         model.addAttribute("discussion", new Discussion());
+        model.addAttribute("user", observation.getUser());
         return "addDiscussion";
     }
 
     @PostMapping(value = "/discussion/add")
-    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session) {
+    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
+        System.out.println("Received id: " + id);
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             discussion.setUser(loggedInUser);
-            Observation observation = discussion.getObservation();
-            if (observation != null) {
-                discussion.setObservation(observation);
-                discussionService.saveDiscussion(discussion);
-            } else {
-                throw new IllegalArgumentException("Observation cannot be null or its ID is missing");
-            }
+        }
+
+        Observation observation = observationService.findObservationById(id);
+//                    Observation observation = discussion.getObservation();
+        if (observation != null) {
+            discussion.setObservation(observation);
+            discussionService.saveDiscussion(discussion);
+        } else {
+            throw new IllegalArgumentException("Observation cannot be null or its ID is missing");
         }
         return "redirect:/observation/list/all";
     }
@@ -73,15 +77,15 @@ public class DiscussionController {
         return "listDiscussion";
     }
 
-    @ModelAttribute("observations")
-    public List<Observation> getObservation() {
-        return this.observationService.findAllObservations();
-    }
-
-    @ModelAttribute("users")
-    public List<User> getUsers() {
-        return this.userService.findAllUsers();
-    }
+//    @ModelAttribute("observations")
+//    public List<Observation> getObservation() {
+//        return this.observationService.findAllObservations();
+//    }
+//
+//    @ModelAttribute("users")
+//    public List<User> getUsers() {
+//        return this.userService.findAllUsers();
+//    }
 
     @GetMapping("/discussions/user/{id}")
     public String getUserDiscussions(@PathVariable Long id, Model model) {
@@ -94,6 +98,7 @@ public class DiscussionController {
     @GetMapping("/discussion/observation/{id}")
     public String showObservationDiscussions(@PathVariable Long id, Model model) {
         Observation observation = observationService.findObservationById(id);
+        model.addAttribute("observation", observation);
         List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
         model.addAttribute("discussions", discussions);
         return "listDiscussion";

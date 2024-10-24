@@ -19,50 +19,6 @@
             width: 400px;
             text-align: left;
         }
-
-        /*h2 {*/
-        /*    text-align: center;*/
-        /*    color: #4CAF50;*/
-        /*}*/
-
-        /*h3 {*/
-        /*    text-align: left;*/
-        /*    color: #4cafaf;*/
-        /*}*/
-
-        /*a {*/
-        /*    color: #4CAF50;*/
-        /*    text-decoration: none;*/
-        /*    margin-right: 10px;*/
-        /*}*/
-
-        /*a:hover {*/
-        /*    text-decoration: underline;*/
-        /*}*/
-
-        /*label {*/
-        /*    display: block;*/
-        /*    margin: 10px 0 5px;*/
-        /*}*/
-
-        /*input, select, textarea, button {*/
-        /*    width: 100%;*/
-        /*    padding: 10px;*/
-        /*    margin: 5px 0 15px;*/
-        /*    border: 1px solid #ccc;*/
-        /*    border-radius: 5px;*/
-        /*}*/
-
-        /*button {*/
-        /*    background-color: #4CAF50;*/
-        /*    color: white;*/
-        /*    border: none;*/
-        /*    cursor: pointer;*/
-        /*}*/
-
-        /*button:hover {*/
-        /*    background-color: #45a049;*/
-        /*}*/
     </style>
 
 </head>
@@ -70,9 +26,10 @@
 <div class="container">
     <h2>Add New Comment</h2>
     <br/><br/><br/>
-    <form:form modelAttribute="discussion" method="post" action="${pageContext.request.contextPath}/observation/discussion/add/${observation.id}">
-        <input type="hidden" name="observation.id" value="${observation.id}"/>
-        <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>
+    <form:form modelAttribute="discussion" method="post"
+               action="${pageContext.request.contextPath}/discussion/add">
+        <input type="hidden" name="id" value="${observation.id}"/>
+<%--        <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>--%>
         <br/><br/><br/>
         <%--@declare id="location"--%>
         <%--@elvariable id="discussion" type=""--%>
@@ -85,6 +42,7 @@
         <%--        </div>--%>
 
         <div class="mb-3">
+            ${observations}
             Comment: <br/>
             <form:textarea path="comment" rows="7"/>
             <form:errors path="comment"/>

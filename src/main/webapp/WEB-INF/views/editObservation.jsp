@@ -74,34 +74,35 @@
     <h2>Edit Observation</h2>
     <br/><br/>
 
-        <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>
-        <br/><br/><br/>
-        <form:form modelAttribute="observation" method="post"
-                   action="${pageContext.request.contextPath}/observation/edit/">
-            <br><br>
+    <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>
+    <br/><br/><br/>
+    <form:form modelAttribute="observation" method="post"
+               action="${pageContext.request.contextPath}/observation/edit/">
+        <input type="hidden" name="id" value="${observation.id}"/>
+        <br><br>
 
-            <div class="mb-3">
-                <label for="animal">Select animal:</label>
-                <form:select path="animal.id" items="${animals}" itemLabel="animalName" itemValue="id"/>
-                <form:errors path="animal.id"/>
-            </div>
+        <div class="mb-3">
+            <label for="animal">Select animal:</label>
+            <form:select path="animal.id" items="${animals}" itemLabel="animalName" itemValue="id"/>
+            <form:errors path="animal.id"/>
+        </div>
 
-            <div class="mb-3">
-                <label for="location">Location:</label>
-                <form:select path="location.id" items="${locations}" itemLabel="LocationName" itemValue="id"/>
-                <form:errors path="location.id"/>
-            </div>
+        <div class="mb-3">
+            <label for="location">Location:</label>
+            <form:select path="location.id" items="${locations}" itemLabel="LocationName" itemValue="id"/>
+            <form:errors path="location.id"/>
+        </div>
 
-            <div class="mb-3">
-                <label for="description" rows="6" cols="20">Notes</label>
-                <form:textarea path="description" id="description"/>
-                <form:errors path="description"/>
-            </div>
+        <div class="mb-3">
+            <label for="description" rows="6" cols="20">Notes</label>
+            <form:textarea path="description" id="description"/>
+            <form:errors path="description"/>
+        </div>
 
-            <div class="mb-3">
-                <button type="submit">SUBMIT</button>
-            </div>
-        </form:form>
+        <div class="mb-3">
+            <button type="submit">SUBMIT</button>
+        </div>
+    </form:form>
 </div>
 </body>
 </html>

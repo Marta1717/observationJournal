@@ -105,16 +105,34 @@ public class UserController {
         return "redirect:/user/list/";
     }
 
+    @PostMapping("/user/subscribe/{id}")
+    public String subscribeToNewsletter(@PathVariable Long id, Model model) {
+        try {
+            userService.subscribeToNewsletter(id);
+            model.addAttribute("successMessage", "Successfully subscribed to the newsletter!");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Failed to subscribe: " + e.getMessage());
+        }
+        return "redirect:/user/list";
+    }
+
+    @PostMapping("/user/unsubscribe/{id}")
+    public String unsubscribeFromNewsletter(@PathVariable Long id, Model model) {
+        try {
+            userService.unsubscribeFromNewsletter(id);
+            model.addAttribute("successMessage", "Successfully unsubscribed from the newsletter!");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Failed to unsubscribe: " + e.getMessage());
+        }
+        return "redirect:/user/list";
+    }
+
     @GetMapping(value = "/user/list")
     public String showUsersList(Model model) {
         model.addAttribute("users", userService.findAllUsers());
         return "listUser";
     }
 }
-//    @ModelAttribute("newsletteragree")
-//    public List<String> getNewsletterAgree() {
-//        return User.NEWSLETTERAGREE;
-//    }
 
 
 

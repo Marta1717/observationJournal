@@ -1,8 +1,10 @@
 package pl.coderslab.Observation;
 
 import org.springframework.stereotype.Service;
+import pl.coderslab.Animal.CATEGORY;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -42,12 +44,13 @@ public class ObservationService {
     }
 
     public List<Observation> findObservationsByCategory(String category) {
-        return observationRepository.findByAnimal_Category(category);
+        try {
+            CATEGORY categoryEnum = CATEGORY.valueOf(category);
+            return observationRepository.findByAnimal_Category(categoryEnum);
+        } catch (IllegalArgumentException ex) {
+            return Collections.emptyList();
+        }
     }
-
-//    public List<Observation> findObservationByUserId(Long userId) {
-//        return observationRepository.findObservationByUserId(userId);
-//    }
 
     public List<Observation> findObservationsByUsername(String username) {
         return observationRepository.findByUser_Username(username);

@@ -10,6 +10,7 @@ import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -30,6 +31,7 @@ public class AnimalController {
         List<Location> locations = locationService.findLocationByUserId(loggedInUser.getId());
         model.addAttribute("animal", new Animal());
         model.addAttribute("locations", locations);
+        model.addAttribute("user", loggedInUser);
         return "addAnimal";
     }
 
@@ -44,8 +46,8 @@ public class AnimalController {
     }
 
     @ModelAttribute("category")
-    public List<String> getCategory() {
-        return Animal.CATEGORY;
+    public List<CATEGORY> getCategory() {
+        return Arrays.asList(CATEGORY.values());
     }
 
     @GetMapping(value = "/animal/edit/{id}")
@@ -57,11 +59,13 @@ public class AnimalController {
         }
         model.addAttribute("animal", animal);
         model.addAttribute("location", locationService.findAllLocations());
+        model.addAttribute("user", animal.getUser());
         return "editAnimal";
     }
 
     @PostMapping(value = "/animal/edit")
-    public String processEditAnimal(@ModelAttribute Animal animal) {
+    public String processEditAnimal(@ModelAttribute Animal animal, @SessionAttribute("loggedUser") User loggedUser) {
+        animal.setUser(loggedUser);
         animalService.saveAnimal(animal);
         return "redirect:/animal/list";
     }
@@ -74,6 +78,7 @@ public class AnimalController {
         }
         model.addAttribute("animal", animal);
         model.addAttribute("location", locationService.findAllLocations());
+        model.addAttribute("user", animal.getUser());
         return "deleteAnimal";
     }
 
@@ -102,7 +107,7 @@ public class AnimalController {
 
     @GetMapping("/animal/{category}")
     public String getAnimalByCategory(@PathVariable String category, Model model) {
-        List<Animal> animals = animalService.findAnimalByCategory(category);
+        List<Animal> animals = animalService.findAnimalByCategory(CATEGORY.valueOf(category));
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
@@ -121,17 +126,6 @@ public class AnimalController {
         return "listAnimal";
     }
 }
-
-//    @GetMapping("/animal/list")
-//    public String showAnimalList(Model model, HttpSession session) {
-//        User loggedInUser = (User) session.getAttribute("loggedInUser");
-//        if (loggedInUser != null) {
-//            model.addAttribute("animals", animalRepository.findAnimalById(loggedInUser.getId()));
-//        }
-//        return "listAnimal";
-//    }
-//}
-//}
 
 
 

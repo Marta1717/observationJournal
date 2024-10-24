@@ -17,6 +17,16 @@
             width: 400px;
             text-align: left;
         }
+
+        .radio-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .radio-container label {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -45,11 +55,16 @@
             <br/>
         </div>
         <div class="mb-3">
-            Newsletter agree <br>
-            <form:radiobutton path="newsletter" value="YES" id="newsletteryes"/>
-            <label for="newsletteryes">Yes</label>
-            <form:radiobutton path="newsletter" value="NO" id="newsletterno"/>
-            <label for="newsletterno">No</label>
+            Newsletter agree <br><br>
+            <div class="radio-container">
+                <label class="form-check-label" for="newsletteryes">Yes</label>
+                <form:radiobutton path="newsletter" value="YES" id="newsletteryes" class="form-check-input"/>
+            </div>
+            <br>
+            <div class="radio-container">
+                <label class="form-check-label" for="newsletterno">No</label>
+                <form:radiobutton path="newsletter" value="NO" id="newsletterno" class="form-check-input"/>
+            </div>
             <form:errors path="newsletter" cssClass="error"/>
             <br/><br/>
         </div>

@@ -43,8 +43,6 @@ public class User {
 
 //    private String role;
 
-//    public static final List<String> NEWSLETTER = List.of(
-//            "Yes", "No");
     private String newsletter;
 
 //    public boolean hasRole(String role) {

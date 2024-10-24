@@ -11,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,12 +27,13 @@ public class Animal {
     @NotNull
     @Size(min = 3, max = 25)
     private String animalName;
+    @Enumerated(EnumType.STRING)
     @NotNull
-    private String category;
+    private CATEGORY category;
     private String animalDescription;
 
-    public static final List<String> CATEGORY= List.of(
-            "SSAK", "PTAK", "GAD", "PŁAZ", "RYBA");
+//    public static final List<String> CATEGORY= List.of(
+//            "SSAK", "PTAK", "GAD", "PŁAZ", "RYBA");
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -47,7 +47,4 @@ public class Animal {
     @OneToMany(mappedBy = "animal", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Observation> observations = new HashSet<>();
 
-    public String getAnimalCategory() {
-        return category;
-    }
 }

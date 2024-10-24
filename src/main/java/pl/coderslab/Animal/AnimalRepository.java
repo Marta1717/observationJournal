@@ -3,9 +3,12 @@ package pl.coderslab.Animal;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Repository
@@ -15,9 +18,11 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     List<Animal> findByAnimalName(String name);
 
-    List<Animal> findByCategory(String category);
+    List<Animal> findByCategory(@NotNull CATEGORY category);
 
-    List<Animal> findByUser_Username(String username);
+    @Query("SELECT a FROM Animal a WHERE a.user.username LIKE :username%")
+    List<Animal> findByUser_Username(@Param("username") String username);
 
-    List<Animal> findByLocation_LocationName(String locationName);
+    @Query("SELECT a FROM Animal a WHERE a.location.locationName LIKE :locationName ")
+    List<Animal> findByLocation_LocationName(@Param("locationName") String locationName);
 }

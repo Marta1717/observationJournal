@@ -45,7 +45,7 @@
 
         <div class="mb-3">
             Select category:<br/>
-            <form:select path="category" items="${category}"/>
+            <form:select path="category" id="category" items="${category}" itemValue="name"/>
             <form:errors path="category"/>
         </div>
 

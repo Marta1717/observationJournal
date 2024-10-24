@@ -70,9 +70,10 @@
             <th>Newsletter</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
         <c:forEach items="${users}" var="user">
-            <tr>
+            <tr></tr>
             <tr>
                 <td>${user.id}</td>
                 <td>${user.username}</td>
@@ -83,6 +84,14 @@
                 </td>
                 <td>
                     <a href="<c:url value="/user/delete/${user.id}"/>">Delete</a>
+                </td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/user/subscribe/${user.id}" method="post">
+                        <button type="submit" class="btn btn-primary">YES</button>
+                    </form>
+                    <form action="${pageContext.request.contextPath}/user/unsubscribe/${user.id}" method="post">
+                        <button type="submit" class="btn btn-warning">NO</button>
+                    </form>
                 </td>
             </tr>
         </c:forEach>
