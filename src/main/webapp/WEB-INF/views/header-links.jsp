@@ -11,7 +11,6 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('images/image.jpg');
             background-color: #def6de;
             margin: 0;
             padding: 0;
