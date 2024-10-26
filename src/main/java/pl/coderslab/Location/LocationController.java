@@ -56,17 +56,13 @@ public class LocationController {
         model.addAttribute("location", locationService.findLocationById(id));
         model.addAttribute("animals", animalService.findAllAnimals());
         model.addAttribute("user", loggedInUser);
-
         return "editLocation";
     }
 
     @PostMapping(value = "/location/edit")
     public String processEditLocation(@ModelAttribute Location location, @SessionAttribute("loggedInUser") User loggedInUser) {
-
         location.setUser(loggedInUser);
-
         locationService.saveLocation(location);
-
         return "redirect:/location/list";
     }
 
@@ -89,18 +85,19 @@ public class LocationController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         Location location = locationService.findLocationById(id);
         if (loggedInUser != null && location.getUser().getId().equals(loggedInUser.getId())) {
-            locationService.deleteLocation(id);
+            locationService.deleteLocationById(id);
         }
         return "redirect:/location/list";
     }
 
     @GetMapping("/location/get/{locationName}")
-    public String getLocationByLocationName(@PathVariable String locationName) {
-        Location location = (Location) locationService.findLocationByLocationName(locationName);
-        return location.toString();
+    public String getLocationByLocationName(@PathVariable String locationName, Model model) {
+        List<Location> locations = locationService.findLocationByLocationName(locationName);
+        model.addAttribute("locations", locations);
+        return "listLocation";
     }
 
-    @GetMapping("/locations/user/{id}")
+    @GetMapping("/location/user/{id}")
     public String getLocationsByUserId(@PathVariable Long id, Model model) {
         List<Location> locations = locationService.findLocationByUserId(id);
         model.addAttribute("location", locations);

@@ -25,4 +25,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     @Query("SELECT a FROM Animal a WHERE a.location.locationName LIKE :locationName ")
     List<Animal> findByLocation_LocationName(@Param("locationName") String locationName);
+
+    List<Animal> findAnimalByUser_Id(Long id);
 }

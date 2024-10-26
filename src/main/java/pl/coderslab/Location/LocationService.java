@@ -28,7 +28,7 @@ public class LocationService {
     }
 
     @Transactional
-    public void deleteLocation(Long id) {
+    public void deleteLocationById(Long id) {
         locationRepository.deleteById(id);
     }
     

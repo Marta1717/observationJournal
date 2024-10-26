@@ -51,41 +51,48 @@ public class AnimalController {
     }
 
     @GetMapping(value = "/animal/edit/{id}")
-    public String editAnimalForm(@PathVariable Long id, Model model) {
-
+    public String editAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
         Animal animal = animalService.findAnimalById(id);
-        if (animal == null) {
+        if (!animal.getUser().getId().equals(loggedInUser.getId())) {
             return "redirect:/animal/list";
         }
-        model.addAttribute("animal", animal);
+        model.addAttribute("animal", animalService.findAnimalById(id));
         model.addAttribute("location", locationService.findAllLocations());
-        model.addAttribute("user", animal.getUser());
+        model.addAttribute("user", loggedInUser);
         return "editAnimal";
     }
 
     @PostMapping(value = "/animal/edit")
-    public String processEditAnimal(@ModelAttribute Animal animal, @SessionAttribute("loggedUser") User loggedUser) {
-        animal.setUser(loggedUser);
+    public String processEditAnimal(@ModelAttribute Animal animal, @SessionAttribute("loggedInUser") User loggedInUser) {
+        animal.setUser(loggedInUser);
         animalService.saveAnimal(animal);
         return "redirect:/animal/list";
     }
 
     @GetMapping("/animal/delete/{id}")
-    public String deleteAnimalForm(@PathVariable Long id, Model model) {
+    public String deleteAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
         Animal animal = animalService.findAnimalById(id);
-        if (animal == null) {
+        if (!animal.getUser().getId().equals(loggedInUser.getId())) {
             return "redirect:/animal/list";
         }
         model.addAttribute("animal", animal);
         model.addAttribute("location", locationService.findAllLocations());
-        model.addAttribute("user", animal.getUser());
         return "deleteAnimal";
     }
 
     @PostMapping(value = "/animal/delete")
-    public String processDeleteAnimal(@RequestParam Long id) {
+    public String processDeleteAnimal(@RequestParam Long id, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
         Animal animal = animalService.findAnimalById(id);
-        if (animal != null) {
+        if (loggedInUser != null && animal.getUser().getId().equals(loggedInUser.getId())) {
             animalService.deleteAnimalById(id);
         }
         return "redirect:/animal/list";
@@ -93,8 +100,7 @@ public class AnimalController {
 
     @GetMapping("/animal/list")
     public String showAnimalList(Model model) {
-        List<Animal> animals = animalService.findAllAnimals();
-        model.addAttribute("animals", animals);
+        model.addAttribute("animals", animalService.findAllAnimals());
         return "listAnimal";
     }
 
@@ -117,6 +123,13 @@ public class AnimalController {
         List<Animal> animals = animalService.findAnimalsByUsername(username);
         model.addAttribute("animals", animals);
         return "listAnimal";
+    }
+
+    @GetMapping("/animal/user/{id}")
+    public String getAnimalsByUserId(@PathVariable Long id, Model model) {
+        List<Animal> animals = animalService.findAnimalByUserId(id);
+        model.addAttribute("animal", animals);
+        return "listLocation";
     }
 
     @GetMapping("/animal/location/{locationName}")

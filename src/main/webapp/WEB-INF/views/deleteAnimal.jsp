@@ -38,7 +38,7 @@
         <input type="hidden" name="id" value="${animal.id}"/>
         <p>Name:<br/><br/>${animal.animalName}</p>
         <p>Category:<br/><br/>${animal.category}</p>
-        <p>Description:<br/><br/>${animal.animalDescription}</p><br/><br/>
+        <p>Description:<br/><br/>${animal.animalDescription}</p><br/>
         <strong><a href="${pageContext.request.contextPath}/animal/list"><h4>CANCEL</h4></a></strong>
         <br/><br/>
         <strong>

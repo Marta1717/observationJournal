@@ -47,4 +47,8 @@ public class AnimalService {
     public List<Animal> findAnimalsByLocationName(String locationName) {
         return animalRepository.findByLocation_LocationName(locationName);
     }
+
+    public List<Animal> findAnimalByUserId(Long id) {
+        return animalRepository.findAnimalByUser_Id(id);
+    }
 }
