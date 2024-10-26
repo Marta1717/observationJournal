@@ -33,25 +33,15 @@
     <a href="${pageContext.request.contextPath}/animal/list"><h3>Observation List</h3></a>
     <br/><br/>
 
-<%--    <label for="user">Select User</label><br/>--%>
-<%--        <form:input path="user.id" id="user"/>--%>
-<%--        <form:errors path="user.id"/>--%>
-<%--    <br/>--%>
-
-    <label for="animal">Select Animal</label>
-        <form:select path="animal.id" id="animal" items="${animals}" itemLabel="animalName" itemValue="id"/>
-        <form:errors path="animal.id"/>
-    <br/>
-
-<%--    <label for="animal">Select Category:</label>--%>
-<%--        <form:select path="animal.category" id="animals" items="${category}"/>--%>
-<%--        <form:errors path="animal.category"/>--%>
-<%--    <br/>--%>
-
     <div class="mb-3">Select location<br/>
         <form:select path="location.id" id="location" items="${locations}" itemLabel="locationName" itemValue="id"/>
         <form:errors path="location.id"/>
     </div>
+
+    <label for="animal">Select animal</label>
+        <form:select path="animal.id" id="animal" items="${animals}" itemLabel="animalName" itemValue="id"/>
+        <form:errors path="animal.id"/>
+    <br/>
 
     <div class="mb-3">Additional description <br/>
         <form:textarea path="description" rows="4"/>

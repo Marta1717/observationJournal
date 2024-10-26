@@ -36,11 +36,7 @@
     <br/><br/><br/>
     <form:form modelAttribute="animal" method="post" action="${pageContext.request.contextPath}/animal/edit/">
         <form:hidden path="id" />
-<%--        <div class="mb-3">--%>
-<%--            Select user<br/>--%>
-<%--            <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>--%>
-<%--            <form:errors path="user.id"/>--%>
-<%--        </div>--%>
+
         <div class="mb-3">
             Category:<br/>
             <form:select path="category" id="category" items="${category}" itemValue="name"/>
@@ -48,7 +44,7 @@
         </div>
 
         <div class="mb-3">
-            Name <br/>
+            Animal name <br/>
             <form:input path="animalName"/>
         </div>
 

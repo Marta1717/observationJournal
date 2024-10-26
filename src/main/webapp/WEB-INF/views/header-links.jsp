@@ -85,9 +85,25 @@
             position: absolute;
             top: 20px;
             right: 20px;
+            text-align: right;
             color: #036400;
             font-weight: bold;
         }
+
+        .user-info a.logout-link {
+            color: #036400;
+            text-decoration: none;
+        }
+
+        .user-info a.logout-link {
+            color: rgba(142, 4, 25, 0.96);
+            text-decoration: none;
+        }
+
+        .user-info a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
@@ -98,8 +114,12 @@
     </h1>
     <br/><br/>
     <div class="user-info">
-        Logged in as: <c:out value="${sessionScope.loggedInUser.username}"/>
+        <span class="logged-in-text"></span> Logged in as:</span>
+        <strong class="username"><c:out value="${sessionScope.loggedInUser.username}"/></strong>
+        <br><br>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-link">Log out</a>
     </div>
+
     <div class="header-links">
         <a href="${pageContext.request.contextPath}/location/add">Add New Location</a>
         <a href="${pageContext.request.contextPath}/location/list">Location List</a>
@@ -110,3 +130,4 @@
     </div>
 </div>
 </body>
+</html>

@@ -76,6 +76,12 @@ public class UserController {
         }
     }
 
+    @GetMapping("/logout")
+    public  String processLogout(HttpSession session) {
+        session.removeAttribute("loggedInUser");
+        return "redirect:/login";
+    }
+
     @GetMapping(value = "/user/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
         User user = userService.findUserById(id);

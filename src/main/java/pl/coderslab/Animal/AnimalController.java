@@ -38,10 +38,11 @@ public class AnimalController {
     @PostMapping(value = "/animal/add/")
     public String processAddAnimal(@ModelAttribute Animal animal, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
             animal.setUser(loggedInUser);
             animalService.saveAnimal(animal);
-        }
         return "redirect:/animal/list";
     }
 

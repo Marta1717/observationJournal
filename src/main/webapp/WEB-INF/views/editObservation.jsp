@@ -82,15 +82,15 @@
         <br><br>
 
         <div class="mb-3">
-            <label for="animal">Select animal:</label>
-            <form:select path="animal.id" items="${animals}" itemLabel="animalName" itemValue="id"/>
-            <form:errors path="animal.id"/>
+            <label for="location">Select location:</label>
+            <form:select path="location.id" items="${locations}" itemLabel="LocationName" itemValue="id"/>
+            <form:errors path="location.id"/>
         </div>
 
         <div class="mb-3">
-            <label for="location">Location:</label>
-            <form:select path="location.id" items="${locations}" itemLabel="LocationName" itemValue="id"/>
-            <form:errors path="location.id"/>
+            <label for="animal">Select animal:</label>
+            <form:select path="animal.id" items="${animals}" itemLabel="animalName" itemValue="id"/>
+            <form:errors path="animal.id"/>
         </div>
 
         <div class="mb-3">

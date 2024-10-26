@@ -21,10 +21,10 @@ public class ObservationService {
         observationRepository.save(observation);
     }
 
-    @Transactional
-    public void editObservation (Observation observation) {
-        observationRepository.save(observation);
-    }
+//    @Transactional
+//    public void editObservation (Observation observation) {
+//        observationRepository.save(observation);
+//    }
 
     public List<Observation> findAllObservations() {
         return observationRepository.findAll();
