@@ -22,9 +22,4 @@ public class HomeController {
     public String showHomeForm() {
         return "home";
     }
-
-//    @PostMapping("/")
-//    public String addForm() {  //@ModelAttribute Model model, BindingResult bindingResult) {
-//        return "login";
-//    }
 }
