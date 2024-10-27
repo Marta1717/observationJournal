@@ -15,7 +15,6 @@ import java.util.List;
 
 @Slf4j
 //@RestController
-//@RequestMapping("/discussion")
 @RequiredArgsConstructor
 @Controller
 public class DiscussionController {
@@ -23,8 +22,6 @@ public class DiscussionController {
     private final DiscussionService discussionService;
     private final ObservationService observationService;
     private final UserService userService;
-//    private final AnimalService animalService;
-//    private final LocationService locationService;
 
     @RequestMapping("/discussion/get/{id}")
     @ResponseBody
@@ -33,59 +30,44 @@ public class DiscussionController {
         return discussion.toString();
     }
 
-    @GetMapping(value = "/discussion/add/form/{id}/")
+    @GetMapping(value = "/observation/{id}/discussion")
     public String showAddDiscussionForm(Model model, HttpSession session, @PathVariable Long id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
         }
         Observation observation = observationService.findObservationById(id);
-//        List<Animal> animals = animalService.findAllAnimals();
-//        List<Location> locations = locationService.findAllLocations();
-//        model.addAttribute("animal", animals);
-//        model.addAttribute("location", locations);
-        model.addAttribute("observations", observation);
+        List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
+        model.addAttribute("discussions", discussions);
         model.addAttribute("discussion", new Discussion());
-        model.addAttribute("user", observation.getUser());
+        model.addAttribute("observation", observation);
+        model.addAttribute("user", loggedInUser);
         return "addDiscussion";
     }
 
-    @PostMapping(value = "/discussion/add")
-    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
-        System.out.println("Received id: " + id);
-
+    @PostMapping(value = "/observation/{id}/discussion")
+    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @PathVariable Long id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            discussion.setUser(loggedInUser);
+        if (loggedInUser == null) {
+            return "redirect:/login";
         }
-
+        discussion.setUser(loggedInUser);
         Observation observation = observationService.findObservationById(id);
-//                    Observation observation = discussion.getObservation();
         if (observation != null) {
             discussion.setObservation(observation);
+           // discussion.setCreatedAt(LocalDateTime.now());
             discussionService.saveDiscussion(discussion);
-        } else {
-            throw new IllegalArgumentException("Observation cannot be null or its ID is missing");
         }
-        return "redirect:/observation/list/all";
+        return  "redirect:/observation/{id}/discussion";
     }
-    //nie edytujemy i nie usuwamy dyskusji
+
+//nie edytujemy i nie usuwamy dyskusji
 
     @GetMapping("/discussion/list")
     public String showDiscussionList(Model model) {
         model.addAttribute("discussion", discussionService.findAllDiscussion());
         return "listDiscussion";
     }
-
-//    @ModelAttribute("observations")
-//    public List<Observation> getObservation() {
-//        return this.observationService.findAllObservations();
-//    }
-//
-//    @ModelAttribute("users")
-//    public List<User> getUsers() {
-//        return this.userService.findAllUsers();
-//    }
 
     @GetMapping("/discussions/user/{id}")
     public String getUserDiscussions(@PathVariable Long id, Model model) {
@@ -104,40 +86,3 @@ public class DiscussionController {
         return "listDiscussion";
     }
 }
-//    nie chcemy edytować ani usuwać komentarzy
-
-//    @GetMapping(value = "/discussion/edit/{id}")
-//    public String editDiscussionForm(@PathVariable Long id, Model model) {
-//        Discussion discussion = discussionRepository.findDiscussionById(id);
-//        model.addAttribute("discussion", discussion);
-//        return "editDiscussion";
-//    }
-//
-//    @ResponseBody
-//    @PostMapping(value = "/discussion/edit")
-//    public String processEditDiscussion(@ModelAttribute Discussion discussion) {
-//        discussionRepository.updateDiscussion(discussion);
-//        return "Updated discussion: " + discussion.getComment();
-//    }
-//
-//    @GetMapping("/discussion/delete/{id}")
-//    public String deleteDiscussionForm(@PathVariable Long id, Model model) {
-//        Discussion discussion = discussionRepository.findDiscussionById(id);
-//        model.addAttribute("discussion", discussion);
-//        return "deleteDiscussion";
-//    }
-//
-//    @ResponseBody
-//    @PostMapping(value = "/discussion/delete")
-//    public String processDeletediscussion(@RequestParam Long id) {
-//        discussionRepository.deleteDiscussionById(id);
-//        return "Deleted discussion";
-//    }
-//    @RequestMapping("discussion/delete/{id}")
-//    @ResponseBody
-//    public String deleteDiscussion(@PathVariable Long id) {
-//        Discussion discussion = discussionRepository.findDiscussionById(id);
-//        discussionRepository.deleteDiscussionById(discussion.getId());
-//        return "Deleted" + discussion;
-//    }
-//}

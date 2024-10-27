@@ -1,57 +1,104 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header-links.jsp" %>
+<%@include file="header-links.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add discussion</title>
+  <title>Details Observation</title>
 
-    <style>
+  <style>
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      margin-left: 15%;
+      margin-right: 15%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 1200px;
+      overflow-y: auto;
+      height: 80vh;
+      text-align: left;
+    }
 
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            margin-left: 35%;
-            margin-right: 35%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: left;
-        }
-    </style>
+    h2 {
+      text-align: center;
+      color: #4CAF50;
+      margin-top: 0;
+    }
 
+    h3 {
+      text-align: left;
+      color: #4cafaf;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px; /* Zmniejsza przestrzeń wewnętrzną komórek */
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+
+    .highlight {
+      color: #0e50b1;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+  </style>
 </head>
 <body>
 <div class="container">
-    <h2>Add New Comment</h2>
-    <br/><br/><br/>
-    <form:form modelAttribute="discussion" method="post"
-               action="${pageContext.request.contextPath}/discussion/add">
-        <input type="hidden" name="id" value="${observation.id}"/>
-<%--        <a href="${pageContext.request.contextPath}/discussion/list"><h3>Discussion List</h3></a>--%>
-        <br/><br/><br/>
-        <%--@declare id="location"--%>
-        <%--@elvariable id="discussion" type=""--%>
+  <h2>Details For Observation</h2>
 
-        <%--        zbędne, do komentarza wchodzi się przez obserwację--%>
-        <%--        <div class="mb-3">--%>
-        <%--            Select observation:<br/>--%>
-        <%--            <form:select path="observation.id" id="location" items="${observations}" itemLabel="id" itemValue="id"/>--%>
-        <%--            <form:errors path="observation.id"/>--%>
-        <%--        </div>--%>
+  <p><strong>Observation Details:</strong></p>
+  <p>User: <span class="highlight">${observation.user.username}</span></p>
+  <p>Location: <span class="highlight">${observation.location.locationName}</span></p>
+  <p>Animal: <span class="highlight">${observation.animal.animalName}</span></p>
 
-        <div class="mb-3">
-            ${observations}
-            Comment: <br/>
-            <form:textarea path="comment" rows="7"/>
-            <form:errors path="comment"/>
-        </div>
+  <h3>Comments:</h3>
+  ${discussions}
+  <c:if test="${not empty discussion}">
+  <c:forEach items="${discussions}" var="discussion">
+  <div class="comment">
+    <p>${discussion.comment}</p>
+    <p><strong>Created by:</strong> ${discussion.user.username} at ${discussion.createdAt}</p>
+    <hr/>
+  </div>
+  </c:forEach>
+  </c:if>
+  <c:if test="${empty discussion}">
+  <p>No comments yet.</p>
+  </c:if>
 
-        <div class="mb-3">
-            <button type="submit">SUBMIT</button>
-        </div>
-    </form:form>
+  <h3>Add New Comment:</h3>
+  <form action="${pageContext.request.contextPath}/observation/${observation.id}/discussion" method="post">
+    <label>
+      <textarea name="comment" rows="5" cols="50" placeholder="Add your comment: "></textarea>
+    </label>
+    <input type="hidden" name="observationId" value="${observation.id}">
+    <button type="submit">SUBMIT COMMENT</button>
+  </form>
+
+  <br/>
+  <a href="${pageContext.request.contextPath}/observation/list/all"><h3>Back To Observation List</h3></a>
 </div>
 </body>
 </html>
