@@ -23,7 +23,7 @@ public class Observation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Data nie może być pusta")
+    @NotNull(message = "The 'date' field cannot be empty")
     private LocalDate date;
 
     @Size(min = 3, max = 500, message = "Opis musi mieć od 3 do 500 znaków")
@@ -36,17 +36,17 @@ public class Observation {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull(message = "Pole 'user' nie może być puste")
+    @NotNull(message = "The 'user' field cannot be empty")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
-    @NotNull(message = "Pole 'location' nie może być puste")
+    @NotNull(message = "The 'location' field cannot be empty")
     private Location location;
 
     @ManyToOne
     @JoinColumn(name = "animal_id")
-    @NotNull(message = "Pole 'animal' nie może być puste")
+    @NotNull(message = "The 'animal' field cannot be empty")
     private Animal animal;
 
     @OneToOne(mappedBy = "observation", orphanRemoval = true, fetch = FetchType.EAGER)

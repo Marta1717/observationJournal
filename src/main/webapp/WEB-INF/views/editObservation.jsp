@@ -67,35 +67,37 @@
     </style>
 </head>
 <body>
+
 <div class="container">
     <%--@declare id="animal"--%>
     <%--@declare id="location"--%>
     <%--@elvariable id="observation" type=""--%>
     <h2>Edit Observation</h2>
+        <c:if test="${not empty error}">
+            <p style="color: red;">${error}</p>
+        </c:if>
     <br/><br/>
-
-    <a href="${pageContext.request.contextPath}/observation/list">Observation List</a>
+        <a href="${pageContext.request.contextPath}/observation/list"><h3>Observation List</h3></a>
     <br/><br/><br/>
-    <form:form modelAttribute="observation" method="post"
-               action="${pageContext.request.contextPath}/observation/edit/">
-        <input type="hidden" name="id" value="${observation.id}"/>
-        <br><br>
+    <form:form modelAttribute="observation" method="post" action="${pageContext.request.contextPath}/observation/edit/">
+        <form:hidden path="id" />
+        <form:hidden path="date"/>
 
         <div class="mb-3">
             <label for="location">Select location:</label>
             <form:select path="location.id" items="${locations}" itemLabel="LocationName" itemValue="id"/>
-            <form:errors path="location.id"/>
+            <form:errors path="location"/>
         </div>
 
         <div class="mb-3">
             <label for="animal">Select animal:</label>
             <form:select path="animal.id" items="${animals}" itemLabel="animalName" itemValue="id"/>
-            <form:errors path="animal.id"/>
+            <form:errors path="animal"/>
         </div>
 
         <div class="mb-3">
             <label for="description" rows="6" cols="20">Notes</label>
-            <form:textarea path="description" id="description"/>
+            <form:textarea path="description"/>
             <form:errors path="description"/>
         </div>
 
@@ -103,6 +105,13 @@
             <button type="submit">SUBMIT</button>
         </div>
     </form:form>
+<%--        <!-- Wyświetlenie zapisanych danych po edycji -->--%>
+<%--        <h3>Observation Details:</h3>--%>
+<%--        <p><strong>Id:</strong> ${observation.id}</p>--%>
+<%--        <p><strong>User:</strong> ${observation.user.username}</p>--%>
+<%--        <p><strong>Location:</strong> ${observation.location.locationName}</p>--%>
+<%--        <p><strong>Animal:</strong> ${observation.animal.animalName}</p>--%>
+
 </div>
 </body>
 </html>

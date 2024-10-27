@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Animal.Animal;
 import pl.coderslab.Animal.AnimalService;
 import pl.coderslab.Animal.CATEGORY;
+import pl.coderslab.Discussion.DiscussionService;
 import pl.coderslab.Location.Location;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
@@ -24,6 +25,7 @@ public class ObservationController {
     private final ObservationService observationService;
     private final LocationService locationService;
     private final AnimalService animalService;
+    private final DiscussionService discussionService;
 
 
     @GetMapping("/observation/add")
@@ -127,20 +129,6 @@ public class ObservationController {
         model.addAttribute("category", CATEGORY.values());
         return "listObservation";
     }
-//  raczej zbędne, usuniety widok detailDiscussion
-//    @GetMapping("/observation/{id}/discussion")
-//    public String showDiscussionForObservation(@PathVariable Long id, Model model) {
-//        Observation observation = observationService.findObservationById(id);
-//        Discussion discussion = observation.getDiscussion();
-//
-//        if (discussion == null) {
-//            discussion = new Discussion();
-//            discussion.setObservation(observation);
-//        }
-//        model.addAttribute("observation", observation);
-//        model.addAttribute("discussion", discussion);
-//        return "detailsDiscussion";
-//    }
 
 //    @GetMapping("/observation/{id}")
 //    public String showObservationDetails(@PathVariable Long id, Model model) {
@@ -148,9 +136,9 @@ public class ObservationController {
 //        List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
 //        model.addAttribute("observation", observation);
 //        model.addAttribute("discussionList", discussions);
-//        return "detailsObservationWithComments";
+//        return "addDiscussion";
 //    }
-
+//
 //    @PostMapping("/observation/discussion/add")
 //    public String processAddDiscussion(@ModelAttribute Discussion discussion, @RequestParam Long id, HttpSession session) {
 //        User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -162,7 +150,7 @@ public class ObservationController {
 //                discussionService.saveDiscussion(discussion);
 //            }
 //        }
-//        return "redirect:/observation/";
+//        return "redirect:/observation/list/all";
 //    }
 }
 //
@@ -195,14 +183,9 @@ public class ObservationController {
 //        model.addAttribute("observations", observations);
 //        return "listAllObservation";
 //    }
-//}
 //    @ModelAttribute("users")
 //    public List<User> getUsers() {
 //        return this.userService.findAllUsers();
-//    }
-//    @ModelAttribute("category")
-//    public List<String> getCategory() {
-//        return observation.CATEGORY;
 //    }
 //}
 
