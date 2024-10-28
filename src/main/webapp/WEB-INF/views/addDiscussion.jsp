@@ -75,7 +75,7 @@
 
   <h3>Comments:</h3>
   ${discussions}
-  <c:if test="${not empty discussion}">
+  <c:if test="${not empty discussions}">
   <c:forEach items="${discussions}" var="discussion">
   <div class="comment">
     <p>${discussion.comment}</p>
@@ -84,16 +84,16 @@
   </div>
   </c:forEach>
   </c:if>
-  <c:if test="${empty discussion}">
+  <c:if test="${empty discussions}">
   <p>No comments yet.</p>
   </c:if>
 
   <h3>Add New Comment:</h3>
-  <form action="${pageContext.request.contextPath}/observation/${observation.id}/discussion" method="post">
+  <form action="${pageContext.request.contextPath}/observation/discussion/add" method="post">
     <label>
       <textarea name="comment" rows="5" cols="50" placeholder="Add your comment: "></textarea>
     </label>
-    <input type="hidden" name="observationId" value="${observation.id}">
+    <input type="hidden" name="id" value="${observation.id}">
     <button type="submit">SUBMIT COMMENT</button>
   </form>
 

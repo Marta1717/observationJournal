@@ -30,13 +30,16 @@ public class DiscussionController {
         return discussion.toString();
     }
 
-    @GetMapping(value = "/observation/{id}/discussion")
-    public String showAddDiscussionForm(Model model, HttpSession session, @PathVariable Long id) {
+    @GetMapping(value = "/observation/discussion/add/form")
+    public String showAddDiscussionForm(Model model, HttpSession session, @RequestParam Long id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
         }
         Observation observation = observationService.findObservationById(id);
+        if (observation == null) {
+            return "redirect:/error";
+        }
         List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
         model.addAttribute("discussions", discussions);
         model.addAttribute("discussion", new Discussion());
@@ -45,20 +48,17 @@ public class DiscussionController {
         return "addDiscussion";
     }
 
-    @PostMapping(value = "/observation/{id}/discussion")
-    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @PathVariable Long id) {
+    @PostMapping(value = "/observation/discussion/add")
+    public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
         }
-        discussion.setUser(loggedInUser);
         Observation observation = observationService.findObservationById(id);
-        if (observation != null) {
+            discussion.setUser(loggedInUser);
             discussion.setObservation(observation);
-           // discussion.setCreatedAt(LocalDateTime.now());
             discussionService.saveDiscussion(discussion);
-        }
-        return  "redirect:/observation/{id}/discussion";
+        return "redirect:/discussion/get/" + discussion.getId();
     }
 
 //nie edytujemy i nie usuwamy dyskusji

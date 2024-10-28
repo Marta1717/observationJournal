@@ -151,7 +151,7 @@
                     <td>${observation.location.locationDescription}</td>
                     <td>${observation.description}</td>
                     <td>
-                        <a href="<c:url value="/observation/${observation.id}/discussion/"/>">Discussion</a>
+                        <a href="<c:url value="/observation/discussion/add/form?id=${observation.id}"/>">Discussion</a>
                     </td>
                     <td>
                     <a href="<c:url value="/observation/edit/${observation.id}"/>">Edit</a>

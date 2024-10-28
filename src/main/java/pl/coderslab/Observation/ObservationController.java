@@ -150,7 +150,7 @@ public class ObservationController {
 //                discussionService.saveDiscussion(discussion);
 //            }
 //        }
-//        return "redirect:/observation/list/all";
+//        return "addDiscusion";
 //    }
 }
 //
