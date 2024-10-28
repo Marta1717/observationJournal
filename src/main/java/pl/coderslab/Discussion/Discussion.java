@@ -21,7 +21,8 @@ public class Discussion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    @NotNull(message = "The 'date' field cannot be empty")
+
+    @NotNull
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -34,7 +35,7 @@ public class Discussion {
     private User user;
 
     @ToString.Exclude
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "observation_id")
     private Observation observation;
 }

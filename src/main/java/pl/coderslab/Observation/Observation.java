@@ -12,6 +12,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,7 +28,7 @@ public class Observation {
     @NotNull(message = "The 'date' field cannot be empty")
     private LocalDate date;
 
-    @Size(min = 3, max = 500, message = "Opis musi mieć od 3 do 500 znaków")
+    @Size(min = 3, max = 500, message = "Description must be between 3 and 500 characters long")
     private String description;
 
     @PrePersist
@@ -49,6 +51,7 @@ public class Observation {
     @NotNull(message = "The 'animal' field cannot be empty")
     private Animal animal;
 
-    @OneToOne(mappedBy = "observation", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Discussion discussion;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "observation", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Discussion> discussion = new HashSet<>();
 }

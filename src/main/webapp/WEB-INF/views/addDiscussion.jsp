@@ -94,6 +94,7 @@
       <textarea name="comment" rows="5" cols="50" placeholder="Add your comment: "></textarea>
     </label>
     <input type="hidden" name="id" value="${observation.id}">
+<%--    <input type="hidden" name="id" value="${discussion.id}">--%>
     <button type="submit">SUBMIT COMMENT</button>
   </form>
 

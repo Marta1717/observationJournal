@@ -11,6 +11,7 @@ import pl.coderslab.User.User;
 import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -50,15 +51,23 @@ public class DiscussionController {
 
     @PostMapping(value = "/observation/discussion/add")
     public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
+        // Logowanie
+        System.out.println("Dodawanie nowego komentarza: " + discussion.getComment());
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
         }
         Observation observation = observationService.findObservationById(id);
-            discussion.setUser(loggedInUser);
-            discussion.setObservation(observation);
-            discussionService.saveDiscussion(discussion);
-        return "redirect:/discussion/get/" + discussion.getId();
+        discussion.setUser(loggedInUser);
+        discussion.setObservation(observation);
+        discussion.setCreatedAt(LocalDateTime.now());
+        observation.getDiscussion().add(discussion);
+        discussionService.saveDiscussion(discussion);
+
+        System.out.println("Zapisano komentarz: " + discussion);
+
+        return "redirect:/observation/list/all";
     }
 
 //nie edytujemy i nie usuwamy dyskusji

@@ -27,17 +27,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Pole 'user' nie może być puste")
+    @NotNull(message = "The 'user' field cannot be empty")
     @Column(unique = true)
     @Size(min = 3, max = 15)
     private String username;
 
     @ToString.Exclude
-    @NotNull(message = "Pole 'password' nie może być puste")
+    @NotNull(message = "The 'password' field cannot be empty")
     @Size(min = 3, max = 15)
     private String password;
 
-    @NotNull(message = "Pole 'email' nie może być puste")
+    @NotNull(message = "The 'email' field cannot be empty")
     @Email
     private String email;
 
