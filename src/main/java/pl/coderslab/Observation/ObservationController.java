@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Animal.Animal;
 import pl.coderslab.Animal.AnimalService;
 import pl.coderslab.Animal.CATEGORY;
-import pl.coderslab.Discussion.DiscussionService;
 import pl.coderslab.Location.Location;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
@@ -26,7 +25,7 @@ public class ObservationController {
     private final ObservationService observationService;
     private final LocationService locationService;
     private final AnimalService animalService;
-    private final DiscussionService discussionService;
+//    private final DiscussionService discussionService;
     private final UserService userService;
 
 
