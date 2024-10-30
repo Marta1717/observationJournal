@@ -26,14 +26,18 @@ public class DiscussionController {
 
     @RequestMapping("/discussion/get/{id}")
     @ResponseBody
-    public String getDiscussionById(@PathVariable Long id) {
+    public String getDiscussionById(@PathVariable Long id, Model model) {
         Discussion discussion = discussionService.findById(id);
+        if (discussion == null) {
+            return "Discussion not found";
+        }
+        model.addAttribute("discussion", discussion);
         return discussion.toString();
     }
 
     @GetMapping(value = "/observation/discussion/add/form")
     public String showAddDiscussionForm(Model model, HttpSession session, @RequestParam Long id) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -51,11 +55,14 @@ public class DiscussionController {
 
     @PostMapping(value = "/observation/discussion/add")
     public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
         Observation observation = observationService.findObservationById(id);
+        if (observation == null) {
+            return "redirect:/error";
+        }
         discussion.setUser(loggedInUser);
         discussion.setObservation(observation);
         discussion.setCreatedAt(LocalDateTime.now());
@@ -82,8 +89,11 @@ public class DiscussionController {
     @GetMapping("/discussion/observation/{id}")
     public String showObservationDiscussions(@PathVariable Long id, Model model) {
         Observation observation = observationService.findObservationById(id);
-        model.addAttribute("observation", observation);
+        if (observation == null) {
+            return "redirect:/error";
+        }
         List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
+        model.addAttribute("observation", observation);
         model.addAttribute("discussions", discussions);
         return "listDiscussion";
     }

@@ -74,7 +74,7 @@
   <p>Animal: <span class="highlight">${observation.animal.animalName}</span></p>
 
   <h3>Comments:</h3>
-  ${discussions}
+<%--  ${discussions}--%>
   <c:if test="${not empty discussions}">
   <c:forEach items="${discussions}" var="discussion">
   <div class="comment">
