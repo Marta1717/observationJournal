@@ -49,7 +49,6 @@ public class DiscussionController {
         return "addDiscussion";
     }
 
-
     @PostMapping(value = "/observation/discussion/add")
     public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
