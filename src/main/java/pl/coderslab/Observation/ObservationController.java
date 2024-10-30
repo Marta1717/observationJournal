@@ -12,6 +12,7 @@ import pl.coderslab.Discussion.DiscussionService;
 import pl.coderslab.Location.Location;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -26,14 +27,16 @@ public class ObservationController {
     private final LocationService locationService;
     private final AnimalService animalService;
     private final DiscussionService discussionService;
+    private final UserService userService;
 
 
     @GetMapping("/observation/add")
     public String addObservationForm(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
+        User loggedInUser = userService.getLoggedInUser(session);
+//        User loggedInUser = (User) session.getAttribute("loggedInUser");
+//        if (loggedInUser == null) {
+//            return "redirect:/login";
+//        }
         List<Location> locations = locationService.findLocationByUserId(loggedInUser.getId());
         List<Animal> animals = animalService.findAnimalByUserId(loggedInUser.getId());
         model.addAttribute("observation", new Observation());
@@ -45,10 +48,11 @@ public class ObservationController {
 
     @PostMapping("/observation/add")
     public String processAddObservation(@ModelAttribute Observation observation, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
+        User loggedInUser = userService.getLoggedInUser(session);
+//        User loggedInUser = (User) session.getAttribute("loggedInUser");
+//        if (loggedInUser == null) {
+//            return "redirect:/login";
+//        }
         observation.setUser(loggedInUser);
         observationService.saveObservation(observation);
 
@@ -57,10 +61,11 @@ public class ObservationController {
 
     @GetMapping(value = "/observation/edit/{id}")
     public String editObservationForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
+        User loggedInUser = userService.getLoggedInUser(session);
+//        User loggedInUser = (User) session.getAttribute("loggedInUser");
+//        if (loggedInUser == null) {
+//            return "redirect:/login";
+//        }
         Observation observation = observationService.findObservationById(id);
         if (!observation.getUser().getId().equals(loggedInUser.getId())) {
             return "redirect:/observation/list";
@@ -73,7 +78,8 @@ public class ObservationController {
     }
 
     @PostMapping(value = "/observation/edit")
-    public String processEditObservation(@ModelAttribute Observation observation, @SessionAttribute("loggedInUser") User loggedInUser) {
+    public String processEditObservation(@ModelAttribute Observation observation, HttpSession session) {
+        User loggedInUser = userService.getLoggedInUser(session);
         observation.setUser(loggedInUser);
         observationService.saveObservation(observation);
         return "redirect:/observation/list/all";
@@ -81,10 +87,11 @@ public class ObservationController {
 
     @GetMapping("/observation/delete/{id}")
     public String deleteObservationForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
+        User loggedInUser = userService.getLoggedInUser(session);
+//        User loggedInUser = (User) session.getAttribute("loggedInUser");
+//        if (loggedInUser == null) {
+//            return "redirect:/login";
+//        }
         Observation observation = observationService.findObservationById(id);
         if (!observation.getUser().getId().equals(loggedInUser.getId())) {
             return "redirect:/observation/list/all";
@@ -97,7 +104,8 @@ public class ObservationController {
 
     @PostMapping(value = "/observation/delete")
     public String processDeleteObservation(@RequestParam Long id, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
+        //   User loggedInUser = (User) session.getAttribute("loggedInUser");
         Observation observation = observationService.findObservationById(id);
         if (loggedInUser != null && observation.getUser().getId().equals(loggedInUser.getId())) {
             observationService.deleteObservationById(id);
