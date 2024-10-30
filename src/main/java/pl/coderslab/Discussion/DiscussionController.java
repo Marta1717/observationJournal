@@ -62,9 +62,6 @@ public class DiscussionController {
         observation.getDiscussion().add(discussion);
         discussion.setId(null);
         discussionService.saveDiscussion(discussion);
-
-        System.out.println("Zapisano komentarz: " + discussion);
-
         return "redirect:/observation/list/all";
     }
 
