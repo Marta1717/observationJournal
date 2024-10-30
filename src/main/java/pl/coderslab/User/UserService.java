@@ -2,6 +2,7 @@ package pl.coderslab.User;
 
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class UserService {
 
     @Transactional
     public void saveUser(User user) {
-        // Można dodać walidację
         userRepository.save(user);
     }
 
@@ -46,10 +46,13 @@ public class UserService {
         throw new IllegalArgumentException("Invalid username or password");
     }
 
-//    public List<Discussion> getUserDiscussions(Long id) {
-//        User user = userRepository.findUserById(id);
-//        return new ArrayList<>(user.getDiscussions());
-//    }
+    public User getLoggedInUser(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            throw new IllegalStateException("User is not logged in");
+        }
+        return loggedInUser;
+    }
 
     @Transactional
     public void subscribeToNewsletter(Long userId) {
@@ -64,4 +67,6 @@ public class UserService {
         user.setNewsletter("NO");
         userRepository.save(user);
     }
+
+
 }
