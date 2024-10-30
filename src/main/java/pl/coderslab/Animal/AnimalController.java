@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Location.Location;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
@@ -20,11 +21,12 @@ public class AnimalController {
 
     private final AnimalService animalService;
     private final LocationService locationService;
+    private final UserService userService;
 
 
     @GetMapping(value = "/animal/add")
     public String showAddForm(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -37,7 +39,7 @@ public class AnimalController {
 
     @PostMapping(value = "/animal/add/")
     public String processAddAnimal(@ModelAttribute Animal animal, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -53,7 +55,7 @@ public class AnimalController {
 
     @GetMapping(value = "/animal/edit/{id}")
     public String editAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -68,7 +70,8 @@ public class AnimalController {
     }
 
     @PostMapping(value = "/animal/edit")
-    public String processEditAnimal(@ModelAttribute Animal animal, @SessionAttribute("loggedInUser") User loggedInUser) {
+    public String processEditAnimal(@ModelAttribute Animal animal, HttpSession session) {
+        User loggedInUser = userService.getLoggedInUser(session);
         animal.setUser(loggedInUser);
         animalService.saveAnimal(animal);
         return "redirect:/animal/list";
@@ -76,7 +79,7 @@ public class AnimalController {
 
     @GetMapping("/animal/delete/{id}")
     public String deleteAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -91,7 +94,7 @@ public class AnimalController {
 
     @PostMapping(value = "/animal/delete")
     public String processDeleteAnimal(@RequestParam Long id, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         Animal animal = animalService.findAnimalById(id);
         if (loggedInUser != null && animal.getUser().getId().equals(loggedInUser.getId())) {
             animalService.deleteAnimalById(id);
