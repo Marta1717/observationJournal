@@ -42,8 +42,8 @@ public class DiscussionController {
             return "redirect:/error";
         }
         List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
-        model.addAttribute("discussions", discussions);
         model.addAttribute("discussion", new Discussion());
+        model.addAttribute("discussions", discussions);
         model.addAttribute("observation", observation);
         model.addAttribute("user", loggedInUser);
         return "addDiscussion";
@@ -51,9 +51,6 @@ public class DiscussionController {
 
     @PostMapping(value = "/observation/discussion/add")
     public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
-        // Logowanie
-        System.out.println("Dodawanie nowego komentarza: " + discussion.getComment());
-
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
@@ -63,14 +60,13 @@ public class DiscussionController {
         discussion.setObservation(observation);
         discussion.setCreatedAt(LocalDateTime.now());
         observation.getDiscussion().add(discussion);
+        discussion.setId(null);
         discussionService.saveDiscussion(discussion);
 
         System.out.println("Zapisano komentarz: " + discussion);
 
         return "redirect:/observation/list/all";
     }
-
-//nie edytujemy i nie usuwamy dyskusji
 
     @GetMapping("/discussion/list")
     public String showDiscussionList(Model model) {
