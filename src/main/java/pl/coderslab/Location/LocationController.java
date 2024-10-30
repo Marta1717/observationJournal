@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Animal.AnimalService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -21,10 +22,12 @@ public class LocationController {
     //    @Autowired
     private final LocationService locationService;
     private final AnimalService animalService;
+    private final UserService userService;
+
 
     @GetMapping(value = "/location/add")
     public String showAddLocationForm(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -35,7 +38,7 @@ public class LocationController {
 
     @PostMapping(value = "/location/add")
     public String processAddLocation(@ModelAttribute Location location, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser != null) {
             location.setUser(loggedInUser);
             locationService.saveLocation(location);
@@ -45,7 +48,7 @@ public class LocationController {
 
     @GetMapping(value = "/location/edit/{id}")
     public String editLocationForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -60,15 +63,18 @@ public class LocationController {
     }
 
     @PostMapping(value = "/location/edit")
-    public String processEditLocation(@ModelAttribute Location location, @SessionAttribute("loggedInUser") User loggedInUser) {
+    public String processEditLocation(@ModelAttribute Location location, HttpSession session) {
+        User loggedInUser = userService.getLoggedInUser(session);
+        if (loggedInUser != null) {
         location.setUser(loggedInUser);
         locationService.saveLocation(location);
+        }
         return "redirect:/location/list";
     }
 
     @GetMapping("/location/delete/{id}")
     public String deleteLocationForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -82,7 +88,7 @@ public class LocationController {
 
     @PostMapping(value = "/location/delete")
     public String processDeleteLocation(@RequestParam Long id, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser = userService.getLoggedInUser(session);
         Location location = locationService.findLocationById(id);
         if (loggedInUser != null && location.getUser().getId().equals(loggedInUser.getId())) {
             locationService.deleteLocationById(id);
