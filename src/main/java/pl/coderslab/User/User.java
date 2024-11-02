@@ -41,13 +41,7 @@ public class User {
     @Email
     private String email;
 
-//    private String role;
-
     private String newsletter;
-
-//    public boolean hasRole(String role) {
-//        return this.role.equals(role);
-//    }
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)

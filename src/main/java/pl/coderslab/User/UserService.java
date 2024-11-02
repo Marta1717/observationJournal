@@ -15,7 +15,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAllUsers() {
+    public List<User> findAllUsersWithFullData() {
         return userRepository.findAll();
     }
 
@@ -46,7 +46,17 @@ public class UserService {
         throw new IllegalArgumentException("Invalid username or password");
     }
 
-    public User getLoggedInUser(HttpSession session) {
+    public UserDTO getLoggedInUserDTO(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            throw new IllegalStateException("User is not logged in");
+        }
+        return new UserDTO(
+                loggedInUser.getId(),
+                loggedInUser.getUsername());
+    }
+
+    public User getLoggedInUserEntity(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             throw new IllegalStateException("User is not logged in");
@@ -68,5 +78,13 @@ public class UserService {
         userRepository.save(user);
     }
 
-
+    public User convertToUser(UserDTO userDTO) {
+        if (userDTO == null) {
+            return null;
+        }
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setUsername(userDTO.getUsername());
+        return user;
+    }
 }
