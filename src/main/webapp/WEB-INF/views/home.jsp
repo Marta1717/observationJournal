@@ -37,7 +37,9 @@
 <%--    Logged in as: <c:out value="${sessionScope.username}"/>--%>
 <%--</div>--%>
 <div class="main-content">
-    <h2>Welcome in Observation Journal!</h2>
+    <h2><strong><a href="${pageContext.request.contextPath}/login"><h4>Welcome in Observation Journal! </h4></a></strong></h2>
 </div>
+
+
 </body>
 </html>

@@ -28,7 +28,7 @@
     <h2>Add Animal</h2>
     <br/><br/>
     <form:form modelAttribute="animal" method="post" action="${pageContext.request.contextPath}/animal/add/">
-    <a href="${pageContext.request.contextPath}/animal/list"><h3>Animal List</h3></a>
+    <a href="${pageContext.request.contextPath}/animal/animal-list"><h3>Animal List</h3></a>
     <br/><br/><br/>
 <%--        <form:hidden path="user" value="${loggedInUser.id}"/>--%>
 

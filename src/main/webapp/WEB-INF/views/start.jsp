@@ -47,7 +47,6 @@
 
     <strong><a href="${pageContext.request.contextPath}/login"><h4>LOG IN</h4></a></strong>
     <br/><br/>
-<%--    <img src="${pageContext.request.contextPath}Observation Journal.jpg" alt="Observation Journal" style="max-width:100%; height:auto;">--%>
 </div>
 </body>
 </html>

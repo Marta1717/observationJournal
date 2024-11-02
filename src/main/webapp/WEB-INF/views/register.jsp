@@ -39,19 +39,19 @@
         <div class="mb-3">
             Username <br/>
             <form:input path="username" id="username" required="required" class="form-control"/>
-            <form:errors path="username"/>
+            <form:errors path="username" cssClass="error"/>
             <br/>
         </div>
         <div class="mb-3">
             Password <br/>
             <form:password path="password" id="password" required="required" class="form-control"/>
-            <form:errors path="password"/>
+            <form:errors path="password" cssClass="error"/>
             <br/>
         </div>
         <div class="mb-3">
             Email <br/>
             <form:input path="email" id="email" required="required" class="form-control"/>
-            <form:errors path="email"/>
+            <form:errors path="email" cssClass="error"/>
             <br/>
         </div>
         <div class="mb-3">

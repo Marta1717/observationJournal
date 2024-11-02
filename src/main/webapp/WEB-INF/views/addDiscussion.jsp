@@ -39,7 +39,7 @@
 
     th, td {
       border: 1px solid #ddd;
-      padding: 8px; /* Zmniejsza przestrzeń wewnętrzną komórek */
+      padding: 8px;
       text-align: left;
     }
 
@@ -89,7 +89,7 @@
   </c:if>
 
   <h3>Add New Comment:</h3>
-  <form action="${pageContext.request.contextPath}/observation/discussion/add" method="post">
+  <form action="${pageContext.request.contextPath}/discussion/add" method="post">
     <label>
       <textarea name="comment" rows="5" cols="50" placeholder="Add your comment: "></textarea>
     </label>

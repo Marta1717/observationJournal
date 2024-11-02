@@ -46,5 +46,4 @@ public class Animal {
     @ToString.Exclude
     @OneToMany(mappedBy = "animal", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Observation> observations = new HashSet<>();
-
 }
