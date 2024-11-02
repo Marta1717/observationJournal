@@ -11,13 +11,14 @@ import pl.coderslab.Animal.CATEGORY;
 import pl.coderslab.Location.Location;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserDTO;
 import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
-//@RequestMapping("/observation")
+@RequestMapping("/observation")
 @RequiredArgsConstructor
 @Controller
 public class ObservationController {
@@ -25,13 +26,13 @@ public class ObservationController {
     private final ObservationService observationService;
     private final LocationService locationService;
     private final AnimalService animalService;
-//    private final DiscussionService discussionService;
+    //    private final DiscussionService discussionService;
     private final UserService userService;
 
 
-    @GetMapping("/observation/add")
+    @GetMapping("add")
     public String addObservationForm(Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
 //        User loggedInUser = (User) session.getAttribute("loggedInUser");
 //        if (loggedInUser == null) {
 //            return "redirect:/login";
@@ -45,22 +46,20 @@ public class ObservationController {
         return "addObservation";
     }
 
-    @PostMapping("/observation/add")
+    @PostMapping("add")
     public String processAddObservation(@ModelAttribute Observation observation, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
-//        User loggedInUser = (User) session.getAttribute("loggedInUser");
-//        if (loggedInUser == null) {
-//            return "redirect:/login";
-//        }
-        observation.setUser(loggedInUser);
-        observationService.saveObservation(observation);
-
+        UserDTO loggedInUserDTO = userService.getLoggedInUserDTO(session);
+        if (loggedInUserDTO != null) {
+            User loggedInUser = userService.convertToUser(loggedInUserDTO);
+            observation.setUser(loggedInUser);
+            observationService.saveObservation(observation);
+        }
         return "redirect:/observation/list/all";
     }
 
-    @GetMapping(value = "/observation/edit/{id}")
+    @GetMapping(value = "edit/{id}")
     public String editObservationForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
 //        User loggedInUser = (User) session.getAttribute("loggedInUser");
 //        if (loggedInUser == null) {
 //            return "redirect:/login";
@@ -76,17 +75,20 @@ public class ObservationController {
         return "editObservation";
     }
 
-    @PostMapping(value = "/observation/edit")
+    @PostMapping(value = "edit")
     public String processEditObservation(@ModelAttribute Observation observation, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
-        observation.setUser(loggedInUser);
-        observationService.saveObservation(observation);
+        UserDTO loggedInUserDTO = userService.getLoggedInUserDTO(session);
+        if (loggedInUserDTO != null) {
+            User loggedInUser = userService.convertToUser(loggedInUserDTO);
+            observation.setUser(loggedInUser);
+            observationService.saveObservation(observation);
+        }
         return "redirect:/observation/list/all";
     }
 
-    @GetMapping("/observation/delete/{id}")
+    @GetMapping("delete/{id}")
     public String deleteObservationForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
 //        User loggedInUser = (User) session.getAttribute("loggedInUser");
 //        if (loggedInUser == null) {
 //            return "redirect:/login";
@@ -101,9 +103,9 @@ public class ObservationController {
         return "deleteObservation";
     }
 
-    @PostMapping(value = "/observation/delete")
+    @PostMapping(value = "delete")
     public String processDeleteObservation(@RequestParam Long id, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
         //   User loggedInUser = (User) session.getAttribute("loggedInUser");
         Observation observation = observationService.findObservationById(id);
         if (loggedInUser != null && observation.getUser().getId().equals(loggedInUser.getId())) {
@@ -112,7 +114,7 @@ public class ObservationController {
         return "redirect:/observation/list/all";
     }
 
-    @GetMapping("/observation/list/all")
+    @GetMapping("list/all")
     public String listAllObservations(
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String animalName,
@@ -136,64 +138,34 @@ public class ObservationController {
         model.addAttribute("category", CATEGORY.values());
         return "listObservation";
     }
-
-//    @GetMapping("/observation/{id}")
-//    public String showObservationDetails(@PathVariable Long id, Model model) {
-//        Observation observation = observationService.findObservationById(id);
-//        List<Discussion> discussions = discussionService.findDiscussionByObservation(observation);
-//        model.addAttribute("observation", observation);
-//        model.addAttribute("discussionList", discussions);
-//        return "addDiscussion";
-//    }
-//
-//    @PostMapping("/observation/discussion/add")
-//    public String processAddDiscussion(@ModelAttribute Discussion discussion, @RequestParam Long id, HttpSession session) {
-//        User loggedInUser = (User) session.getAttribute("loggedInUser");
-//        if (loggedInUser != null) {
-//            discussion.setUser(loggedInUser);
-//            Observation observation = observationService.findObservationById(id);
-//            if (observation != null) {
-//                discussion.setObservation(observation);
-//                discussionService.saveDiscussion(discussion);
-//            }
-//        }
-//        return "addDiscusion";
-//    }
 }
-//
-//    @GetMapping("/observation/user/username/{username}")
+
+//    @GetMapping("user/username/{username}")
 //    public String getObservationByUsername(@PathVariable String username, Model model) {
 //        List<Observation> observations = observationService.findObservationsByUsername(username);
 //        model.addAttribute("observations", observations);
 //        return "listAllObservation";
 //    }
 //
-//    @GetMapping("/observation/location/locationName/{locationName}")
+//    @GetMapping("location/locationName/{locationName}")
 //    public String getObservationByLocationName(@PathVariable String locationName, Model model) {
 //        List<Observation> observations = observationService.findObservationsByLocationName(locationName);
 //        model.addAttribute("observations", observations);
 //        return "listAllObservation";
 //    }
 //
-//
-//
-//    @GetMapping("observation/animalName/{animalName}")
+//    @GetMapping("animalName/{animalName}")
 //    public String getObservationByAnimalName(@PathVariable String animalName, Model model) {
 //        List<Observation> observations = observationService.findObservationsByAnimalName(animalName);
 //        model.addAttribute("observations", observations);
 //        return "listAllObservation";
 //    }
 //
-//    @GetMapping("observation/animal/category/{category}")
+//    @GetMapping("animal/category/{category}")
 //    public String getObservationByCategory(@PathVariable String category, Model model) {
 //        List<Observation> observations = observationService.findObservationsByCategory(category);
 //        model.addAttribute("observations", observations);
 //        return "listAllObservation";
-//    }
-//    @ModelAttribute("users")
-//    public List<User> getUsers() {
-//        return this.userService.findAllUsers();
-//    }
 //}
 
 

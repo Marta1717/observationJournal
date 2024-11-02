@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Location.Location;
 import pl.coderslab.Location.LocationService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserDTO;
 import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @Controller
+@RequestMapping("/animal")
 public class AnimalController {
 
     private final AnimalService animalService;
@@ -24,9 +26,9 @@ public class AnimalController {
     private final UserService userService;
 
 
-    @GetMapping(value = "/animal/add")
+    @GetMapping(value = "/add")
     public String showAddForm(Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -37,12 +39,13 @@ public class AnimalController {
         return "addAnimal";
     }
 
-    @PostMapping(value = "/animal/add/")
+    @PostMapping(value = "/add/")
     public String processAddAnimal(@ModelAttribute Animal animal, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
-        if (loggedInUser == null) {
+        UserDTO loggedInUserDTO = userService.getLoggedInUserDTO(session);
+        if (loggedInUserDTO == null) {
             return "redirect:/login";
         }
+        User loggedInUser = userService.convertToUser(loggedInUserDTO);
             animal.setUser(loggedInUser);
             animalService.saveAnimal(animal);
         return "redirect:/animal/list";
@@ -53,9 +56,9 @@ public class AnimalController {
         return Arrays.asList(CATEGORY.values());
     }
 
-    @GetMapping(value = "/animal/edit/{id}")
+    @GetMapping(value = "/edit/{id}")
     public String editAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -69,17 +72,18 @@ public class AnimalController {
         return "editAnimal";
     }
 
-    @PostMapping(value = "/animal/edit")
+    @PostMapping(value = "/edit")
     public String processEditAnimal(@ModelAttribute Animal animal, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO userDTO = userService.getLoggedInUserDTO(session);
+        User loggedInUser = userService.convertToUser(userDTO);
         animal.setUser(loggedInUser);
         animalService.saveAnimal(animal);
         return "redirect:/animal/list";
     }
 
-    @GetMapping("/animal/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteAnimalForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -92,9 +96,9 @@ public class AnimalController {
         return "deleteAnimal";
     }
 
-    @PostMapping(value = "/animal/delete")
+    @PostMapping(value = "/delete")
     public String processDeleteAnimal(@RequestParam Long id, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
         Animal animal = animalService.findAnimalById(id);
         if (loggedInUser != null && animal.getUser().getId().equals(loggedInUser.getId())) {
             animalService.deleteAnimalById(id);
@@ -102,41 +106,41 @@ public class AnimalController {
         return "redirect:/animal/list";
     }
 
-    @GetMapping("/animal/list")
+    @GetMapping("/animal-list")
     public String showAnimalList(Model model) {
         model.addAttribute("animals", animalService.findAllAnimals());
         return "listAnimal";
     }
 
-    @GetMapping("/animal/{animalName}")
+    @GetMapping("/{animalName}")
     public String getAnimalByAnimalName(@PathVariable String animalName, Model model) {
         List<Animal> animals = animalService.findAnimalByAnimalName(animalName);
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
 
-    @GetMapping("/animal/{category}")
+    @GetMapping("/{category}")
     public String getAnimalByCategory(@PathVariable String category, Model model) {
         List<Animal> animals = animalService.findAnimalByCategory(CATEGORY.valueOf(category));
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
 
-    @GetMapping("/animal/user/{username}")
+    @GetMapping("/user/{username}")
     public String getAnimalByUsername(@PathVariable String username, Model model) {
         List<Animal> animals = animalService.findAnimalsByUsername(username);
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
 
-    @GetMapping("/animal/user/{id}")
+    @GetMapping("/user/{id}")
     public String getAnimalsByUserId(@PathVariable Long id, Model model) {
         List<Animal> animals = animalService.findAnimalByUserId(id);
         model.addAttribute("animal", animals);
         return "listLocation";
     }
 
-    @GetMapping("/animal/location/{locationName}")
+    @GetMapping("/location/{locationName}")
     public String getAnimalByLocationName(@PathVariable String locationName, Model model) {
         List<Animal> animals = animalService.findAnimalsByLocationName(locationName);
         model.addAttribute("animals", animals);

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Observation.Observation;
 import pl.coderslab.Observation.ObservationService;
 import pl.coderslab.User.User;
+import pl.coderslab.User.UserDTO;
 import pl.coderslab.User.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -18,13 +19,14 @@ import java.util.List;
 //@RestController
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/discussion")
 public class DiscussionController {
 
     private final DiscussionService discussionService;
     private final ObservationService observationService;
     private final UserService userService;
 
-    @RequestMapping("/discussion/get/{id}")
+    @RequestMapping("/get/{id}")
     @ResponseBody
     public String getDiscussionById(@PathVariable Long id, Model model) {
         Discussion discussion = discussionService.findById(id);
@@ -35,9 +37,9 @@ public class DiscussionController {
         return discussion.toString();
     }
 
-    @GetMapping(value = "/observation/discussion/add/form")
+    @GetMapping(value = "/add/form")
     public String showAddDiscussionForm(Model model, HttpSession session, @RequestParam Long id) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
         if (loggedInUser == null) {
             return "redirect:/login";
         }
@@ -53,16 +55,17 @@ public class DiscussionController {
         return "addDiscussion";
     }
 
-    @PostMapping(value = "/observation/discussion/add")
+    @PostMapping(value = "/add")
     public String processAddDiscussion(@ModelAttribute Discussion discussion, HttpSession session, @RequestParam Long id) {
-        User loggedInUser = userService.getLoggedInUser(session);
-        if (loggedInUser == null) {
+        UserDTO loggedInUserDTO = userService.getLoggedInUserDTO(session);
+        if (loggedInUserDTO == null) {
             return "redirect:/login";
         }
         Observation observation = observationService.findObservationById(id);
         if (observation == null) {
             return "redirect:/error";
         }
+        User loggedInUser = userService.convertToUser(loggedInUserDTO);
         discussion.setUser(loggedInUser);
         discussion.setObservation(observation);
         discussion.setCreatedAt(LocalDateTime.now());
@@ -72,21 +75,24 @@ public class DiscussionController {
         return "redirect:/observation/list/all";
     }
 
-    @GetMapping("/discussion/list")
+    @GetMapping("/discussion-list")
     public String showDiscussionList(Model model) {
         model.addAttribute("discussion", discussionService.findAllDiscussion());
         return "listDiscussion";
     }
 
-    @GetMapping("/discussions/user/{id}")
+    @GetMapping("user/{id}")
     public String getUserDiscussions(@PathVariable Long id, Model model) {
         User user = userService.findUserById(id);
+        if (user == null) {
+            return "redirect:/login";
+        }
         List<Discussion> discussions = discussionService.findDiscussionByUser(user);
         model.addAttribute("discussions", discussions);
         return "listDiscussion";
     }
 
-    @GetMapping("/discussion/observation/{id}")
+    @GetMapping("/observation/{id}")
     public String showObservationDiscussions(@PathVariable Long id, Model model) {
         Observation observation = observationService.findObservationById(id);
         if (observation == null) {

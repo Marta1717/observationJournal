@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -11,31 +12,21 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RequiredArgsConstructor
-//@RequestMapping("/user)
 @Controller
 public class UserController {
 
     private final UserService userService;
 
-    @RequestMapping("/user/get/{id}")
-    @ResponseBody
+    @GetMapping("/user/get/{id}")
     public String getUserById(@PathVariable Long id) {
         User user = userService.findUserById(id);
         if (user != null) {
-            return user.toString();
+            return "redirect:/home";
         } else {
-            return "User not found";
+            return "redirect:/login";
         }
-    }
 
-//    @RequestMapping("/user/update/{id}/{username}")
-//    @ResponseBody
-//    public String updateUser(@PathVariable Long id, @PathVariable String username) {
-//        User user = userService.findUserById(id);
-//        user.setUsername(username);
-//        userService.saveUser(user);
-//        return user.toString();
-//    }
+    }
 
     @GetMapping(value = "/register")
     public String showRegistrationForm(Model model) {
@@ -44,9 +35,9 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public String processRegister(@ModelAttribute User user, Model model) {
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            model.addAttribute("emailError", "Email cannot be null or empty");
+    public String processRegister(@ModelAttribute User user, Model model, BindingResult result) {
+        if (result.hasErrors()) {
+            System.out.println("Email: " + user.getEmail());
             return "register";
         }
         try {
@@ -69,7 +60,7 @@ public class UserController {
         try {
             User loggedInUser = userService.login(user.getUsername(), user.getPassword());
             session.setAttribute("loggedInUser", loggedInUser);
-            return "redirect:/user/list";
+            return "redirect:/home";
         } catch (IllegalArgumentException e) {
             model.addAttribute("loginError", "Invalid username or password");
             return "login";
@@ -84,7 +75,7 @@ public class UserController {
 
     @GetMapping(value = "/user/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        User loggedInUser = userService.getLoggedInUserEntity(session);
         if (!loggedInUser.getId().equals(id)) {
             return "redirect:/user/list";
         }
@@ -95,7 +86,7 @@ public class UserController {
 
     @PostMapping(value = "/user/edit")
     public String processEditUser(@ModelAttribute User user, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
+        User loggedInUser = userService.getLoggedInUserEntity(session);
         if (!loggedInUser.getId().equals(user.getId())) {
             return "redirect:/user/list/";
         }
@@ -105,8 +96,8 @@ public class UserController {
 
     @GetMapping("/user/delete/{id}")
     public String deleteUserForm(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
-        if (!loggedInUser.getId().equals(id)) {
+        User loggedInUserDTO = userService.getLoggedInUserEntity(session);
+        if (!loggedInUserDTO.getId().equals(id)) {
             return "redirect:/user/list";
         }
 
@@ -117,8 +108,8 @@ public class UserController {
 
     @PostMapping(value = "/user/delete")
     public String processDeleteUser(@RequestParam Long id, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
-        if (loggedInUser.getId().equals(id)) {
+        User loggedInUserDTO = userService.getLoggedInUserEntity(session);
+        if (loggedInUserDTO.getId().equals(id)) {
             userService.deleteUser(id);
         }
         return "redirect:/user/list/";
@@ -126,8 +117,8 @@ public class UserController {
 
     @PostMapping("/user/subscribe/{id}")
     public String subscribeToNewsletter(@PathVariable Long id, Model model, HttpSession session) {
-        User loggedInUser = userService.getLoggedInUser(session);
-        if (loggedInUser.getId().equals(id)) {
+        User loggedInUserDTO = userService.getLoggedInUserEntity(session);
+        if (loggedInUserDTO.getId().equals(id)) {
             try {
                 userService.subscribeToNewsletter(id);
                 model.addAttribute("successMessage", "Successfully subscribed to the newsletter!");
@@ -140,8 +131,8 @@ public class UserController {
 
     @PostMapping("/user/unsubscribe/{id}")
     public String unsubscribeFromNewsletter(@PathVariable Long id, HttpSession session, Model model) {
-        User loggedInUser = userService.getLoggedInUser(session);
-        if (loggedInUser.getId().equals(id)) {
+        User loggedInUserDTO = userService.getLoggedInUserEntity(session);
+        if (loggedInUserDTO.getId().equals(id)) {
             try {
                 userService.unsubscribeFromNewsletter(id);
                 model.addAttribute("successMessage", "Successfully unsubscribed from the newsletter!");
@@ -154,7 +145,7 @@ public class UserController {
 
     @GetMapping(value = "/user/list")
     public String showUsersList(Model model) {
-        model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("users", userService.findAllUsersWithFullData());
         return "listUser";
     }
 }
