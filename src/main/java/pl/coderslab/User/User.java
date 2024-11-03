@@ -27,17 +27,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "The 'user' field cannot be empty")
+    @NotNull
     @Column(unique = true)
     @Size(min = 3, max = 15)
     private String username;
 
     @ToString.Exclude
-    @NotNull(message = "The 'password' field cannot be empty")
+    @NotNull
     @Size(min = 3, max = 15)
     private String password;
 
-    @NotNull(message = "The 'email' field cannot be empty")
+    @NotNull
     @Email
     private String email;
 

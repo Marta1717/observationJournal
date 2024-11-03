@@ -26,17 +26,12 @@ public class ObservationController {
     private final ObservationService observationService;
     private final LocationService locationService;
     private final AnimalService animalService;
-    //    private final DiscussionService discussionService;
     private final UserService userService;
 
 
     @GetMapping("add")
     public String addObservationForm(Model model, HttpSession session) {
         UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
-//        User loggedInUser = (User) session.getAttribute("loggedInUser");
-//        if (loggedInUser == null) {
-//            return "redirect:/login";
-//        }
         List<Location> locations = locationService.findLocationByUserId(loggedInUser.getId());
         List<Animal> animals = animalService.findAnimalByUserId(loggedInUser.getId());
         model.addAttribute("observation", new Observation());
@@ -60,12 +55,9 @@ public class ObservationController {
     @GetMapping(value = "edit/{id}")
     public String editObservationForm(@PathVariable Long id, Model model, HttpSession session) {
         UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
-//        User loggedInUser = (User) session.getAttribute("loggedInUser");
-//        if (loggedInUser == null) {
-//            return "redirect:/login";
-//        }
         Observation observation = observationService.findObservationById(id);
         if (!observation.getUser().getId().equals(loggedInUser.getId())) {
+            model.addAttribute("errorMessage", "You do not have permission to edit this observation.");
             return "redirect:/observation/list";
         }
         model.addAttribute("observation", observationService.findObservationById(id));
@@ -76,10 +68,19 @@ public class ObservationController {
     }
 
     @PostMapping(value = "edit")
-    public String processEditObservation(@ModelAttribute Observation observation, HttpSession session) {
+    public String processEditObservation(@ModelAttribute Observation observation, HttpSession session, Model model) {
         UserDTO loggedInUserDTO = userService.getLoggedInUserDTO(session);
+        Observation existingObservation = observationService.findObservationById(observation.getId());
         if (loggedInUserDTO != null) {
             User loggedInUser = userService.convertToUser(loggedInUserDTO);
+            if (!existingObservation.getUser().getId().equals(loggedInUser.getId())) {
+                model.addAttribute("errorMessage", "You do not have permission to edit this observation.");
+                model.addAttribute("observation", existingObservation);
+                model.addAttribute("user", loggedInUser);
+                model.addAttribute("locations", locationService.findAllLocations());
+                model.addAttribute("animals", animalService.findAllAnimals());
+                return "editObservation";
+            }
             observation.setUser(loggedInUser);
             observationService.saveObservation(observation);
         }
@@ -89,12 +90,9 @@ public class ObservationController {
     @GetMapping("delete/{id}")
     public String deleteObservationForm(@PathVariable Long id, Model model, HttpSession session) {
         UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
-//        User loggedInUser = (User) session.getAttribute("loggedInUser");
-//        if (loggedInUser == null) {
-//            return "redirect:/login";
-//        }
         Observation observation = observationService.findObservationById(id);
         if (!observation.getUser().getId().equals(loggedInUser.getId())) {
+            model.addAttribute("errorMessage", "You do not have permission to delete this observation.");
             return "redirect:/observation/list/all";
         }
         model.addAttribute("location", locationService.findAllLocations());
@@ -104,12 +102,17 @@ public class ObservationController {
     }
 
     @PostMapping(value = "delete")
-    public String processDeleteObservation(@RequestParam Long id, HttpSession session) {
+    public String processDeleteObservation(@RequestParam Long id, HttpSession session, Model model) {
         UserDTO loggedInUser = userService.getLoggedInUserDTO(session);
-        //   User loggedInUser = (User) session.getAttribute("loggedInUser");
         Observation observation = observationService.findObservationById(id);
         if (loggedInUser != null && observation.getUser().getId().equals(loggedInUser.getId())) {
             observationService.deleteObservationById(id);
+        } else {
+            model.addAttribute("errorMessage", "You do not have permission to delete this observation.");
+            model.addAttribute("location", locationService.findAllLocations());
+            model.addAttribute("animal", animalService.findAllAnimals());
+            model.addAttribute("observation", observation);
+            return "deleteObservation";
         }
         return "redirect:/observation/list/all";
     }
@@ -139,36 +142,6 @@ public class ObservationController {
         return "listObservation";
     }
 }
-
-//    @GetMapping("user/username/{username}")
-//    public String getObservationByUsername(@PathVariable String username, Model model) {
-//        List<Observation> observations = observationService.findObservationsByUsername(username);
-//        model.addAttribute("observations", observations);
-//        return "listAllObservation";
-//    }
-//
-//    @GetMapping("location/locationName/{locationName}")
-//    public String getObservationByLocationName(@PathVariable String locationName, Model model) {
-//        List<Observation> observations = observationService.findObservationsByLocationName(locationName);
-//        model.addAttribute("observations", observations);
-//        return "listAllObservation";
-//    }
-//
-//    @GetMapping("animalName/{animalName}")
-//    public String getObservationByAnimalName(@PathVariable String animalName, Model model) {
-//        List<Observation> observations = observationService.findObservationsByAnimalName(animalName);
-//        model.addAttribute("observations", observations);
-//        return "listAllObservation";
-//    }
-//
-//    @GetMapping("animal/category/{category}")
-//    public String getObservationByCategory(@PathVariable String category, Model model) {
-//        List<Observation> observations = observationService.findObservationsByCategory(category);
-//        model.addAttribute("observations", observations);
-//        return "listAllObservation";
-//}
-
-
 
 
 

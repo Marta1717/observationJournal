@@ -1,7 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header-links.jsp"%>
+<%@include file="header-links.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,11 +44,17 @@
         tr:hover {
             background-color: #ddd;
         }
+
     </style>
 </head>
 <body>
 <div class="container">
     <h2>Location List</h2>
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger">
+            <spring:message code="${errorMessage}"/>
+        </div>
+    </c:if>
     <br/><br/>
     <a href="<c:url value="/location/add"/>"><h3>Add New Location</h3></a>
     <br/><br/>

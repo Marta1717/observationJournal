@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
-//@RestController
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/discussion")

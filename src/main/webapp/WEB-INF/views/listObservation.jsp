@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@include file="header-links.jsp"%>
 <!DOCTYPE html>
@@ -126,6 +127,11 @@
     <br/><br/>
     <div class="table-container">
         <h2>All Observation List</h2>
+        <c:if test="${not empty errorMessage}">
+            <div class="alert alert-danger">
+                <spring:message code="${errorMessage}" />
+            </div>
+        </c:if>
         <table>
             <tr>
                 <th>Id</th>

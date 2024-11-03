@@ -38,17 +38,17 @@ public class Observation {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull(message = "The 'user' field cannot be empty")
+    @NotNull
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
-    @NotNull(message = "The 'location' field cannot be empty")
+    @NotNull
     private Location location;
 
     @ManyToOne
     @JoinColumn(name = "animal_id")
-    @NotNull(message = "The 'animal' field cannot be empty")
+    @NotNull
     private Animal animal;
 
     @ToString.Exclude

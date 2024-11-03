@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
-//@RestController
 @RequestMapping("/location")
 @RequiredArgsConstructor
 @Controller
@@ -55,6 +54,7 @@ public class LocationController {
         }
         Location location = locationService.findLocationById(id);
         if(!location.getUser().getId().equals(loggedInUser.getId())) {
+            model.addAttribute("errorMessage", "You do not have permission to edit this location.");
             return "redirect:/location/list";
         }
         model.addAttribute("location", locationService.findLocationById(id));
@@ -82,6 +82,7 @@ public class LocationController {
         }
         Location location = locationService.findLocationById(id);
         if(!location.getUser().getId().equals(loggedInUser.getId())) {
+            model.addAttribute("errorMessage", "You do not have permission to delete this location.");
             return "redirect:/location/list";
         }
         model.addAttribute("location", location);

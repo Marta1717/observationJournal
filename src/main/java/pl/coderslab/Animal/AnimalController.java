@@ -64,6 +64,7 @@ public class AnimalController {
         }
         Animal animal = animalService.findAnimalById(id);
         if (!animal.getUser().getId().equals(loggedInUser.getId())) {
+            model.addAttribute("errorMessage", "You do not have permission to edit this animal.");
             return "redirect:/animal/list";
         }
         model.addAttribute("animal", animalService.findAnimalById(id));
@@ -89,6 +90,7 @@ public class AnimalController {
         }
         Animal animal = animalService.findAnimalById(id);
         if (!animal.getUser().getId().equals(loggedInUser.getId())) {
+            model.addAttribute("errorMessage", "You do not have permission to delete this animal.");
             return "redirect:/animal/list";
         }
         model.addAttribute("animal", animal);

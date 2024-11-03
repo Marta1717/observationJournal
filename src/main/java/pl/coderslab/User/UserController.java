@@ -76,6 +76,7 @@ public class UserController {
     public String editUserForm(@PathVariable Long id, Model model, HttpSession session) {
         User loggedInUser = userService.getLoggedInUserEntity(session);
         if (!loggedInUser.getId().equals(id)) {
+            model.addAttribute("errorMessage", "You do not have permission to edit this user.");
             return "redirect:/user/list";
         }
         User user = userService.findUserById(id);
@@ -97,6 +98,7 @@ public class UserController {
     public String deleteUserForm(@PathVariable Long id, Model model, HttpSession session) {
         User loggedInUserDTO = userService.getLoggedInUserEntity(session);
         if (!loggedInUserDTO.getId().equals(id)) {
+            model.addAttribute("errorMessage", "You do not have permission to delete this user.");
             return "redirect:/user/list";
         }
 
