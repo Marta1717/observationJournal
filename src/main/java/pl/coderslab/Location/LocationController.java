@@ -125,16 +125,5 @@ public class LocationController {
         return "listLocation";
     }
 }
-//    @ModelAttribute("animals")
-//    public List<Animal> getAnimals() {
-//        return this.animalService.findAllAnimals();
-//    }
-
-
-//    @ModelAttribute("users")
-//    public List<User> getUsers() {
-//        return this.userService.findAllUsers();
-//    }
-//}
 
 

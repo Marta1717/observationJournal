@@ -87,7 +87,7 @@
                 </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/user/subscribe/${user.id}" method="post">
-                        <button type="submit" class="btn btn-primary">subcribe</button>
+                        <button type="submit" class="btn btn-primary">subscribe</button>
                     </form>
                     <form action="${pageContext.request.contextPath}/user/unsubscribe/${user.id}" method="post">
                         <button type="submit" class="btn btn-warning">unsubscribe</button>

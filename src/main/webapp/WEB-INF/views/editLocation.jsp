@@ -33,6 +33,11 @@
 <body>
 <div class="container">
     <h2>Edit Location</h2>
+
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger">${error}</div>
+    </c:if>
+
     ${users}
     <br/><br/>
     <a href="${pageContext.request.contextPath}/location/list"><h3>Location List</h3></a>

@@ -20,6 +20,11 @@
             width: 400px;
             text-align: left;
         }
+
+        .error{
+            color: red;
+            font-weight: bold;
+        }
     </style>
 
 </head>
@@ -34,14 +39,8 @@
 
         <div class="mb-3">Select location<br/>
             <form:select path="location.id" id="location" items="${locations}" itemLabel="locationName" itemValue="id"/>
-            <form:errors path="location.id"/>
+            <form:errors path="location.id" cssClass="error"/>
         </div>
-
-<%--        <div class="mb-3">--%>
-<%--            Select user<br/>--%>
-<%--            <form:select path="user.id" id="user" items="${users}" itemLabel="username" itemValue="id"/>--%>
-<%--            <form:errors path="user.id"/>--%>
-<%--        </div>--%>
 
         <div class="mb-3">
             Select category:<br/>
@@ -51,7 +50,7 @@
 
         <div class="mb-3">Name <br/>
             <form:input path="animalName"/>
-            <form:errors path="animalName"/>
+            <form:errors path="animalName" cssClass="error"/>
 
         </div>
 

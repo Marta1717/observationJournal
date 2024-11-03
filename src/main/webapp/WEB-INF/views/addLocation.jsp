@@ -32,7 +32,7 @@
         <div class="mb-3">
             Place name <br/>
             <form:input path="locationName"/>
-            <form:errors path="locationName"/>
+            <form:errors path="locationName" cssClass="error"/>
         </div>
 
         <div class="mb-3">

@@ -48,7 +48,7 @@ public class AnimalController {
         User loggedInUser = userService.convertToUser(loggedInUserDTO);
             animal.setUser(loggedInUser);
             animalService.saveAnimal(animal);
-        return "redirect:/animal/list";
+        return "redirect:/animal/animal-list";
     }
 
     @ModelAttribute("category")
@@ -78,7 +78,7 @@ public class AnimalController {
         User loggedInUser = userService.convertToUser(userDTO);
         animal.setUser(loggedInUser);
         animalService.saveAnimal(animal);
-        return "redirect:/animal/list";
+        return "redirect:/animal/animal-list";
     }
 
     @GetMapping("/delete/{id}")
@@ -103,7 +103,7 @@ public class AnimalController {
         if (loggedInUser != null && animal.getUser().getId().equals(loggedInUser.getId())) {
             animalService.deleteAnimalById(id);
         }
-        return "redirect:/animal/list";
+        return "redirect:/animal/animal-list";
     }
 
     @GetMapping("/animal-list")
@@ -112,14 +112,14 @@ public class AnimalController {
         return "listAnimal";
     }
 
-    @GetMapping("/{animalName}")
+    @GetMapping("/animal/{animalName}")
     public String getAnimalByAnimalName(@PathVariable String animalName, Model model) {
         List<Animal> animals = animalService.findAnimalByAnimalName(animalName);
         model.addAttribute("animals", animals);
         return "listAnimal";
     }
 
-    @GetMapping("/{category}")
+    @GetMapping("/animal/{category}")
     public String getAnimalByCategory(@PathVariable String category, Model model) {
         List<Animal> animals = animalService.findAnimalByCategory(CATEGORY.valueOf(category));
         model.addAttribute("animals", animals);

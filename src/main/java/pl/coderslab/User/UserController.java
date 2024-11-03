@@ -37,7 +37,6 @@ public class UserController {
     @PostMapping(value = "/register")
     public String processRegister(@ModelAttribute User user, Model model, BindingResult result) {
         if (result.hasErrors()) {
-            System.out.println("Email: " + user.getEmail());
             return "register";
         }
         try {

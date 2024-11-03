@@ -96,5 +96,20 @@
      font-weight: bold;
  }
 
+ .user-info a.logout-link {
+     color: #036400;
+     text-decoration: none;
+ }
+
+ .user-info a.logout-link {
+     color: rgba(142, 4, 25, 0.96);
+     text-decoration: none;
+ }
+
+ .user-info a:hover {
+     text-decoration: underline;
+ }
+
+
 
 
