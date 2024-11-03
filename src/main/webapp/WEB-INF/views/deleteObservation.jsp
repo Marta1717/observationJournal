@@ -38,6 +38,7 @@
     <input type="hidden" name="id" value="${observation.id}"/>
     <p>Date:<br/> ${observation.date}</p>
     <p>Description:<br/> ${observation.description}</p>
+    <br><br>
     <strong><a href="${pageContext.request.contextPath}/observation/list">CANCEL</a></strong>
     <strong><button type="submit" name="action">DELETE</button></strong>
 </form:form>
