@@ -25,10 +25,10 @@ public class Observation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "The 'date' field cannot be empty")
+    @NotNull
     private LocalDate date;
 
-    @Size(min = 3, max = 500, message = "Description must be between 3 and 500 characters long")
+    @Size(min = 3, max = 100)
     private String description;
 
     @PrePersist
